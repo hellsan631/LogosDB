@@ -1,0 +1,98 @@
+<?php
+
+    namespace Logos\Main;
+
+    use DateTime;
+    use DateTimeZone;
+    use Exception;
+
+    interface DatabaseCore{
+
+        public static function getInstance();
+
+        public static function getQuery($prepare, $execute);
+
+    }
+
+    function clean($data){
+        return htmlspecialchars(mysql_real_escape_string($data));
+    }
+
+    function isJson($string){
+        // make sure provided input is of type string
+        if (!is_string($string))
+            return false;
+
+        // let's leave the rest to PHP.
+        // try to decode string
+        json_decode($string);
+
+        return (json_last_error() === JSON_ERROR_NONE);
+    }
+
+    function sendEmail($subject, $message, $recipient){
+
+        $headers = "From: no-reply<noreply@whats-your-confidence.com>\r\n";
+        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+        return mail($recipient, $subject, $message, $headers);
+
+    }
+
+    function base64_url_encode($input){
+        return strtr(base64_encode($input), '+/=', '-_,');
+    }
+
+    function formatNumber($number, $type = "ordinal"){//ordinal suffix
+
+        $ends = array('th','st','nd','rd','th','th','th','th','th','th');
+
+        if($number == "N/A")
+            return $number;
+
+        return (($number %100) >= 11 && ($number%100) <= 13) ? $number.'th' : $number.$ends[$number % 10];
+
+    }
+
+
+    function getTimezone(){
+        return new DateTimeZone('America/New_York');
+    }
+
+    function isValidDateTimeString($str_dt) {
+
+        if(!is_string($str_dt))
+            return false;
+
+        try{
+
+            $date = new DateTime($str_dt);
+
+        }catch(Exception $e){
+
+            return false;
+
+        }
+
+        return (($date && DateTime::getLastErrors()["warning_count"] == 0 && DateTime::getLastErrors()["error_count"] == 0));
+
+    }
+
+    function unixToMySQL($timestamp){
+
+        if($timestamp instanceof DateTime)
+            $timestamp = $timestamp->format('Y-m-d H:i:s');
+
+        return date('Y-m-d H:i:s', strtotime($timestamp) ?: $timestamp);
+
+    }
+
+    function getDay($dateTimeString){
+
+        $tempDate = new DateTime($dateTimeString);
+        $tempDate->setTime(0,0,0);
+        return $tempDate->format('D');
+
+    }
+
+?>
