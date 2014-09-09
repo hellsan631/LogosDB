@@ -10,7 +10,7 @@
         public function createNew();
 
         //static version of createNew based on a given input of data, to be inserted into class
-        public static function createSingle($data, $returnObject);
+        public static function createSingle($data);
 
         //Allows you to do a multiple object insert into a database.
         //Count field is optional, as count might depend on the number of rows in the array
@@ -70,7 +70,7 @@
         public static function firstOrNew($dataArray);
 
         //returns an instance of an object with a given array of data
-        public static function returnInstance($dataArray);
+        public static function newInstance($dataArray);
 
     }
 

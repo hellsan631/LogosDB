@@ -7,6 +7,8 @@
     use Logos\DB\MySQL;
     use Logos\DB\MySQL\DatabaseObject;
 
+    //include "backend.php";
+
     class User extends DatabaseObject{
 
         public $username;
