@@ -30,11 +30,11 @@
 
         //-------------DB Load Objects
 
-        //Loads a single object from the database
-        public static function load($conditionArray);
-
         //Loads an object from a database into the container class
         public function loadInto($id);
+
+        //Loads a single object from the database
+        public static function load($conditionArray);
 
         //Loads a list of objects from the database with given conditions
         public static function getList($conditionArray);

@@ -39,6 +39,36 @@
 
     }
 
+    function sortByKey(&$objects, $key, $order = "DESC"){
+
+        global $sortKey;
+
+        $sortKey = $key;
+
+        $order = mb_strtoupper($order);
+
+        if($order === "ASC"){
+            usort($objects, function($a, $b){
+
+                global $sortKey;
+
+                return strcmp($a->{$sortKey}, $b->{$sortKey});
+
+            });
+        }else if($order === "DESC"){
+            usort($objects, function($a, $b){
+
+                global $sortKey;
+
+                return strcmp($b->{$sortKey}, $a->{$sortKey});
+
+            });
+        }
+
+        return $objects;
+
+    }
+
     function base64_url_encode($input){
         return strtr(base64_encode($input), '+/=', '-_,');
     }

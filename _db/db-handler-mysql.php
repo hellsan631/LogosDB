@@ -145,7 +145,7 @@
          */
         public static function createSingle($data){
 
-            $data = self::dataToArray($data);
+            self::dataToArray($data);
 
             $keyChain = self::getKeyChain();
 
@@ -251,7 +251,7 @@
             //for each data set.
             foreach($data as $objID => $obj){
 
-                $data[$objID] = self::dataToArray($data[$objID]);
+                self::dataToArray($data[$objID]);
 
             }
 
@@ -331,16 +331,15 @@
 
         }
 
-
-
-
         //-------------DB Object Update
 
-        //Updates/saves changes to an object in the database, with an optional param $changedData
         /**
+         * Updates/saves changes to an object in the database, with an optional param $changedData.
+         * If changedData is null, then it will just use what data is in the class. If you however want to just change
+         * a few things and already have an object, then use the changed data param
          *
          * 100 Queries Run
-         * <p>Average Time: 152ms per 100/611kb</p>
+         * <p>Average Time: 136ms per 100/611kb</p>
          * <p>Average Time: 7ms per 1/12kb</p>
          * <p>Average Time: 9ms per 2/14kb</p>
          *
@@ -362,7 +361,7 @@
             $keyChain = self::getKeyChain();
             $dataArray = [];
 
-            $changedData = ($changedData === null) ? $this->toArray() : self::dataToArray($changedData);
+            self::dataToArray($changedData);
 
             $prepareStatement = "UPDATE ".self::name()." SET ";
 
@@ -393,19 +392,117 @@
         }
 
         //Updates multiple objects with given data, and a conditional array
-        public static function saveMultiple($changedData, $conditionArray){}
+        public static function saveMultiple($changedData, $conditionArray){
+
+            $keyChain = self::getKeyChain();
+
+            self::dataToArray($changedData);
+            self::dataToArray($conditionArray);
+
+            $prepareStatement = "UPDATE ".self::name()." SET ";
+
+            foreach($changedData as $key => $val){
+                if($val !== null && $key !== "id" && array_key_exists($key, $keyChain))
+                    $prepareStatement .= "$key = :$key, ";
+                else
+                    unset($changedData[$key]);
+            }
+
+            $prepareStatement = rtrim($prepareStatement, ", ")." WHERE ";
+
+            foreach($conditionArray as $key => $value){
+
+                if(array_key_exists($key, $keyChain)){
+                    $prepareStatement .= "{$key} = :w{$key}, ";
+                    $changedData["w".$key] = $value;
+                }
+
+            }
+
+            foreach($changedData as $key => $val){
+
+                $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
+
+                unset($changedData[$key]);
+
+            }
+
+            //string should look like this:
+            //UPDATE fruit SET color = :color, count = :count WHERE id = :id
+
+            return Core::getQuery($prepareStatement, $changedData, false);
+
+        }
 
 
         //-------------DB Load Objects
 
-        //Loads a single object from the database
-        public static function load($conditionArray){}
-
         //Loads a file into an object
-        public function loadInto($id){}
+        public function loadInto($id){
+
+            $prepareStatement = "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1";
+            $dataArray = [":id" => $id];
+
+            return Core::fetchQuery($prepareStatement, $dataArray, PDO::FETCH_INTO, $this);
+
+        }
+
+        //Loads a single object from the database
+        public static function load($conditionArray){
+
+            $keyChain = self::getKeyChain();
+
+            $prepareStatement = "SELECT * FROM ".self::name()." WHERE ";
+
+            foreach($conditionArray as $key => $value){
+
+                if(array_key_exists($key, $keyChain)){
+                    $prepareStatement .= "{$key} = :{$key}, ";
+                    $conditionArray[":".$key] = $value;
+                }
+
+                unset($conditionArray[$key]);
+
+            }
+
+            $prepareStatement = rtrim($prepareStatement, ", ")." LIMIT 1";
+
+            return Core::fetchQuery($prepareStatement, $conditionArray, PDO::FETCH_OBJ, self::name());
+
+        }
 
         //Loads a list of objects from the database with given conditions
-        public static function getList($conditionArray){}
+        public static function getList($conditionArray){
+
+            $keyChain = self::getKeyChain();
+
+            $prepareStatement = "SELECT * FROM ".self::name()." WHERE ";
+
+            foreach($conditionArray as $key => $value){
+
+                if(array_key_exists($key, $keyChain)){
+                    $prepareStatement .= "{$key} = :{$key}, ";
+                    $conditionArray[":".$key] = $value;
+                }
+
+                unset($conditionArray[$key]);
+
+            }
+
+            $prepareStatement = rtrim($prepareStatement, ", ")." LIMIT 10";
+            $name = self::name();
+
+            $objects = Core::fetchQuery($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
+
+            if(is_array($objects)){
+                foreach($objects as &$value){
+                    $value->loaded = true;
+                }
+            }
+
+            return $objects;
+
+        }
 
 
         //-------------DB Delete Objects
@@ -441,7 +538,7 @@
 
             $className = explode("\\", get_called_class());
 
-            return mb_strtolower(end($className));
+            return end($className);
 
         }
 
@@ -467,7 +564,7 @@
 
         }
 
-        private static function dataToArray($dataToFilter){
+        private static function dataToArray(&$dataToFilter){
 
             if(!is_array($dataToFilter)){
                 if(is_object($dataToFilter))
@@ -577,6 +674,53 @@
             return false;
 
         }
+
+        public static function fetchQuery($prepare, $execute, $fetchMode, &$fetchParam){
+
+            try {
+
+                $query = self::getInstance()->dbh->prepare($prepare);
+
+
+                $query->setFetchMode($fetchMode, $fetchParam);
+
+
+                $query->execute($execute);
+
+                if($fetchMode === PDO::FETCH_OBJ){
+
+                    $fetchParam = $query->fetchObject($fetchParam);
+
+                    if(!is_object($fetchParam) && !is_array($fetchParam))
+                        return false;
+
+                    $fetchParam->loaded = true;
+
+                }else if($fetchMode === PDO::FETCH_INTO){
+
+                    $query->fetch();
+
+                    $fetchParam->loaded = true;
+
+                }else if($fetchMode === PDO::FETCH_CLASS){
+
+                    return $query->fetchAll($fetchMode, 'Logos\Objects\\'.$fetchParam);
+
+                }
+
+                return $fetchParam;
+
+
+            }catch(PDOException $pe) {
+
+                trigger_error('Could not connect to MySQL database. ' . $pe->getMessage() , E_USER_ERROR);
+
+            }
+
+            return false;
+
+        }
+
 
     }
 
