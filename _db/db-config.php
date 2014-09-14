@@ -1,19 +1,19 @@
 <?php
 
-    namespace Logos\Main;
+namespace Logos\Main;
 
-    class Config{
+class Config{
 
-        static $confArray;
+    static $confArray;
 
-        public static function read($name){
-            return self::$confArray[$name];
-        }
-
-        public static function write($name, $value){
-            self::$confArray[$name] = $value;
-        }
-
+    public static function read($name){
+        return self::$confArray[$name];
     }
+
+    public static function write($name, $value){
+        self::$confArray[$name] = $value;
+    }
+
+}
 
 ?>
