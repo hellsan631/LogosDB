@@ -1,7 +1,6 @@
 <?php
 
     //@TODO: create Schema syntax for object database creation
-    //@TODO: rest of DatabaseObject functions
 
     namespace Logos\DB\MySQL;
 
@@ -22,9 +21,6 @@
     abstract class DatabaseObject implements DatabaseHandler{
 
         public $id;
-
-        //Force Extending class to define this method
-        //abstract protected function classDataSetup();
 
         public function __construct($id = null){
 
@@ -76,16 +72,13 @@
             //We use the keychain because it gets non-dynamic property names, which is what the database schema is based on.
             $keyChain = self::getKeyChain();
 
-            //An empty dataArray to dump our data in
             $dataArray = [];
 
-            //Beginning of building the prepared MYSQL insert statement
             $prepareStatement = "INSERT INTO ".self::name()." (";
 
             foreach($keyChain as $key => $val){
 
                 //since this is a new object, we don't want to save the ID, rather letting the DB generate an ID
-                //We also don't want a variable that is null to be included in the list
                 if($this->{$key} !== null && $key !== "id")
                     $prepareStatement .= "$key, ";
                 else
@@ -97,7 +90,6 @@
 
             //we are going to generate the array of variables to be processed by PDO
             //in example, color and count will be overwritten by PDO safely
-            //to learn more, refer to PDO manual for more information on specific PDO procedures
 
             foreach($keyChain as $key => $val){
 
@@ -147,13 +139,14 @@
             self::dataToArray($data);
 
             $keyChain = self::getKeyChain();
-
             $dataArray = [];
 
             $prepareStatement = "INSERT INTO ".self::name()." (";
 
             foreach($data as $key => $val){
 
+                //Here we check to see if the key meets our criteria. If it doesn't we want to unset the key so
+                //don't have to sort through the $data array again, and make the same comparisons.
                 if($val !== null && $keyChain[$key] !== "id" && array_key_exists($key, $keyChain))
                     $prepareStatement .= "$key, ";
                 else
@@ -163,18 +156,15 @@
 
             $prepareStatement = rtrim($prepareStatement, ", ").") VALUES (";
 
-            //No checking needed here because all of the keys which didn't check out last time were unset
             foreach($data as $key => $val){
                 $prepareStatement .= ":$key, ";
 
-                //We can't skip the date checking because we don't know if an object has the hasDate field as that field
-                //is dynamically declared upon object creation.
+                //If an object has the word date in it, we want to convert it to a usable mysql format
                 $dataArray[':'.$key] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
             }
 
             $prepareStatement = rtrim($prepareStatement, ", ").")";
 
-            //checks to see if there was an object that was inserted into the database
             if(Core::fetchQuery($prepareStatement, $dataArray, false)){
 
                 $data["id"] = Core::getInstance()->dbh->lastInsertId();
@@ -189,9 +179,9 @@
 
 
         /**
-         * CreateMultiple is useful if you want to create a multiple numbers of objects with a single query. It is
+         * CreateMultiple is useful if you want to create multiple numbers of objects with a single query. It is
          * recommended that you use it for creating anything greater then 1 object, as its efficiency is about equal
-         * to CreateSingle, even with a single query.It however, requires that the first array/object in data
+         * to CreateSingle, even with a single query. It however, requires that the first array/object in data
          * have all of the fields that you want to insert, because it uses this object as the basis to build the query.
          * Any fields outside of the first array in $data will not be added, and likewise, the fields which don't
          * exist for some arrays but do for the first one will be set to NULL
@@ -216,14 +206,6 @@
             $keyChain = self::getKeyChain();
 
             $prepareStatement = "INSERT INTO ".self::name()." (";
-
-            //  INSERT INTO example
-            //      (example_id, name, value, other_value)
-            //  VALUES
-            //      (100, 'Name 1', 'Value 1', 'Other 1'),
-            //      (101, 'Name 2', 'Value 2', 'Other 2'),
-            //      (102, 'Name 3', 'Value 3', 'Other 3'),
-            //      (103, 'Name 4', 'Value 4', 'Other 4');
 
             //Good keys contains the keys of the first object that match variables of the called object.
             $goodKeys = $dataArray = [];
@@ -273,14 +255,13 @@
             //across multiple objects inside a database.
             if($count === null){
 
-                //going through each object/array inside $data
                 foreach($data as $objID => $obj){
 
                     $prepareStatement .= " (";
 
                     foreach($goodKeys as $key => $val){
 
-                        //We check to see if the data on the given key is set, otherwise set it to null.
+                        //This check is important because it makes sure we have an even number of parameters for each object
                         if(!isset($data[$objID][$key]))
                             $data[$objID][$key] = null;
 
@@ -309,8 +290,6 @@
                         if(array_key_exists($key, $goodKeys)){
                             $prepareStatement .= ":$key$count, ";
 
-                            //We can't skip the date checking because we don't know if an object has the hasDate field as that field
-                            //is dynamically declared upon object creation.
                             $dataArray[':'.$key.$count] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
                         }
 
@@ -390,7 +369,6 @@
 
         }
 
-        //Updates multiple objects with given data, and a conditional array
         public static function saveMultiple($changedData, $conditionArray){
 
             $keyChain = self::getKeyChain();
@@ -436,7 +414,6 @@
 
         //-------------DB Load Objects
 
-        //Loads a file into an object
         public function loadInto($id){
 
             $prepareStatement = "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1";
@@ -446,7 +423,6 @@
 
         }
 
-        //Loads a list of objects from the database with given conditions
         public function getList($conditionArray = null){
 
             $keyChain = self::getKeyChain();
@@ -482,7 +458,6 @@
 
         }
 
-        //Loads a single object from the database
         public static function load($conditionArray){
 
             $keyChain = self::getKeyChain();
@@ -509,22 +484,15 @@
 
         //Static version of getList
         public static function loadMultiple($conditionArray = null){
-
             return self::newInstance()->getList($conditionArray);
-
         }
-
 
         //-------------DB Delete Objects
 
-        //Deletes/Removes/Erases a single object
         public function remove(){
-
            return self::destroy($this->id);
-
         }
 
-        //Deletes/Removes/Erases multiple objects based on a set of conditions
         public static function removeMultiple($conditionArray){
 
             $keyChain = self::getKeyChain();
@@ -548,7 +516,6 @@
 
         }
 
-        //Deletes/Removes/Erases a based on an ID (can be an array)
         public static function destroy($id){
 
             $prepareStatement = "DELETE FROM ".self::name()." WHERE id = :id";
@@ -558,7 +525,6 @@
 
         }
 
-
         //-------------DB Caching Functions
 
         //caches the object
@@ -567,9 +533,11 @@
 
             phpFastCache("files")->set($cache_name, $this, $timer);
 
+            return $this;
+
         }
 
-        //finds a cached object or database
+        //finds a cached object or queries the database with a given condition
         public static function find($cacheName, $conditionArray){
 
             $obj = phpFastCache("files")->get($cacheName);
@@ -693,8 +661,6 @@
             return $this;
         }
 
-        //grabs a json string and converts it to the object
-
         //Magic Methods
         //serialize
         public function __sleep(){
@@ -732,9 +698,10 @@
 
         private $query = "";
 
+        //Any time a query is executed, we want to make sure to clear the query so that it doesn't show up again.
         public function getQuery(){
 
-            $tempQ =  $this->query;
+            $tempQ = $this->query;
 
             $this->query = "";
 
@@ -776,11 +743,16 @@
 
     }
 
+    //Core is a singleton because it implements the database connection class. Calling core multiple times
+    //would otherwise create many more objects then if we didn't have a singleton as a core.
+    //Also, creating a singleton means we can save data to the query using our query handler
+    //between instance calls.
     class Core implements DatabaseCore{
 
         public $dbh;
         public $query;
         private static $instance;
+        //Core is a singleton
 
         public function __construct(){
 
@@ -796,6 +768,7 @@
 
         }
 
+        //Singleton get class
         public static function getInstance(){
             if (!isset(self::$instance)){
                 $object = __CLASS__;

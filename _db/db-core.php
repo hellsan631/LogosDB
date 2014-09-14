@@ -19,12 +19,27 @@
     }
 
     function isJson($string){
-        // make sure provided input is of type string
+
         if (!is_string($string))
             return false;
 
+        // trim white spaces
+        $string = trim($string);
+
+        // get first character/last character
+        $firstChar = substr($string, 0, 1);
+        $lastChar = substr($string, -1);
+
+        if (!$firstChar || !$lastChar)
+            return false;
+
+        if ($firstChar !== '{' && $firstChar !== '[')
+            return false;
+
+        if ($lastChar !== '}' && $lastChar !== ']')
+            return false;
+
         // let's leave the rest to PHP.
-        // try to decode string
         json_decode($string);
 
         return (json_last_error() === JSON_ERROR_NONE);
@@ -83,7 +98,6 @@
         return (($number %100) >= 11 && ($number%100) <= 13) ? $number.'th' : $number.$ends[$number % 10];
 
     }
-
 
     function getTimezone(){
         return new DateTimeZone('America/New_York');
