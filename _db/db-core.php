@@ -10,7 +10,7 @@
 
         public static function getInstance();
 
-        public static function getQuery($prepare, $execute);
+        public static function fetchQuery($prepare, $execute);
 
     }
 

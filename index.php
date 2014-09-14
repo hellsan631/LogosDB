@@ -9,6 +9,7 @@
 
     include "./_db/objects.php";
 
+    use Logos\DB\MySQL\Core;
     use Logos\Objects;
     use Logos\Objects\User;
     use Logos\Main\Config;
@@ -38,18 +39,17 @@
     $memTwoTemp = number_format(((memory_get_usage() - $memTwo) / 1024), 2);
     $memTwo = memory_get_usage();
 
-    while ($count < 1){
+    $user = new User(["username" => "testing"]);
 
-        var_dump(Main\sortByKey(User::getList(["username" => "testing"]), "id"));
-        $count++;
-    }
+    $user->cache("test");
+
+    $user->find(null);
 
     $timeTemp3 = number_format((microtime(TRUE) - $time3)*1000, 3);
 
     $memThree = memory_get_usage();
 
     echo "<pre>";
-
 
     $memThreeTemp = number_format((($memThree-$memTwo) / 1024), 2);
 

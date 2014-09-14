@@ -33,11 +33,13 @@
         //Loads an object from a database into the container class
         public function loadInto($id);
 
+        //Loads a list of objects from the database with given conditions
+        public function getList($conditionArray);
+
         //Loads a single object from the database
         public static function load($conditionArray);
 
-        //Loads a list of objects from the database with given conditions
-        public static function getList($conditionArray);
+
 
 
         //-------------DB Delete Objects
@@ -58,7 +60,7 @@
         public function cache($cache_name, $timer);
 
         //finds a cached object or database
-        public static function find($conditionArray);
+        public static function find($cacheName, $conditionArray);
 
 
         //-------------Object Related

@@ -5,11 +5,10 @@
 
     namespace Logos\DB\MySQL;
 
-    //error_reporting(E_STRICT);
-
     include_once "db-interface.php";
     include_once "db-core.php";
     include_once "db-config.php";
+    include_once "cache/phpfastcache.php";
 
     use Logos\DB\DatabaseHandler;
     use Logos\Main\DatabaseCore;
@@ -114,7 +113,7 @@
             //INSERT INTO fruit (color, count) VALUES (:color, :count)
 
             //checks to see if there was an object that was inserted into the database
-            $this->id = Core::getQuery($prepareStatement, $dataArray, false) ? Core::getInstance()->dbh->lastInsertId() : null;
+            $this->id = Core::fetchQuery($prepareStatement, $dataArray, false) ? Core::getInstance()->dbh->lastInsertId() : null;
 
             return $this;
         }
@@ -176,7 +175,7 @@
             $prepareStatement = rtrim($prepareStatement, ", ").")";
 
             //checks to see if there was an object that was inserted into the database
-            if(Core::getQuery($prepareStatement, $dataArray, false)){
+            if(Core::fetchQuery($prepareStatement, $dataArray, false)){
 
                 $data["id"] = Core::getInstance()->dbh->lastInsertId();
 
@@ -327,7 +326,7 @@
 
             $prepareStatement = rtrim($prepareStatement, ", ");
 
-            return Core::getQuery($prepareStatement, $dataArray, false);
+            return Core::fetchQuery($prepareStatement, $dataArray, false);
 
         }
 
@@ -385,7 +384,7 @@
             //string should look like this:
             //UPDATE fruit SET color = :color, count = :count WHERE id = :id
 
-            Core::getQuery($prepareStatement, $dataArray, false);
+            Core::fetchQuery($prepareStatement, $dataArray, false);
 
             return $this;
 
@@ -430,7 +429,7 @@
             //string should look like this:
             //UPDATE fruit SET color = :color, count = :count WHERE id = :id
 
-            return Core::getQuery($prepareStatement, $changedData, false);
+            return Core::fetchQuery($prepareStatement, $changedData, false);
 
         }
 
@@ -443,7 +442,43 @@
             $prepareStatement = "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1";
             $dataArray = [":id" => $id];
 
-            return Core::fetchQuery($prepareStatement, $dataArray, PDO::FETCH_INTO, $this);
+            return Core::fetchQueryObj($prepareStatement, $dataArray, PDO::FETCH_INTO, $this);
+
+        }
+
+        //Loads a list of objects from the database with given conditions
+        public function getList($conditionArray = null){
+
+            $keyChain = self::getKeyChain();
+            $name = self::name();
+
+            $prepareStatement = "SELECT * FROM ".$name." WHERE ";
+
+            if($conditionArray !== null){
+                foreach($conditionArray as $key => $value){
+
+                    if(array_key_exists($key, $keyChain)){
+                        $prepareStatement .= "{$key} = :{$key}, ";
+                        $conditionArray[":".$key] = $value;
+                    }
+
+                    unset($conditionArray[$key]);
+
+                }
+
+                $prepareStatement = rtrim($prepareStatement, ", ");
+
+            }
+
+            $objects = Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
+
+            if(is_array($objects)){
+                foreach($objects as &$value){
+                    $value->loaded = true;
+                }
+            }
+
+            return $objects;
 
         }
 
@@ -466,17 +501,35 @@
             }
 
             $prepareStatement = rtrim($prepareStatement, ", ")." LIMIT 1";
+            $name = self::name();
 
-            return Core::fetchQuery($prepareStatement, $conditionArray, PDO::FETCH_OBJ, self::name());
+            return Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_OBJ, $name);
 
         }
 
-        //Loads a list of objects from the database with given conditions
-        public static function getList($conditionArray){
+        //Static version of getList
+        public static function loadMultiple($conditionArray = null){
+
+            return self::newInstance()->getList($conditionArray);
+
+        }
+
+
+        //-------------DB Delete Objects
+
+        //Deletes/Removes/Erases a single object
+        public function remove(){
+
+           return self::destroy($this->id);
+
+        }
+
+        //Deletes/Removes/Erases multiple objects based on a set of conditions
+        public static function removeMultiple($conditionArray){
 
             $keyChain = self::getKeyChain();
 
-            $prepareStatement = "SELECT * FROM ".self::name()." WHERE ";
+            $prepareStatement = "DELETE FROM ".self::name()." WHERE ";
 
             foreach($conditionArray as $key => $value){
 
@@ -489,50 +542,71 @@
 
             }
 
-            $prepareStatement = rtrim($prepareStatement, ", ")." LIMIT 10";
-            $name = self::name();
+            $prepareStatement = rtrim($prepareStatement, ", ");
 
-            $objects = Core::fetchQuery($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
-
-            if(is_array($objects)){
-                foreach($objects as &$value){
-                    $value->loaded = true;
-                }
-            }
-
-            return $objects;
+            return Core::fetchQuery($prepareStatement, $conditionArray);
 
         }
 
-
-        //-------------DB Delete Objects
-
-        //Deletes/Removes/Erases a single object
-        public function remove(){}
-
-        //Deletes/Removes/Erases multiple objects based on a set of conditions
-        public static function removeMultiple($conditionArray){}
-
         //Deletes/Removes/Erases a based on an ID (can be an array)
-        public static function destroy($id){}
+        public static function destroy($id){
+
+            $prepareStatement = "DELETE FROM ".self::name()." WHERE id = :id";
+            $dataArray = [':id' => $id];
+
+            return Core::fetchQuery($prepareStatement, $dataArray);
+
+        }
 
 
         //-------------DB Caching Functions
 
         //caches the object
-        public function cache($cache_name, $timer){}
+        // phpFastCache support "apc", "memcache", "memcached", "wincache" ,"files", "sqlite" and "xcache"
+        public function cache($cache_name, $timer = 600){
+
+            phpFastCache("files")->set($cache_name, $this, $timer);
+
+        }
 
         //finds a cached object or database
-        public static function find($conditionArray){}
+        public static function find($cacheName, $conditionArray){
+
+            $obj = phpFastCache("files")->get($cacheName);
+
+            if($obj === null)
+                $obj = self::load($conditionArray);
+
+            return $obj;
+
+        }
 
 
         //-------------Object Related
 
         //gets the first object occurrence or creates a new one in the database
-        public static function firstOrCreate($dataArray){}
+        public static function firstOrCreate($dataArray){
+
+            $obj = self::firstOrNew($dataArray);
+
+            if(!is_numeric($obj->id))
+                $obj->createNew();
+
+            return $obj;
+
+        }
 
         //gets the first object occurrence or returns a new instance of that object
-        public static function firstOrNew($dataArray){}
+        public static function firstOrNew($dataArray){
+
+            $obj = self::load($dataArray);
+
+            if(!is_object($obj))
+                $obj = self::newInstance($dataArray);
+
+            return $obj;
+
+        }
 
         private static function name(){
 
@@ -549,6 +623,23 @@
 
             return new $className($dataArray);
 
+        }
+
+        //User::query('limit', 10)->getList();
+        //User::query(['orderBy', 'limit'], ['id DESC', 10])->getList();
+        //User::query(['orderBy', 'limit'], ['id ASC, username DESC', 10])->getList();
+
+        public static function query($functionCall, $params){
+
+            if(!is_array($functionCall))
+                Core::getInstance()->query->$functionCall($params);
+            else{
+                foreach($functionCall as $key => $value){
+                    Core::getInstance()->query->$value($params[$key]);
+                }
+            }
+
+            return self::newInstance();
         }
 
 
@@ -592,7 +683,7 @@
 
             $keyChain = self::getKeyChain();
 
-            $array = self::dataToArray($array);
+            self::dataToArray($array);
 
             foreach($array as $key => $value){
                 if(array_key_exists($key, $keyChain))
@@ -608,7 +699,16 @@
         //serialize
         public function __sleep(){
 
-            return $this->toArray();
+            $keys = self::getKeyChain();
+
+            $temp = [];
+
+            foreach($keys as $key => $value){
+                if($this->{$key} !== null)
+                    array_push($temp, $key);
+            }
+
+            return $temp;
 
         }
 
@@ -620,9 +720,57 @@
 
         public function __invoke($dataArray){
 
-            $object = get_class($this);
+            $object = self::name();
 
             return new $object($dataArray);
+
+        }
+
+    }
+
+    class QueryHandler{
+
+        private $query = "";
+
+        public function getQuery(){
+
+            $tempQ =  $this->query;
+
+            $this->query = "";
+
+            return $tempQ;
+
+        }
+
+        public function groupBy($grouping){
+
+            $this->query = " GROUP BY $grouping".$this->query;
+
+            return $this;
+
+        }
+
+        public function orderBy($order){
+
+            $this->query .= " ORDER BY $order";
+
+            return $this;
+
+        }
+
+        public function limit($min = 1, $max = null){
+
+            $this->query .= " LIMIT ";
+
+            $this->query .= "$min, ";
+
+            if($max !== null)
+                $this->query .= "$max, ";
+
+
+            $this->query = rtrim($this->query, ", ");
+
+            return $this;
 
         }
 
@@ -631,6 +779,7 @@
     class Core implements DatabaseCore{
 
         public $dbh;
+        public $query;
         private static $instance;
 
         public function __construct(){
@@ -641,7 +790,9 @@
 
             $this->dbh = @new PDO($dsn, Config::read('db.user'), Config::read('db.password'), array(PDO::ATTR_PERSISTENT => true));
             $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //PDO::ERRMODE_SILENT
-            $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
+            $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+            $this->query = new QueryHandler();
 
         }
 
@@ -654,11 +805,13 @@
             return self::$instance;
         }
 
-        public static function getQuery($prepare, $execute, $returnQuery = true){
+        public static function fetchQuery($prepare, $execute, $returnQuery = true){
 
             try {
 
-                $query = self::getInstance()->dbh->prepare($prepare);
+                $newInstance = self::getInstance();
+
+                $query = $newInstance->dbh->prepare($prepare.$newInstance->query->getQuery());
 
                 if(!$returnQuery)
                     return $query->execute($execute);
@@ -675,16 +828,15 @@
 
         }
 
-        public static function fetchQuery($prepare, $execute, $fetchMode, &$fetchParam){
+        public static function fetchQueryObj($prepare, $execute, $fetchMode, &$fetchParam){
 
             try {
 
-                $query = self::getInstance()->dbh->prepare($prepare);
+                $newInstance = self::getInstance();
 
+                $query = $newInstance->dbh->prepare($prepare.$newInstance->query->getQuery());
 
                 $query->setFetchMode($fetchMode, $fetchParam);
-
-
                 $query->execute($execute);
 
                 if($fetchMode === PDO::FETCH_OBJ){
