@@ -2,9 +2,6 @@
 
     namespace Logos;
 
-    $time = microtime(TRUE);
-    $mem = memory_get_usage();
-
     include "./_db/objects.php";
 
     use Logos\DB\MySQL\Core;
@@ -18,47 +15,186 @@
     Config::write('db.user', 'dimlitl_prax');
     Config::write('db.password', 'Radegast123/*');
 
-    $timeTemp2 = number_format((microtime(TRUE) - $time)*1000, 3);
-    $time2 = microtime(TRUE);
-    $memTemp = number_format(((memory_get_usage()-$mem) / 1024), 2);
-    $memTwo = memory_get_usage();
+    $timeArray = [];
 
-    $count = 0;
+    timeFunction(function(){
 
-    while ($count < 100){
-        $count++;
+        $count = 0;
+        $users = [];
+
+        while($count < 100){
+            array_push($users, new User(["username" => "testing", "email" => "email@email.com"]));
+            $count++;
+        }
+
+        foreach($users as $user){
+            $user->createNew();
+        }
+
+    }, "createNew x 100", $timeArray);
+
+    timeFunction(function(){
+
+        $count = 0;
+
+        while($count < 100){
+            User::newInstance(["username" => "testing", "email" => "email@email.com"])->createNew();
+            $count++;
+        }
+
+    }, "Instance::createNew x 100", $timeArray);
+
+    timeFunction(function(){
+
+        $count = 0;
+
+        while($count < 100){
+            User::createSingle(["username" => "testing", "email" => "email@email.com"]);
+            $count++;
+        }
+
+    }, "createSingle x 100", $timeArray);
+
+    timeFunction(function(){
+
+        return User::createMultiple(["username" => "testing", "email" => "email@email.com"], 100);
+
+    }, "createMultiple x 100", $timeArray);
+
+    timeFunction(function(){
+
+        $users = [];
+        $count = 0;
+
+        while($count < 100){
+            array_push($users, ["username" => "testing", "email" => "email@email.com"]);
+            $count++;
+        }
+
+        return User::createMultiple($users);
+
+    }, "createMultiple (arrays) x 100", $timeArray);
+
+    timeFunction(function(){
+
+        $count = 0;
+        $user = new User(["id" => 3939, "username" => "testing", "email" => "email@email.com"]);
+
+        while($count < 100){
+            $user->save(["username" => "testing"]);
+            $count++;
+        }
+
+    }, "save x 100", $timeArray);
+
+    timeFunction(function(){
+
+        User::query(['limit'], [100]);
+
+        return User::saveMultiple(["email" => "email@email.com"], ["username" => "testing"]);
+
+    }, "saveMultiple x 100", $timeArray);
+
+    timeFunction(function(){
+
+        $count = 0;
+        $user = new User();
+
+        while($count < 100){
+            $user->loadInto(3939);
+            $count++;
+        }
+
+    }, "loadInto x 100", $timeArray);
+
+    timeFunction(function(){
+
+        User::query('limit', 100)->getList();
+
+    }, "getList x 100", $timeArray);
+
+    timeFunction(function(){
+
+        $count = 0;
+
+        while($count < 100){
+            User::load(["id" => 3939]);
+            $count++;
+        }
+
+    }, "load x 100", $timeArray);
+
+    timeFunction(function(){
+
+        User::query(['limit'], [100]);
+
+        User::loadMultiple(["username" => "testing"]);
+
+    }, "loadMultiple x 100", $timeArray);
+
+    timeFunction(function(){
+
+        User::query(['limit'], [100]);
+
+        $users = User::loadMultiple(["username" => "testing"]);
+
+        foreach($users as $user){
+            $user->remove();
+        }
+
+    }, "remove x 100", $timeArray);
+
+
+    timeFunction(function(){
+
+        User::query(['limit'], [100]);
+
+        $users = User::loadMultiple(["username" => "testing"]);
+
+        foreach($users as $user){
+            User::destroy($user->id);
+        }
+
+    }, "destroy x 100", $timeArray);
+
+    timeFunction(function(){
+
+        User::query('limit', 300);
+
+        return User::removeMultiple(["username" => "testing"]);
+
+
+    }, "removeMultiple x 100", $timeArray);
+
+
+    foreach($timeArray as $value){
+
+        echo "<pre>";
+
+        var_dump($value);
+
+        echo "</pre>";
+
     }
 
-    $timeTemp1 =  number_format((microtime(TRUE) - $time2)*1000, 3);
-    $time3 = microtime(TRUE);
 
-    $count = 0;
+    function timeFunction($function, $name, &$timeArray){
 
-    $memTwoTemp = number_format(((memory_get_usage() - $memTwo) / 1024), 2);
-    $memTwo = memory_get_usage();
+        $time =  microtime(TRUE);
+        $mem = memory_get_usage();
 
-    //big method goes here
+        $return = $function();
 
-    $timeTemp3 = number_format((microtime(TRUE) - $time3)*1000, 3);
+        array_push($timeArray,
+            array(
+                "Time" => number_format((microtime(TRUE) - $time)*1000, 3)." sec",
+                "Memory" => number_format(((memory_get_usage() - $mem) / 1024), 4)." kb",
+                "Name" => $name,
+                "Return" => $return
+            )
+        );
 
-    $memThree = memory_get_usage();
-
-    echo "<pre>";
-
-    $memThreeTemp = number_format((($memThree-$memTwo) / 1024), 2);
-
-    $timeTemp =  number_format((microtime(TRUE) - $time)*1000, 3);
-
-
-    echo "Head Time : $timeTemp2 ms<br/>";
-    echo "Head : $memTemp KB<br/><br/>";
-    echo "Mem 1 : $memTwoTemp KB <br/>";
-    echo "Time 1: $timeTemp1 ms<br/><br/>";
-    echo "Mem 2 : $memThreeTemp KB <br/>";
-    echo "Time 2: $timeTemp3 ms<br/><br/>";
-    echo "Time Total: $timeTemp ms<br/>";
-
-    echo "</pre>";
+    }
 
 
 ?>

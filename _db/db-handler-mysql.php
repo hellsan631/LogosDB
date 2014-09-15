@@ -1,6 +1,7 @@
 <?php
 
 //@TODO: create Schema syntax for object database creation
+//@TODO: commenting
 
 namespace Logos\DB\MySQL;
 
@@ -15,7 +16,6 @@ use Logos\Main\Config;
 use Logos\Main;
 use PDO;
 use PDOException;
-use DateTime;
 use Exception;
 
 abstract class DatabaseObject implements DatabaseHandler{
@@ -23,9 +23,7 @@ abstract class DatabaseObject implements DatabaseHandler{
     public $id;
 
     public function __construct($id = null){
-
        $this->classDataSetup($id);
-
     }
 
     /**
@@ -40,16 +38,11 @@ abstract class DatabaseObject implements DatabaseHandler{
            $this->loaded = false;
 
         if($id !== null){
-
             if(is_numeric($id)){
-
                 $this->loadInto($id);
                 $this->loaded = true;
-
             }else{
-
                 $this->updateObject(self::dataToArray($id));
-
             }
         }
     }
@@ -60,9 +53,7 @@ abstract class DatabaseObject implements DatabaseHandler{
      * Create a new object in database with data based on current given object<br/><br/>
      *
      * 100 Queries Run
-     * <p>Average Time: 140ms per 100/488kb</p>
-     * <p>Average Time: 7ms per 1/10kb</p>
-     * <p>Average Time: 9ms per 2/11kb</p>
+     * <p>Average Time: 48ms per 100/1.23kb</p>
      *
      * @return Object $this
      */
@@ -117,14 +108,10 @@ abstract class DatabaseObject implements DatabaseHandler{
      * count and a much lower execution time.</p>
      *
      * 100 Queries Run
-     * <p>Average Time: 112ms per 100/337kb</p>
-     * <p>Average Time: 6ms per 1/12kb</p>
-     * <p>Average Time: 11ms per 2/15kb</p>
+     * <p>Average Time: 40ms per 100/0.375kb</p>
      * <br/>
      * self::newInstance($data)->createNew()
-     * <p>Average Time: 149ms per 100/522kb</p>
-     * <p>Average Time: 11ms per 1/15kb</p>
-     * <p>Average Time: 12ms per 2/16kb</p>
+     * <p>Average Time: 49ms per 100/0.296kb</p>
      *
      * @param mixed $data
      * <p>Can be an array of matched object data, an object, or even a json string</p>
@@ -139,7 +126,6 @@ abstract class DatabaseObject implements DatabaseHandler{
         self::dataToArray($data);
 
         $keyChain = self::getKeyChain();
-        $dataArray = [];
 
         $prepareStatement = "INSERT INTO ".self::name()." (";
 
@@ -160,16 +146,16 @@ abstract class DatabaseObject implements DatabaseHandler{
             $prepareStatement .= ":$key, ";
 
             //If an object has the word date in it, we want to convert it to a usable mysql format
-            $dataArray[':'.$key] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
+            $data[':'.$key] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
+
+            unset($data[$key]);
         }
 
         $prepareStatement = rtrim($prepareStatement, ", ").")";
 
-        if(Core::fetchQuery($prepareStatement, $dataArray, false)){
+        if(Core::fetchQuery($prepareStatement, $data, false)){
 
-            $data["id"] = Core::getInstance()->dbh->lastInsertId();
-
-            return $data;
+            return Core::getInstance()->dbh->lastInsertId();
 
         }
 
@@ -179,15 +165,12 @@ abstract class DatabaseObject implements DatabaseHandler{
 
 
     /**
-     * CreateMultiple is useful if you want to create multiple numbers of objects with a single query. It is
-     * recommended that you use it for creating anything greater then 1 object, as its efficiency is about equal
-     * to CreateSingle, even with a single query. It however, requires that the first array/object in data
-     * have all of the fields that you want to insert, because it uses this object as the basis to build the query.
-     * Any fields outside of the first array in $data will not be added, and likewise, the fields which don't
-     * exist for some arrays but do for the first one will be set to NULL
+     * Used if you want to create multiple numbers of objects with a single query. for any query greater then 1 object,
+     * its efficiency is about equal CreateSingle. Every array in data should be set symmetric.
      *
      * 100 Queries Run
-     * <p>Average Time: 30ms per 100/81kb</p>
+     * <p>Average Time: 6ms per 100/0.39kb (single Obj)</p>
+     * <p>Average Time: 7ms per 100/0.28kb (arrays)</p>
      *
      * @param Array $data
      * <p>Can be an array of matched object data, an array of objects, or even an array of json strings.
@@ -207,96 +190,62 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         $prepareStatement = "INSERT INTO ".self::name()." (";
 
-        //Good keys contains the keys of the first object that match variables of the called object.
         $goodKeys = $dataArray = [];
 
-        if($count === null && !isset($data[0])){
-            //If $data was a single object array but count was 0, we set count to 1 to try and execute query.
-            //We can trigger an error here for malformed data, but if only one object was passed as data,
-            //we want to treat it as a single query and try and execute due to the dynamic nature of the web.
+        //We can trigger an error here but we can try and treat it as a single query
+        if($count === null && !isset($data[0]))
             $count = 1;
-        }
 
         //This creates a uniform data set to convert and set our remaining data to.
-        //By skipping this we would have to create longer routes for data to travel, which would be less efficient.
-        if($count !== null && !isset($data[0])){
+        if($count !== null && !isset($data[0]))
+            $data = [$data];
 
-            $temp = $data;
-            unset($data);
-            $data = [$temp];
-
-        }
-
-        //We go through each bit of data and make sure that its usable for our query builder below
-        //Meaning, that all data is in the array state. This is time consuming, so its recommended to use arrays
-        //for each data set.
+        //We want to check that each array of data is usable in the builder, and not json or an object
         foreach($data as $objID => $obj){
-
             self::dataToArray($data[$objID]);
-
         }
 
-        //This is for generating
-        //  INSERT INTO example
-        //      (example_id, name, value, other_value)
-        //As mentioned in the class description, arrays inside $data should NOT be asymmetric.
+        //Arrays inside $data should NOT be asymmetric.
         foreach(array_keys ($data[0]) as $value){
-
             if($value !== "id" && array_key_exists($value, $keyChain)){
                 $goodKeys[$value] = true;
                 $prepareStatement .= "$value, ";
             }
-
         }
 
         $prepareStatement = rtrim($prepareStatement, ", ").") VALUES ";
 
         //If the number of queries are based on the count of $data instead of smearing a single object
-        //across multiple objects inside a database.
         if($count === null){
-
             foreach($data as $objID => $obj){
-
                 $prepareStatement .= " (";
 
                 foreach($goodKeys as $key => $val){
-
-                    //This check is important because it makes sure we have an even number of parameters for each object
                     if(!isset($data[$objID][$key]))
                         $data[$objID][$key] = null;
 
                     if(array_key_exists($key, $goodKeys)){
                         $prepareStatement .= ":$key$objID, ";
-
                         $dataArray[':'.$key.$objID] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($data[$objID][$key]) : $data[$objID][$key];
                     }
-
                 }
 
                 $prepareStatement = rtrim($prepareStatement, ", ")."), ";
-
             }
-
         }else{
-
             $obj = $data[0];
 
             while($count > 0){
-
                 $prepareStatement .= " (";
 
                 foreach($obj as $key => $val){
-
                     if(array_key_exists($key, $goodKeys)){
                         $prepareStatement .= ":$key$count, ";
-
                         $dataArray[':'.$key.$count] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
                     }
-
                 }
 
                 $prepareStatement = rtrim($prepareStatement, ", ")."), ";
-
                 $count--;
 
             }
@@ -317,9 +266,7 @@ abstract class DatabaseObject implements DatabaseHandler{
      * a few things and already have an object, then use the changed data param
      *
      * 100 Queries Run
-     * <p>Average Time: 136ms per 100/611kb</p>
-     * <p>Average Time: 7ms per 1/12kb</p>
-     * <p>Average Time: 9ms per 2/14kb</p>
+     * <p>Average Time: 40ms per 100/0.41kb</p>
      *
      * @param mixed $changedData [optional]
      * <p>An optional array/object/json string of data that is to be saved into the database relating to the
@@ -337,37 +284,42 @@ abstract class DatabaseObject implements DatabaseHandler{
             throw new Exception("Object has no ID, so cannot be saved using a non-static method.");
 
         $keyChain = self::getKeyChain();
-        $dataArray = [];
 
-        self::dataToArray($changedData);
+        if($changedData === null)
+            $changedData = $this->toArray();
+        else
+            self::dataToArray($changedData);
 
         $prepareStatement = "UPDATE ".self::name()." SET ";
 
-        foreach($changedData as $key => $val){
-            if($val !== null && $key !== "id" && array_key_exists($key, $keyChain))
-                $prepareStatement .= "$key = :$key, ";
-            else
-                unset($changedData[$key]);
-        }
+        self::buildQuerySet($prepareStatement, $changedData, $keyChain);
 
-        $prepareStatement = rtrim($prepareStatement, ", ")." WHERE id = :id";
+        $prepareStatement .= " WHERE id = :id";
 
         $changedData["id"] = $this->id;
 
         foreach($changedData as $key => $val){
 
-            $dataArray[':'.$key] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
+            $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
+
+            unset($changedData[$key]);
 
         }
 
         //string should look like this:
         //UPDATE fruit SET color = :color, count = :count WHERE id = :id
 
-        Core::fetchQuery($prepareStatement, $dataArray, false);
+        if(!Core::fetchQuery($prepareStatement, $changedData, false))
+            throw new Exception("Object couldn't be saved");
 
         return $this;
 
     }
+
+    /**
+    * 100 Queries Run
+    * <p>Average Time: 1ms per 100/0.44kb</p>
+    */
 
     public static function saveMultiple($changedData, $conditionArray){
 
@@ -378,14 +330,9 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         $prepareStatement = "UPDATE ".self::name()." SET ";
 
-        foreach($changedData as $key => $val){
-            if($val !== null && $key !== "id" && array_key_exists($key, $keyChain))
-                $prepareStatement .= "$key = :$key, ";
-            else
-                unset($changedData[$key]);
-        }
+        self::buildQuerySet($prepareStatement, $changedData, $keyChain);
 
-        $prepareStatement = rtrim($prepareStatement, ", ")." WHERE ";
+        $prepareStatement .= " WHERE ";
 
         foreach($conditionArray as $key => $value){
 
@@ -395,6 +342,8 @@ abstract class DatabaseObject implements DatabaseHandler{
             }
 
         }
+
+        $prepareStatement = rtrim($prepareStatement, ", ");
 
         foreach($changedData as $key => $val){
 
@@ -414,6 +363,11 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     //-------------DB Load Objects
 
+    /**
+     * 100 Queries Run
+     * <p>Average Time: 39ms per 100/1.844kb</p>
+     */
+
     public function loadInto($id){
 
         $prepareStatement = "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1";
@@ -423,27 +377,21 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     }
 
+
+    /**
+     * 100 Queries Run
+     * <p>Average Time: 4ms per 100/0.422kb</p>
+     */
+
     public function getList($conditionArray = null){
 
-        $keyChain = self::getKeyChain();
         $name = self::name();
 
-        $prepareStatement = "SELECT * FROM ".$name." WHERE ";
+        $prepareStatement = "SELECT * FROM ".$name;
 
         if($conditionArray !== null){
-            foreach($conditionArray as $key => $value){
-
-                if(array_key_exists($key, $keyChain)){
-                    $prepareStatement .= "{$key} = :{$key}, ";
-                    $conditionArray[":".$key] = $value;
-                }
-
-                unset($conditionArray[$key]);
-
-            }
-
-            $prepareStatement = rtrim($prepareStatement, ", ");
-
+            $prepareStatement .= " WHERE ";
+            self::buildQueryWhere($prepareStatement, $conditionArray);
         }
 
         $objects = Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
@@ -458,29 +406,28 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     }
 
-    public static function load($conditionArray){
+    /**
+     * 100 Queries Run
+     * <p>Average Time: 47ms per 100/0.355kb</p>
+     */
 
-        $keyChain = self::getKeyChain();
+    public static function load($conditionArray){
 
         $prepareStatement = "SELECT * FROM ".self::name()." WHERE ";
 
-        foreach($conditionArray as $key => $value){
+        self::buildQueryWhere($prepareStatement, $conditionArray);
 
-            if(array_key_exists($key, $keyChain)){
-                $prepareStatement .= "{$key} = :{$key}, ";
-                $conditionArray[":".$key] = $value;
-            }
-
-            unset($conditionArray[$key]);
-
-        }
-
-        $prepareStatement = rtrim($prepareStatement, ", ")." LIMIT 1";
+        $prepareStatement .= " LIMIT 1";
         $name = self::name();
 
         return Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_OBJ, $name);
 
     }
+
+    /**
+     * 100 Queries Run
+     * <p>Average Time: 4ms per 100/0.305kb</p>
+     */
 
     //Static version of getList
     public static function loadMultiple($conditionArray = null){
@@ -489,32 +436,34 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     //-------------DB Delete Objects
 
+    /**
+     * 100 Queries Run
+     * <p>Average Time: 34ms per 100/0.335kb</p>
+     */
+
     public function remove(){
        return self::destroy($this->id);
     }
 
-    public static function removeMultiple($conditionArray){
+    /**
+     * 100 Queries Run
+     * <p>Average Time: 2ms per 100/1.265kb</p>
+     */
 
-        $keyChain = self::getKeyChain();
+    public static function removeMultiple($conditionArray){
 
         $prepareStatement = "DELETE FROM ".self::name()." WHERE ";
 
-        foreach($conditionArray as $key => $value){
-
-            if(array_key_exists($key, $keyChain)){
-                $prepareStatement .= "{$key} = :{$key}, ";
-                $conditionArray[":".$key] = $value;
-            }
-
-            unset($conditionArray[$key]);
-
-        }
-
-        $prepareStatement = rtrim($prepareStatement, ", ");
+        self::buildQueryWhere($prepareStatement, $conditionArray);
 
         return Core::fetchQuery($prepareStatement, $conditionArray);
 
     }
+
+    /**
+     * 100 Queries Run
+     * <p>Average Time: 38ms per 100/0.325kb</p>
+     */
 
     public static function destroy($id){
 
@@ -608,6 +557,42 @@ abstract class DatabaseObject implements DatabaseHandler{
         }
 
         return self::newInstance();
+    }
+
+    private static function buildQuerySet(&$prepareStatement, &$conditionArray, &$keyChain = null){
+
+        if($keyChain === null)
+            $keyChain = self::getKeyChain();
+
+        foreach($conditionArray as $key => $val){
+            if($val !== null && $key !== "id" && array_key_exists($key, $keyChain))
+                $prepareStatement .= "$key = :$key, ";
+            else
+                unset($conditionArray[$key]);
+        }
+
+        $prepareStatement = rtrim($prepareStatement, ", ");
+
+    }
+
+    private static function buildQueryWhere(&$prepareStatement, &$conditionArray, &$keyChain = null){
+
+        if($keyChain === null)
+            $keyChain = self::getKeyChain();
+
+        foreach($conditionArray as $key => $value){
+
+            if(array_key_exists($key, $keyChain)){
+                $prepareStatement .= "{$key} = :{$key}, ";
+                $conditionArray[":".$key] = $value;
+            }
+
+            unset($conditionArray[$key]);
+
+        }
+
+        $prepareStatement = rtrim($prepareStatement, ", ");
+
     }
 
 
@@ -760,6 +745,7 @@ class Core implements DatabaseCore{
             ';dbname='    . Config::read('db.base') .
             ';connect_timeout=15';
 
+        //We use the @ symbol to supress errors because otherwise we would get the "mysql server has gone away"
         $this->dbh = @new PDO($dsn, Config::read('db.user'), Config::read('db.password'), array(PDO::ATTR_PERSISTENT => true));
         $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //PDO::ERRMODE_SILENT
         $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -809,12 +795,16 @@ class Core implements DatabaseCore{
 
             $query = $newInstance->dbh->prepare($prepare.$newInstance->query->getQuery());
 
-            $query->setFetchMode($fetchMode, $fetchParam);
+            if($fetchMode === PDO::FETCH_OBJ)
+                $query->setFetchMode($fetchMode);
+            else
+                $query->setFetchMode($fetchMode, $fetchParam);
+
             $query->execute($execute);
 
             if($fetchMode === PDO::FETCH_OBJ){
 
-                $fetchParam = $query->fetchObject($fetchParam);
+                $fetchParam = $query->fetch();
 
                 if(!is_object($fetchParam) && !is_array($fetchParam))
                     return false;
@@ -838,7 +828,7 @@ class Core implements DatabaseCore{
 
         }catch(PDOException $pe) {
 
-            trigger_error('Could not connect to MySQL database. ' . $pe->getMessage() , E_USER_ERROR);
+            trigger_error('Error fetching Object. ' . $pe->getMessage() , E_USER_ERROR);
 
         }
 
