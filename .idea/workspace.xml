@@ -2,8 +2,169 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="208acb59-83ae-4099-97d0-e117f1bb3d79" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\backend.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\driver.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\drivers\apc.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\drivers\files.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\drivers\memcache.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\drivers\memcached.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\drivers\sqlite.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\drivers\wincache.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\drivers\xcache.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\extensions.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\extensions\regex.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\_db\cache\phpfastcache.php" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\auto\.htaccess" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\.htaccess" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\02\02f15a7d0b3f55dc3fbea6d38b62c52d.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\06\064b14cca89b2918f0a332470da2cebf.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\08\0896b5d09beb8f3d207b6e50b5534642.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\0a\0a16b09784bae8287858faf95511a66e.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\0a\0a809ca78b9aa5393c0cb7dad7eb6a3a.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\12\1211f0aa22b0518fcf1694d875ff259e.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\13\13e28b82b739928c070be77afbc668ea.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\14\143e1da8e6c7c95f7b9401091be6c3fa.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\16\168a051c1147d504f832ac8a0a1ebdd1.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\18\1801803254d671f2ea754a94e56df59a.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\18\18bd524154282e82c104bfb0e24dd1e0.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\19\192beb199bc41714bc563f5a0cc7e9a5.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\1b\1b16902dd14835889f1dd8a60e604907.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\1c\1cb9a2cdf84ff27e0ff8aa17644b15e3.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\20\2096a1e3206c02898f4cb287fbeac1cd.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\21\2167fcf808b8f383e7e44e25305a08a8.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\22\229184a584c4ff75907927d1ebd7576f.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\26\2647c1dba23bc0e0f9cdf75339e120d2.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\29\29fdff891569187da8e5ed4f7a6ea4c8.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\2a\2aedcba61ca55ceb62d785c6b7f10a83.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\2b\2b2050eb04c8bf0965fd4f153767c64b.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\2d\2de39d164c7807c1be5cad819d978cf2.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\30\30f985ec9336f2a5c2142feb9ebdbb53.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\33\33d3b157ddc0896addfb22fa2a519097.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\37\372b342ff9361898d4cbb9f46c15a3c4.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\39\39f28409dd43f3a7248ceb0cdf3d46c6.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\3d\3d3ea16164ee9e653ee5fea75329a38a.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\40\40d96f51118b6c2b574cbe5ee9f0f8ee.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\42\420b0313c754ef4586339aa847d1d7c2.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\42\42fa0ae29bfef4936055a239c6eafd54.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\43\438e8e03fca213a74f5bd6b6f1bd403f.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\45\45ed8504b88d7ac1bebc122d9a4d1ab3.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\4a\4ad9f5add488c97992ec7730571850b7.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\4d\4de754248c196c85ee4fbdcee89179bd.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\50\5031fe4276fb6a875ffaeaf2aff15db7.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\53\530d60431d81fb70f74ecb9c91b658c2.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\53\5330f5fa350679fb680ac438824048bd.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\54\54e0f485f4daf036e45e7ec3e246ef67.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\54\54ecc28e9508fcf28363014b0d1b4eb8.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\59\599a318840a9f0acba0e40c9f56bfc92.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\5b\5bb8512b42c2ae13fed3df42121e515e.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\5d\5dd3cbb8b144cb4ffc62269606ca6046.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\61\6158cdc6f0b5626d7f9b407adf4bb89b.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\62\62b427e768931c661c51622d00c2e6ab.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\64\64f10c3d417db179124e8e1aefd76598.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\67\671df07e9737de590613ae321ea1b687.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\6d\6d3c7d453759616fd8ae9f6c20e5d071.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\6e\6ea395e8a2f1814c9b2cfca2c06c5b2a.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\6f\6f9f69256d91652afad06c9c4894cce6.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\70\70c7bdc758417aa5c47a1e63e62982b3.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\71\71f27883da079f7b8f338e49adc3a1d1.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\74\74707d064c4eeda12c3bf2f1807a7198.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\76\765812833515fce06c971624f85391da.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\76\7695ea769f021803c508817dd374bb27.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\77\77edbe5f897a5dbcde49d31bec1537b8.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\79\7952f28ed57f184d368a7d2a47947cd7.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\79\796f13adf0167d7019717e1b71291ad7.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\7a\7a34050dab00ebaea6ee7704db870cb1.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\7b\7ba77854a96f6a3182fc526ae3018403.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\7c\7ca59a1cccb9460269b2c6ac451c1031.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\7d\7d57783f3e3622fcbda6e50a9128094c.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\7f\7f96b48eff9b7a8f8ebe955363b7b260.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\84\8487e01fbaf43e758c17f86472cbf3e6.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\84\84e6518d7de27dd25b48f86fe2e09cb1.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\85\851e8eaf4988ed55c3d335ea8d5ed61b.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\85\85b2386ab4a0feeb2c08dab68514df25.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\86\86f2fbb60fb7b50c94009182fb4edcdd.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\87\874f44f0fc7f98682c91ecbf990e5a2f.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\88\8835b1e3c1b39faed4b8eac454712c34.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8a\8a455d2b84726913fe7652efdc0cfadc.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8a\8af04c7c593df10d2f103df1572e9cfa.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8b\8b0c03e92fcd51ffb191b89bc63aba66.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8c\8cb1f62625edb0977782ad3930d7d239.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8c\8cca55a3ce9504c4e1fac4e6adc96340.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8d\8dce6e505559c34d2d5f383ebec8f72e.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8e\8e0b297f1a21f8ee84759d0f12ec55fc.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8e\8e2f32d963726b000e9f6489f5352cfe.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8e\8ec0debd6d3f4de8a06593e9ab32e42b.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8f\8f4c7958a3ef11baf6c6053f83fc3511.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\8f\8fa8a26d57f0356d7bf6b43adbab9488.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\90\900b780295f3fd8e1ca09313415200f8.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\90\902c296e891d8e76557eb09453b58741.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\90\9057e55163c2fd23e54ed4454186423c.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\90\90be09f2c0cf80e0004fc73d2a72473d.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\91\91906afbe4627f854c07693c7f4264cb.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\92\9243749d363441134ab195b4febe391c.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\96\9674c7912595ee76681ae8698267c579.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\96\96ecbfadac55a39b8909822f91399f00.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\97\97b0724d4dc613ce5bde0fcbe9267b71.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\98\9843a745d90a5a55cb0039aadeea32c0.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\99\99a805bc0d0845bf489b9b09ad69ea30.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\9a\9a568a2aa8c19a3155607f84137d92a8.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\9b\9b82909c30456ac902e14526e63081d4.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\a3\a39ff1fdae1147076e02047ae82a19fc.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\a4\a415a6169544d0fb98640cb469497580.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\a5\a5f9765381ee11f5a94e4ff0c01ee0b6.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\a7\a74e65df39b527b7cf3a888cfda196f5.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\a8\a868dea95a3f4888248ecf2ea5233c3b.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\a9\a9af6e399b3953f6a2c9f657fff0c451.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\aa\aaae69545b49385a902dfb6a05c7eddc.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\ab\ab1513164c86afa5d30f46b482c3030a.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\ab\ab9ebd57177b5106ad7879f0896685d4.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\ac\acf068d3e5e1ab3b6ae7d718587f654e.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\af\af5906f2fb4338b7cb15760cdbc48d0d.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\b4\b417c3e4c5f511fc316f75b6df52181a.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\b6\b6f79519d3b769aff4991526d838022d.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\b7\b724902a8d40bd99faa556e60c0a928c.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\b7\b7d1f1c8d305db3a7f5bced270c7a47a.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\bd\bdf0a9d5c29efb12bb024c245cceddcd.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\be\be800ff41f5c4aa73d8c082d2e00a186.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\c3\c393ff5eb0ca0c31ee7b9014afc0b0b0.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\c4\c467b03da03f8fd27fc0a40c6482bc5f.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\c4\c46a056b63fc8f2dc366c1e343c67d88.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\c6\c6349c30ef34ee3777ae17cdf6f2ba63.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\c7\c74d57ee356e0e6e6f6854bbc0402167.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\c9\c97c8f6641c51f119d1c5ab3ad757213.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\cb\cb4342a6105501a33df7163f7c84bf26.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\cb\cbecf914a0a7d3eee3c998951ad344d6.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\ce\ce8ac2a12dbcbf25bb7be41780d71216.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\cf\cf47ad1d59ead49d438bf2104dcfda44.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\d4\d427827f3d7dc428d2df366fbf9912b6.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\d5\d5ece54ea76a9e6632f4242df1820164.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\d6\d6fb4d9874457402ccd9d7b4d8bea9ed.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\d7\d7df5b64df1181ef1d62d646a13aa860.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\da\dace0df7d1842118ada1b2757cdfa55e.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\db\db6a549038935d2a7a39962afa560b10.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\df\dfe0173c3901a478714540acff77fe9b.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\e2\e2ca42a743fe7cbb93e61a67584d577e.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\e3\e3743b463beb38a2a24eebe5ecbad410.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\e5\e566940d2d0ed3b3b2cde15b72d021de.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\e6\e6eb49c63548fd56f34508d1a0c3b37b.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\e7\e76ad700d7fa440fff021c166effab3b.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\e9\e940a3ba6df738388b772344a8a112e4.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\eb\eb34428a7690e6a343959bd7757ad1bb.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\eb\ebc82ddcaa790d66bba665311ead3045.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\ed\edb2698ff1122b6e0691087c4b5a43a3.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\f4\f44ea3289d6cc6b6870fbd84a0f1b2d9.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\f6\f66b440fb50420757bc73916e5b70fe9.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\f6\f6c15b2d371681ba5250dd75c528842e.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\fa\fada3d8ed2d4a4ace2863798fece05ac.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\fe\fea834beaf89cb0b8e3dcc21773bdab8.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\sqlite\db1" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\cache.storage.127.0.0.1\sqlite\indexing" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\HellsAn631\Zend\workspaces\LogosOOP\LogosDB\testing.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_db/db-handler-mysql.php" afterPath="$PROJECT_DIR$/_db/db-handler-mysql.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_db/db-interface.php" afterPath="$PROJECT_DIR$/_db/db-interface.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_db/objects.php" afterPath="$PROJECT_DIR$/_db/objects.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="LogosDB.iws" />
@@ -30,7 +191,7 @@
       <file leaf-file-name="db-config.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_db/db-config.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="7" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="408">
+            <state line="2" column="0" selection-start="7" selection-end="255" vertical-scroll-proportion="-0.0" vertical-offset="34" max-vertical-offset="408">
               <folding />
             </state>
           </provider>
@@ -39,16 +200,7 @@
       <file leaf-file-name="db-core.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_db/db-core.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="7" selection-end="2791" vertical-scroll-proportion="-0.0" vertical-offset="34" max-vertical-offset="2465">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="backend.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_db/backend.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="777" column="25" selection-start="22708" selection-end="23284" vertical-scroll-proportion="-20.73077" vertical-offset="12670" max-vertical-offset="14603">
+            <state line="2" column="0" selection-start="7" selection-end="2791" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="2499">
               <folding />
             </state>
           </provider>
@@ -57,18 +209,18 @@
       <file leaf-file-name="db-interface.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_db/db-interface.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="32" selection-start="189" selection-end="189" vertical-scroll-proportion="-0.0" vertical-offset="153" max-vertical-offset="1445">
+            <state line="39" column="49" selection-start="1444" selection-end="1444" vertical-scroll-proportion="-14.192307" vertical-offset="294" max-vertical-offset="1258">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="db-handler-mysql.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="db-handler-mysql.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_db/db-handler-mysql.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="347" column="4" selection-start="11503" selection-end="11503" vertical-scroll-proportion="1.0993485" vertical-offset="5224" max-vertical-offset="14399">
+            <state line="521" column="82" selection-start="15443" selection-end="15633" vertical-scroll-proportion="-26.807692" vertical-offset="8160" max-vertical-offset="13974">
               <folding>
-                <element signature="e#245#274#0" expanded="true" />
+                <element signature="e#206#235#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -77,20 +229,11 @@
       <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="173" column="25" selection-start="3718" selection-end="3718" vertical-scroll-proportion="-37.73077" vertical-offset="1960" max-vertical-offset="3485">
+            <state line="15" column="44" selection-start="360" selection-end="360" vertical-scroll-proportion="-9.807693" vertical-offset="0" max-vertical-offset="3485">
               <folding>
                 <element signature="e#67#91#0" expanded="true" />
-                <marker date="1410751588660" expanded="true" signature="3632:3750" placeholder="..." />
+                <marker date="1410849437285" expanded="true" signature="3612:3730" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="testing.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testing.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="18" selection-start="515" selection-end="515" vertical-scroll-proportion="-14.384615" vertical-offset="0" max-vertical-offset="527">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -98,8 +241,10 @@
       <file leaf-file-name="objects.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_db/objects.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="0" selection-start="394" selection-end="394" vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="561">
-              <folding />
+            <state line="12" column="62" selection-start="237" selection-end="237" vertical-scroll-proportion="-7.8461537" vertical-offset="0" max-vertical-offset="612">
+              <folding>
+                <element signature="e#66#85#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -107,7 +252,16 @@
       <file leaf-file-name="security.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_db/security.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="23" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1666">
+            <state line="9" column="23" selection-start="118" selection-end="118" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="1666">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="66" column="3" selection-start="1711" selection-end="1711" vertical-scroll-proportion="0.62222224" vertical-offset="506" max-vertical-offset="1496">
               <folding />
             </state>
           </provider>
@@ -136,19 +290,21 @@
         <option value="$PROJECT_DIR$/testing.php" />
         <option value="$PROJECT_DIR$/_db/db-config.php" />
         <option value="$PROJECT_DIR$/_db/db-core.php" />
-        <option value="$PROJECT_DIR$/_db/db-interface.php" />
-        <option value="$PROJECT_DIR$/_db/objects.php" />
         <option value="$PROJECT_DIR$/_db/security.php" />
-        <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/_db/db-handler-mysql.php" />
+        <option value="$PROJECT_DIR$/_db/db-interface.php" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/_db/objects.php" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="EasyPHP" />
   <component name="ProjectFrameBounds">
-    <option name="y" value="40" />
-    <option name="width" value="1456" />
-    <option name="height" value="806" />
+    <option name="x" value="-8" />
+    <option name="y" value="32" />
+    <option name="width" value="1936" />
+    <option name="height" value="1122" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -176,6 +332,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -210,7 +367,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -248,29 +404,29 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="40" width="1456" height="806" extended-state="6" />
+    <frame x="-8" y="32" width="1936" height="1122" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="9" y="600" width="202" height="411" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29305556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29270834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="92" y="132" width="1736" height="922" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297244" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297244" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -290,27 +446,12 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="6" selection-start="591" selection-end="591" vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="765">
-          <folding>
-            <element signature="e#67#91#0" expanded="true" />
-            <marker date="1410751588660" expanded="true" signature="3632:3750" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/_db/objects.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="0" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="527">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/backend.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="5" selection-start="5" selection-end="5" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
-          <folding />
+          <folding>
+            <element signature="e#66#85#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -339,7 +480,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="256" column="39" selection-start="9345" selection-end="9345" vertical-scroll-proportion="0.0" vertical-offset="4352" max-vertical-offset="7939">
           <folding>
-            <element signature="e#245#274#0" expanded="true" />
+            <element signature="e#206#235#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -356,7 +497,7 @@
         <state line="24" column="84" selection-start="722" selection-end="722" vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="901">
           <folding>
             <element signature="e#67#91#0" expanded="true" />
-            <marker date="1410751588660" expanded="true" signature="3632:3750" placeholder="..." />
+            <marker date="1410849437285" expanded="true" signature="3612:3730" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -364,14 +505,9 @@
     <entry file="file://$PROJECT_DIR$/_db/objects.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="0" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="527">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/backend.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="5" selection-start="5" selection-end="5" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
-          <folding />
+          <folding>
+            <element signature="e#66#85#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -400,7 +536,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="120" column="75" selection-start="3924" selection-end="3924" vertical-scroll-proportion="0.0" vertical-offset="2040" max-vertical-offset="7480">
           <folding>
-            <element signature="e#245#274#0" expanded="true" />
+            <element signature="e#206#235#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -417,7 +553,7 @@
         <state line="24" column="90" selection-start="728" selection-end="728" vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="901">
           <folding>
             <element signature="e#67#91#0" expanded="true" />
-            <marker date="1410751588660" expanded="true" signature="3632:3750" placeholder="..." />
+            <marker date="1410849437285" expanded="true" signature="3612:3730" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -425,14 +561,9 @@
     <entry file="file://$PROJECT_DIR$/_db/objects.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="0" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="527">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/backend.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="5" selection-start="5" selection-end="5" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
-          <folding />
+          <folding>
+            <element signature="e#66#85#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -461,7 +592,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="0" selection-start="514" selection-end="514" vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="4301">
           <folding>
-            <element signature="e#245#274#0" expanded="true" />
+            <element signature="e#206#235#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -483,48 +614,35 @@
         <state line="24" column="2" selection-start="397" selection-end="397" vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="510">
           <folding>
             <element signature="e#67#91#0" expanded="true" />
-            <marker date="1410751588660" expanded="true" signature="3632:3750" placeholder="..." />
+            <marker date="1410849437285" expanded="true" signature="3612:3730" placeholder="..." />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testing.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="0" selection-start="1059" selection-end="1208" vertical-scroll-proportion="0.0" vertical-offset="935" max-vertical-offset="1139" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/_db/objects.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="9" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="561">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/backend.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
+          <folding>
+            <element signature="e#66#85#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/_db/objects.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/backend.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
+          <folding>
+            <element signature="e#66#85#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/_db/objects.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
+          <folding>
+            <element signature="e#66#85#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -560,54 +678,9 @@
         <state line="181" column="9" selection-start="6235" selection-end="6235" vertical-scroll-proportion="0.34232366" vertical-offset="2747" max-vertical-offset="18496" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_db/cache/extensions/regex.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/cache/drivers/apc.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.47614107" vertical-offset="459" max-vertical-offset="1462" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/cache/extensions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/cache/phpfastcache.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="1" selection-start="366" selection-end="366" vertical-scroll-proportion="-10.233402" vertical-offset="10103" max-vertical-offset="11271">
-          <folding>
-            <element signature="e#6#160#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/_db/db-config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="0" selection-start="7" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="408">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/objects.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="394" selection-end="394" vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="561">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/security.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="23" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1666">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_db/backend.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="777" column="25" selection-start="22708" selection-end="23284" vertical-scroll-proportion="-20.73077" vertical-offset="12670" max-vertical-offset="14603">
           <folding />
         </state>
       </provider>
@@ -619,36 +692,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_db/db-interface.php">
+    <entry file="file://$PROJECT_DIR$/_db/security.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="32" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1445">
+        <state line="9" column="23" selection-start="118" selection-end="118" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="1666">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testing.php">
+    <entry file="file://$PROJECT_DIR$/_db/db-handler-mysql.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="18" selection-start="515" selection-end="515" vertical-scroll-proportion="-14.384615" vertical-offset="0" max-vertical-offset="527">
+        <state line="521" column="82" selection-start="15443" selection-end="15633" vertical-scroll-proportion="-26.807692" vertical-offset="8160" max-vertical-offset="13974">
+          <folding>
+            <element signature="e#206#235#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_db/db-interface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="49" selection-start="1444" selection-end="1444" vertical-scroll-proportion="-14.192307" vertical-offset="294" max-vertical-offset="1258">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="25" selection-start="3718" selection-end="3718" vertical-scroll-proportion="-37.73077" vertical-offset="1960" max-vertical-offset="3485">
+        <state line="15" column="44" selection-start="360" selection-end="360" vertical-scroll-proportion="-9.807693" vertical-offset="0" max-vertical-offset="3485">
           <folding>
             <element signature="e#67#91#0" expanded="true" />
-            <marker date="1410751588660" expanded="true" signature="3632:3750" placeholder="..." />
+            <marker date="1410849437285" expanded="true" signature="3612:3730" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_db/db-handler-mysql.php">
+    <entry file="file://$PROJECT_DIR$/_db/objects.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="347" column="4" selection-start="11503" selection-end="11503" vertical-scroll-proportion="1.0993485" vertical-offset="5224" max-vertical-offset="14399">
+        <state line="12" column="62" selection-start="237" selection-end="237" vertical-scroll-proportion="-7.8461537" vertical-offset="0" max-vertical-offset="612">
           <folding>
-            <element signature="e#245#274#0" expanded="true" />
+            <element signature="e#66#85#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="3" selection-start="1711" selection-end="1711" vertical-scroll-proportion="0.62222224" vertical-offset="506" max-vertical-offset="1496">
+          <folding />
         </state>
       </provider>
     </entry>

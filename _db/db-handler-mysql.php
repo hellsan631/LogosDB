@@ -8,7 +8,6 @@ namespace Logos\DB\MySQL;
 include_once "db-interface.php";
 include_once "db-core.php";
 include_once "db-config.php";
-include_once "cache/phpfastcache.php";
 
 use Logos\DB\DatabaseHandler;
 use Logos\Main\DatabaseCore;
@@ -471,30 +470,6 @@ abstract class DatabaseObject implements DatabaseHandler{
         $dataArray = [':id' => $id];
 
         return Core::fetchQuery($prepareStatement, $dataArray);
-
-    }
-
-    //-------------DB Caching Functions
-
-    //caches the object
-    // phpFastCache support "apc", "memcache", "memcached", "wincache" ,"files", "sqlite" and "xcache"
-    public function cache($cache_name, $timer = 600){
-
-        phpFastCache("files")->set($cache_name, $this, $timer);
-
-        return $this;
-
-    }
-
-    //finds a cached object or queries the database with a given condition
-    public static function find($cacheName, $conditionArray){
-
-        $obj = phpFastCache("files")->get($cacheName);
-
-        if($obj === null)
-            $obj = self::load($conditionArray);
-
-        return $obj;
 
     }
 

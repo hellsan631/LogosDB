@@ -40,8 +40,6 @@ interface DatabaseHandler{
     public static function load($conditionArray);
 
 
-
-
     //-------------DB Delete Objects
 
     //Deletes/Removes/Erases a single object
@@ -52,15 +50,6 @@ interface DatabaseHandler{
 
     //Deletes/Removes/Erases an object based on an ID (can be an array)
     public static function destroy($id);
-
-
-    //-------------DB Caching Functions
-
-    //caches the object inside the $_SESSION variable
-    public function cache($cache_name, $timer);
-
-    //finds a cached object or database
-    public static function find($cacheName, $conditionArray);
 
 
     //-------------Object Related

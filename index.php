@@ -11,9 +11,9 @@
     use Logos\Main;
 
     Config::write('db.host', 'localhost');
-    Config::write('db.base', 'dimlitl_sidekick');
-    Config::write('db.user', 'dimlitl_prax');
-    Config::write('db.password', 'Radegast123/*');
+    Config::write('db.base', 'db_name');
+    Config::write('db.user', 'db_user');
+    Config::write('db.password', 'db_pass');
 
     $timeArray = [];
 
