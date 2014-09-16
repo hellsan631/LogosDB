@@ -15,8 +15,9 @@ in your database you want to use this with.
 ### Database Schema
 
 ```
-Each table in your database should have an ID field, which is a incremental primary index. If you want a table to use
-a date, use the timestamp format, and include date in the name of the field.
+Each table in your database should have an ID field, which is a incremental primary
+index. If you want a table to use a date, use the timestamp format, and include
+date in the name of the field.
 ```
 
 ## Usage
@@ -24,7 +25,8 @@ a date, use the timestamp format, and include date in the name of the field.
 ### Creating a new object in the database
 
 ```php
-//An object can be either declared as a variable, or statically created (which takes less memory and time)
+//An object can be either declared as a variable, or statically created
+//(which takes less memory and time)
 
 //Object as a variable
 $user = new User(["username" => "testing", "email" => "email@email.com"]);
@@ -47,7 +49,10 @@ $users = [];
 $count = 0;
 
 while($count < 100){
-    array_push($users, ["username" => "testing", "email" => "email@email.com", "other_var" => $count]);
+    array_push($users, ["username" => "testing",
+                        "email" => "email@email.com",
+                        "other_var" => $count]);
+
     $count++;
 }
 
@@ -71,10 +76,16 @@ User::saveMultiple(["email" => "newEmail@gmail.com"], ["username" => "testing"])
 Want to add a limit, orderBy, or groupBy to your query results?
 
 ```php
+
 User::query('limit', 10)->getList();
+
 User::query(['orderBy', 'limit'], ['id DESC', 10])->getList();
+
 User::query(['orderBy', 'limit'], ['id ASC, username DESC', 10])->getList();
+
 ```
+
+
 
 Expanding on this readme at a later date.
 
