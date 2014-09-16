@@ -69,10 +69,10 @@ date in the name of the field.
 
 ### Creating a new object in the database
 
-```php
-//An object can be either declared as a variable, or statically created
-//(which takes less memory and time)
+An object can be either declared as a variable, or statically created
+(which takes less memory and time)
 
+```php
 //Object as a variable
 $user = new User(["username" => "testing", "email" => "email@email.com"]);
 $user->createNew();
@@ -83,9 +83,9 @@ User::createSingle(["username" => "testing", "email" => "email@email.com"]);
 
 ### Saving Many objects to a database
 
-```php
-//You can save objects multiple ways.
+You can save objects multiple ways.
 
+```php
 //Want to create 100 new identical objects?
 User::createMultiple(["username" => "testing", "email" => "email@email.com"], 100);
 
@@ -129,6 +129,8 @@ User::query(['orderBy', 'limit'], ['id ASC, username DESC', 10])->getList();
 ```
 
 ### Automatically Converts JSON
+
+You can use JSON or an object anywhere you want.
 
 ```php
 $JSON_STRING = '{"username": "testing", "email": "testing@mail.com"}';
