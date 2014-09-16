@@ -14,10 +14,8 @@ Requires PDO
 
 ### Creating A Model
 
-```
 Copy this folder into your project, and create an object class for each table
 in your database you want to use this with.
-```
 
 ```php
 namespace Logos\Objects;
@@ -39,7 +37,8 @@ class User extends DatabaseObject{
 }
 ```
 
-### Controller Useage
+### Controller Usage
+
 ```php
 namespace Logos;
 
