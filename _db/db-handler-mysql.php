@@ -65,7 +65,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         $dataArray = [];
 
-        $prepareStatement = "INSERT INTO ".self::name()." (";
+        $prepareStatement = "INSERT INTO ".self::_name()." (";
 
         foreach($keyChain as $key => $val){
 
@@ -127,7 +127,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         $keyChain = self::_getKeyChain();
 
-        $prepareStatement = "INSERT INTO ".self::name()." (";
+        $prepareStatement = "INSERT INTO ".self::_name()." (";
 
         foreach($data as $key => $val){
 
@@ -188,7 +188,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         $keyChain = self::_getKeyChain();
 
-        $prepareStatement = "INSERT INTO ".self::name()." (";
+        $prepareStatement = "INSERT INTO ".self::_name()." (";
 
         $goodKeys = $dataArray = [];
 
@@ -290,7 +290,7 @@ abstract class DatabaseObject implements DatabaseHandler{
         else
             self::_dataToArray($changedData);
 
-        $prepareStatement = "UPDATE ".self::name()." SET ";
+        $prepareStatement = "UPDATE ".self::_name()." SET ";
 
         self::_buildQuerySet($prepareStatement, $changedData, $keyChain);
 
@@ -328,7 +328,7 @@ abstract class DatabaseObject implements DatabaseHandler{
         self::_dataToArray($changedData);
         self::_dataToArray($conditionArray);
 
-        $prepareStatement = "UPDATE ".self::name()." SET ";
+        $prepareStatement = "UPDATE ".self::_name()." SET ";
 
         self::_buildQuerySet($prepareStatement, $changedData, $keyChain);
 
@@ -370,7 +370,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     public function loadInto($id){
 
-        $prepareStatement = "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1";
+        $prepareStatement = "SELECT * FROM ".self::_name()." WHERE id = :id LIMIT 1";
         $dataArray = [":id" => $id];
 
         return Core::fetchQueryObj($prepareStatement, $dataArray, PDO::FETCH_INTO, $this);
@@ -385,7 +385,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     public function getList($conditionArray = null){
 
-        $name = self::name();
+        $name = self::_name();
 
         $prepareStatement = "SELECT * FROM ".$name;
 
@@ -413,12 +413,13 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     public static function load($conditionArray){
 
-        $prepareStatement = "SELECT * FROM ".self::name()." WHERE ";
+        $name = self::_name();
+
+        $prepareStatement = "SELECT * FROM ".$name." WHERE ";
 
         self::_buildQueryWhere($prepareStatement, $conditionArray);
 
         $prepareStatement .= " LIMIT 1";
-        $name = self::name();
 
         return Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_OBJ, $name);
 
@@ -452,7 +453,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     public static function removeMultiple($conditionArray){
 
-        $prepareStatement = "DELETE FROM ".self::name()." WHERE ";
+        $prepareStatement = "DELETE FROM ".self::_name()." WHERE ";
 
         self::_buildQueryWhere($prepareStatement, $conditionArray);
 
@@ -467,7 +468,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     public static function destroy($id){
 
-        $prepareStatement = "DELETE FROM ".self::name()." WHERE id = :id";
+        $prepareStatement = "DELETE FROM ".self::_name()." WHERE id = :id";
         $dataArray = [':id' => $id];
 
         return Core::fetchQuery($prepareStatement, $dataArray);
@@ -501,7 +502,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     }
 
-    private static function name(){
+    private static function _name(){
 
         $className = explode("\\", get_called_class());
 
@@ -647,7 +648,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     public function __invoke($dataArray){
 
-        $object = self::name();
+        $object = self::_name();
 
         return new $object($dataArray);
 
