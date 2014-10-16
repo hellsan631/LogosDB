@@ -1,4 +1,4 @@
-LogosDB
+LogosDB v 1.1
 =======
 
 A Database Object Handler Class that makes DB interaction easy for a change.
