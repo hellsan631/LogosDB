@@ -313,7 +313,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     public static function saveMultiple($changedData, $conditionArray){
 
-        $keyChain = self::getKeyChain();
+        $keyChain = self::_getKeyChain();
 
         self::_dataToArray($changedData);
         self::_dataToArray($conditionArray);
