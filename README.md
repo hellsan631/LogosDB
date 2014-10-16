@@ -18,13 +18,9 @@ Copy this folder into your project, and create an object class for each table
 in your database you want to use this with.
 
 ```php
-namespace Logos\Objects;
 
 //right now there is only mysql database compatibility
 include "db-handler-mysql.php";
-
-use Logos\DB\MySQL;
-use Logos\DB\MySQL\DatabaseObject;
 
 //example object
 class User extends DatabaseObject{
@@ -40,14 +36,7 @@ class User extends DatabaseObject{
 ### Controller Usage
 
 ```php
-namespace Logos;
-
 include "./_db/objects.php";
-
-use Logos\Objects;
-use Logos\Objects\User;
-use Logos\Main\Config;
-use Logos\Main;
 
 //Database settings
 Config::write('db.host', 'localhost');
