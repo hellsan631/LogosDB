@@ -512,17 +512,32 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     }
 
-    //User::query('limit', 10)->getList();
-    //User::query(['orderBy', 'limit'], ['id DESC', 10])->getList();
-    //User::query(['orderBy', 'limit'], ['id ASC, username DESC', 10])->getList();
+    //Object::query('limit', 10)->getList();
+    //Object::query(['orderBy', 'limit'], ['id DESC', 10])->getList();
+    //Object::query(['orderBy', 'limit'], ['id ASC', 10])->getList();
+    //Object::query(['orderBy' => 'id ASC', 'limit' => 10])->getList();
 
-    public static function query($functionCall, $params){
+    public static function query($functionCall, $params = null){
 
-        if(!is_array($functionCall))
-            Core::getInstance()->query->$functionCall($params);
-        else{
+        if($params === null){
+
+            if(!is_array($functionCall)){
+                trigger_error("Invalid Use of Query. No Params Given, and invalid Key/Value pairs");
+            }
+
             foreach($functionCall as $key => $value){
-                Core::getInstance()->query->$value($params[$key]);
+                if($key == 'groupBy' or $key == 'orderBy' or $key == 'limit'){
+                    Core::getInstance()->query->$key($value);
+                }
+            }
+
+        }else{
+            if(!is_array($functionCall))
+                Core::getInstance()->query->$functionCall($params);
+            else{
+                foreach($functionCall as $key => $value){
+                    Core::getInstance()->query->$value($params[$key]);
+                }
             }
         }
 
@@ -651,22 +666,26 @@ abstract class DatabaseObject implements DatabaseHandler{
 
 class QueryHandler{
 
-    private $query = "";
+    private $groupBy = "";
+    private $orderBy = "";
+    private $limit = "";
 
     //Any time a query is executed, we want to make sure to clear the query so that it doesn't show up again.
     public function getQuery(){
 
-        $tempQ = $this->query;
+        $query = " {$this->groupBy} {$this->orderBy} {$this->limit} ";
 
-        $this->query = "";
+        $this->groupBy = "";
+        $this->orderBy = "";
+        $this->limit = "";
 
-        return $tempQ;
+        return $query;
 
     }
 
     public function groupBy($grouping){
 
-        $this->query = " GROUP BY $grouping".$this->query;
+        $this->$groupBy = "GROUP BY $grouping";
 
         return $this;
 
@@ -674,7 +693,7 @@ class QueryHandler{
 
     public function orderBy($order){
 
-        $this->query .= " ORDER BY $order";
+        $this->orderBy .= "ORDER BY $order";
 
         return $this;
 
@@ -682,15 +701,15 @@ class QueryHandler{
 
     public function limit($min = 1, $max = null){
 
-        $this->query .= " LIMIT ";
+        $this->limit .= "LIMIT ";
 
-        $this->query .= "$min, ";
+        $this->limit .= "$min, ";
 
         if($max !== null)
-            $this->query .= "$max, ";
+            $this->limit .= "$max, ";
 
 
-        $this->query = rtrim($this->query, ", ");
+        $this->limit = rtrim($this->limit, ", ");
 
         return $this;
 
