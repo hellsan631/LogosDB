@@ -693,21 +693,42 @@ class QueryHandler{
 
     public function orderBy($order){
 
-        $this->orderBy .= "ORDER BY $order";
+        $this->orderBy = "ORDER BY $order";
 
         return $this;
 
     }
 
-    public function limit($min = 1, $max = null){
+    public function limit($limit){
 
-        $this->limit .= "LIMIT ";
+        $min = null;
+        $max = null;
 
-        $this->limit .= "$min, ";
+        if(is_array($limit)){
+
+            //if array has named keys
+            if(array_key_exists('min', $limit))
+                $min = $limit['min'];
+            if(array_key_exists('max', $limit))
+                $max = $limit['max'];
+
+            //if array uses integers instead
+            if(array_key_exists(0, $limit))
+                $min = $limit[0];
+            if(array_key_exists(1, $limit))
+                $max = $limit[1];
+
+        }else{
+            $min = intval($limit);
+        }
+
+        if($min === null)
+            return $this;
+
+        $this->limit = "LIMIT $min, ";
 
         if($max !== null)
             $this->limit .= "$max, ";
-
 
         $this->limit = rtrim($this->limit, ", ");
 

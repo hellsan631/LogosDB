@@ -1,4 +1,4 @@
-LogosDB v 1.1
+LogosDB v 1.2.1
 =======
 
 A Database Object Handler Class that makes DB interaction easy for a change.
@@ -114,6 +114,39 @@ User::query('limit', 10)->getList();
 User::query(['orderBy', 'limit'], ['id DESC', 10])->getList();
 
 User::query(['orderBy', 'limit'], ['id ASC, username DESC', 10])->getList();
+
+User::query(['orderBy' => 'id ASC', 'limit' => 10])->getList();
+
+//how to use min/max for limit
+//Send them in as array!
+User::query('limit', [0, 10])->getList();
+User::query('limit', ['min' => 0, 'max' => 10])->getList();
+//Or if you want to use an array to add more,
+
+User::query(['limit' => [0, 10]])->getList();
+User::query(['limit' => ['min' => 0, 'max' => 10]])->getList();
+```
+
+Any added limit/orderby/groupby is only added to the next query executed.
+If you run any two queries in a row , i.e.
+```php
+User::query('limit', 10);
+User::loadMultiple($array1);
+
+//limit no longer applies here
+User::query('limit', 10);
+User::CreateMultiple($array2);
+```
+You will need to add the query to each call to the database if you want it to effect that call.
+
+Also, any time you set a query, the previous query of that type is overwritten.
+```php
+User::query('limit', 10);
+User::query('orderBy', 'id ASC');
+User::query('orderBy', 'id DESC');
+
+//would load users in id DESC order
+User::loadMultiple($array1);
 ```
 
 ### Automatically Converts JSON
