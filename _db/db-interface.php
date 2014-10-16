@@ -1,6 +1,5 @@
 <?php
 
-namespace Logos\DB;
 
 interface DatabaseHandler{
 

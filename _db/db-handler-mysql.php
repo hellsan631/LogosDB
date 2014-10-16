@@ -4,19 +4,9 @@
 //@TODO: commenting
 //@TODO: re-do querying to better follow php code conventions
 
-namespace Logos\DB\MySQL;
-
 include_once "db-interface.php";
 include_once "db-core.php";
 include_once "db-config.php";
-
-use Logos\DB\DatabaseHandler;
-use Logos\Main\DatabaseCore;
-use Logos\Main\Config;
-use Logos\Main;
-use PDO;
-use PDOException;
-use Exception;
 
 abstract class DatabaseObject implements DatabaseHandler{
 
@@ -86,7 +76,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
             $prepareStatement .= ":$key, ";
 
-            $dataArray[':'.$key] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($this->{$key}) : $this->{$key};
+            $dataArray[':'.$key] = (mb_strpos($key,'date') !== false) ? unixToMySQL($this->{$key}) : $this->{$key};
 
         }
 
@@ -133,7 +123,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
             //Here we check to see if the key meets our criteria. If it doesn't we want to unset the key so
             //don't have to sort through the $data array again, and make the same comparisons.
-            if($val !== null && $keyChain[$key] !== "id" && array_key_exists($key, $keyChain))
+            if($val !== null && array_key_exists($key, $keyChain) && $keyChain[$key] !== "id")
                 $prepareStatement .= "$key, ";
             else
                 unset($data[$key]);
@@ -146,7 +136,7 @@ abstract class DatabaseObject implements DatabaseHandler{
             $prepareStatement .= ":$key, ";
 
             //If an object has the word date in it, we want to convert it to a usable mysql format
-            $data[':'.$key] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
+            $data[':'.$key] = (mb_strpos($key,'date') !== false) ? unixToMySQL($val) : $val;
 
             unset($data[$key]);
         }
@@ -226,7 +216,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
                     if(array_key_exists($key, $goodKeys)){
                         $prepareStatement .= ":$key$objID, ";
-                        $dataArray[':'.$key.$objID] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($data[$objID][$key]) : $data[$objID][$key];
+                        $dataArray[':'.$key.$objID] = (mb_strpos($key,'date') !== false) ? unixToMySQL($data[$objID][$key]) : $data[$objID][$key];
                     }
                 }
 
@@ -241,7 +231,7 @@ abstract class DatabaseObject implements DatabaseHandler{
                 foreach($obj as $key => $val){
                     if(array_key_exists($key, $goodKeys)){
                         $prepareStatement .= ":$key$count, ";
-                        $dataArray[':'.$key.$count] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
+                        $dataArray[':'.$key.$count] = (mb_strpos($key,'date') !== false) ? unixToMySQL($val) : $val;
                     }
                 }
 
@@ -300,7 +290,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         foreach($changedData as $key => $val){
 
-            $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
+            $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? unixToMySQL($val) : $val;
 
             unset($changedData[$key]);
 
@@ -347,7 +337,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         foreach($changedData as $key => $val){
 
-            $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? Main\unixToMySQL($val) : $val;
+            $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? unixToMySQL($val) : $val;
 
             unset($changedData[$key]);
 
@@ -416,6 +406,9 @@ abstract class DatabaseObject implements DatabaseHandler{
         $name = self::_name();
 
         $prepareStatement = "SELECT * FROM ".$name." WHERE ";
+
+        if(is_int($conditionArray))
+            $conditionArray = ["id" => $conditionArray];
 
         self::_buildQueryWhere($prepareStatement, $conditionArray);
 
@@ -590,7 +583,7 @@ abstract class DatabaseObject implements DatabaseHandler{
         if(!is_array($dataToFilter)){
             if(is_object($dataToFilter))
                 $dataToFilter = (array) $dataToFilter;
-            else if(Main\isJson($dataToFilter))
+            else if(isJson($dataToFilter))
                 $dataToFilter = json_decode($dataToFilter, true);
             else
                 trigger_error("Tried to filter Malformed data");
@@ -781,7 +774,7 @@ class Core implements DatabaseCore{
 
             if($fetchMode === PDO::FETCH_OBJ){
 
-                $fetchParam = $query->fetch();
+                $fetchParam = $query->fetchObject($fetchParam);
 
                 if(!is_object($fetchParam) && !is_array($fetchParam))
                     return false;
@@ -796,7 +789,7 @@ class Core implements DatabaseCore{
 
             }else if($fetchMode === PDO::FETCH_CLASS){
 
-                return $query->fetchAll($fetchMode, 'Logos\Objects\\'.$fetchParam);
+                return $query->fetchAll($fetchMode, $fetchParam);
 
             }
 

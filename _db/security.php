@@ -1,10 +1,6 @@
 <?php
 
-namespace Logos\Security;
-
 include_once "db-core.php";
-
-use Logos\Main;
 
 class Cipher {
     private $secureKey;

@@ -1,11 +1,6 @@
 <?php
 
-namespace Logos\Objects;
-
 include "db-handler-mysql.php";
-
-use Logos\DB\MySQL;
-use Logos\DB\MySQL\DatabaseObject;
 
 //example object
 class User extends DatabaseObject{

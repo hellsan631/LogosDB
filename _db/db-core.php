@@ -1,10 +1,5 @@
 <?php
 
-namespace Logos\Main;
-
-use DateTime;
-use DateTimeZone;
-use Exception;
 
 interface DatabaseCore{
 
