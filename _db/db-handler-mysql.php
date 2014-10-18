@@ -407,7 +407,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         $prepareStatement = "SELECT * FROM ".$name." WHERE ";
 
-        if(is_int($conditionArray))
+        if(!is_array($conditionArray))
             $conditionArray = ["id" => $conditionArray];
 
         self::_buildQueryWhere($prepareStatement, $conditionArray);
