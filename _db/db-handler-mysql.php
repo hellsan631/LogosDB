@@ -568,15 +568,14 @@ abstract class DatabaseObject implements DatabaseHandler{
         foreach($conditionArray as $key => $value){
 
             if(array_key_exists($key, $keyChain)){
-                $prepareStatement .= "{$key} = :{$key}, ";
+                $prepareStatement .= "{$key} = :{$key} AND ";
                 $conditionArray[":".$key] = $value;
+                 unset($conditionArray[$key]);
             }
-
-            unset($conditionArray[$key]);
 
         }
 
-        $prepareStatement = rtrim($prepareStatement, ", ");
+        $prepareStatement = rtrim($prepareStatement, "AND ");
 
     }
 
