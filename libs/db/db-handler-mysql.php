@@ -20,13 +20,9 @@ abstract class DatabaseObject implements DatabaseHandler{
      */
     public function classDataSetup($id = null){
 
-        if(!isset($this->loaded))
-           $this->loaded = false;
-
         if($id !== null){
             if(is_numeric($id)){
                 $this->loadInto($id);
-                $this->loaded = true;
             }else{
                 $this->updateObject(self::_dataToArray($id));
             }
@@ -382,12 +378,6 @@ abstract class DatabaseObject implements DatabaseHandler{
         }
 
         $objects = Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
-
-        if(is_array($objects)){
-            foreach($objects as &$value){
-                $value->loaded = true;
-            }
-        }
 
         return $objects;
 
@@ -810,13 +800,9 @@ class Core implements DatabaseCore{
                 if(!is_object($fetchParam) && !is_array($fetchParam))
                     return false;
 
-                $fetchParam->loaded = true;
-
             }else if($fetchMode === PDO::FETCH_INTO){
 
                 $query->fetch();
-
-                $fetchParam->loaded = true;
 
             }else if($fetchMode === PDO::FETCH_CLASS){
 
