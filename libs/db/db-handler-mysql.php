@@ -823,5 +823,5 @@ class Core implements DatabaseCore{
 
     }
 
-
 }
+
