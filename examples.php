@@ -1,14 +1,6 @@
 <?php
 
-    namespace Logos;
-
-    include "./_db/objects.php";
-
-    use Logos\DB\MySQL\Core;
-    use Logos\Objects;
-    use Logos\Objects\User;
-    use Logos\Main\Config;
-    use Logos\Main;
+    include "./vendor/autoload.php";
 
     Config::write('db.host', 'localhost');
     Config::write('db.base', 'db_name');

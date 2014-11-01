@@ -4,10 +4,6 @@
 //@TODO: commenting
 //@TODO: re-do querying to better follow php code conventions
 
-include_once "db-interface.php";
-include_once "db-core.php";
-include_once "db-config.php";
-
 abstract class DatabaseObject implements DatabaseHandler{
 
     public $id;
@@ -375,6 +371,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     public function getList($conditionArray = null){
 
+        self::_dataToArray($conditionArray);
         $name = self::_name();
 
         $prepareStatement = "SELECT * FROM ".$name;
@@ -403,12 +400,13 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     public static function load($conditionArray){
 
+        self::_dataToArray($conditionArray);
         $name = self::_name();
 
-        $prepareStatement = "SELECT * FROM ".$name." WHERE ";
+        $prepareStatement = "SELECT * FROM `".$name."` WHERE ";
 
         if(!is_array($conditionArray))
-            $conditionArray = ["id" => $conditionArray];
+            $conditionArray = is_numeric($conditionArray) ? ["id" => $conditionArray] : false;
 
         self::_buildQueryWhere($prepareStatement, $conditionArray);
 
@@ -484,6 +482,9 @@ abstract class DatabaseObject implements DatabaseHandler{
     }
 
     //gets the first object occurrence or returns a new instance of that object
+    /*
+     * @return DatabaseObject $dataArray
+     */
     public static function firstOrNew($dataArray){
 
         $obj = self::load($dataArray);
@@ -568,15 +569,14 @@ abstract class DatabaseObject implements DatabaseHandler{
         foreach($conditionArray as $key => $value){
 
             if(array_key_exists($key, $keyChain)){
-                $prepareStatement .= "{$key} = :{$key}, ";
+                $prepareStatement .= "{$key} = :{$key} AND ";
                 $conditionArray[":".$key] = $value;
+                unset($conditionArray[$key]);
             }
-
-            unset($conditionArray[$key]);
 
         }
 
-        $prepareStatement = rtrim($prepareStatement, ", ");
+        $prepareStatement = rtrim($prepareStatement, "AND ");
 
     }
 
@@ -589,7 +589,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     public function toArray(){
 
-        return get_object_vars($this->prune());
+        return get_object_vars($this);
 
     }
 
@@ -605,15 +605,6 @@ abstract class DatabaseObject implements DatabaseHandler{
         }
 
         return $dataToFilter;
-
-    }
-
-    public function prune(){
-
-        if(isset($this->loaded))
-            unset($this->loaded);
-
-        return $this;
 
     }
 
@@ -848,5 +839,3 @@ class Core implements DatabaseCore{
 
 
 }
-
-?>

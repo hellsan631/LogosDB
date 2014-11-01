@@ -133,5 +133,3 @@ function getDay($dateTimeString){
     return $tempDate->format('D');
 
 }
-
-?>

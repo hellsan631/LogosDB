@@ -63,6 +63,3 @@ interface DatabaseHandler{
     public static function newInstance($dataArray);
 
 }
-
-
-?>

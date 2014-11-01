@@ -7,7 +7,7 @@ class Cipher {
     private $iv;
 
     function __construct($textKey, $iv = null) {
-        $this->secureKey = hash('sha256',$textKey,TRUE);
+        $this->secureKey = hash('sha256', $textKey, TRUE);
 
         if($iv == null)
             $this->iv = mcrypt_create_iv(32);
@@ -85,5 +85,3 @@ class Password{
     }
 
 }
-
-?>
