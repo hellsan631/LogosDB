@@ -1,7 +1,7 @@
 <?php
 
 
-interface DatabaseCore{
+interface Database_Core{
 
     public static function getInstance();
 

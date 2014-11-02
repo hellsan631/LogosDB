@@ -1,7 +1,7 @@
 <?php
 
 
-interface DatabaseHandler{
+interface Database_Handler{
 
     //-------------DB Object Creation
 

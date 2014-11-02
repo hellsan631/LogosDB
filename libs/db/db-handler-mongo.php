@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class LogosMongo extends DatabaseObject implements DatabaseHandler{
+abstract class Logos_Mongo_Object extends Database_Object implements Database_Handler{
 
     public $id;
 
@@ -95,7 +95,7 @@ abstract class LogosMongo extends DatabaseObject implements DatabaseHandler{
 
 }
 
-class MongoCore implements DatabaseCore{
+class Mongo_Core implements Database_Core{
 
     public $dbh;
     private static $instance;

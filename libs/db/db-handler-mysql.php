@@ -4,7 +4,7 @@
 //@TODO: commenting
 //@TODO: re-do querying to better follow php code conventions
 
-abstract class LogosMySQL extends DatabaseObject implements DatabaseHandler{
+abstract class Logos_MySQL_Object extends Database_Object implements Database_Handler{
 
     public $id;
 
@@ -667,7 +667,7 @@ class QueryHandler{
 //would otherwise create many more objects then if we didn't have a singleton as a core.
 //Also, creating a singleton means we can save data to the query using our query handler
 //between instance calls.
-class MySQLCore implements DatabaseCore{
+class MySQL_Core implements Database_Core{
 
     public $dbh;
     public $query;

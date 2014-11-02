@@ -1,6 +1,6 @@
 <?php
 
-abstract class DatabaseObject{
+abstract class Database_Object{
 
     protected static function _name(){
 

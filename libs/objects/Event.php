@@ -1,6 +1,6 @@
 <?php
 
-class Event extends LogosMySQL{
+class Event extends Logos_MySQL_Object{
 
     public $date_start;
     public $name;
