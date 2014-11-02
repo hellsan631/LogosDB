@@ -11,9 +11,7 @@ class UserTest extends Generic_DB_Test{
     }
 
     public function testCheckObjectCreation(){
-
         $this->assertObjectHasAttribute('id', $this->user);
-
     }
 
 }
