@@ -4,7 +4,7 @@
 //@TODO: commenting
 //@TODO: re-do querying to better follow php code conventions
 
-abstract class DatabaseObject implements DatabaseHandler{
+abstract class LogosMySQL extends DatabaseObject implements DatabaseHandler{
 
     public $id;
 
@@ -68,7 +68,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
             $prepareStatement .= ":$key, ";
 
-            $dataArray[':'.$key] = (mb_strpos($key,'date') !== false) ? unixToMySQL($this->{$key}) : $this->{$key};
+            $dataArray[':'.$key] = (mb_strpos($key,'date') !== false) ? Core::unixToMySQL($this->{$key}) : $this->{$key};
 
         }
 
@@ -78,7 +78,7 @@ abstract class DatabaseObject implements DatabaseHandler{
         //INSERT INTO fruit (color, count) VALUES (:color, :count)
 
         //checks to see if there was an object that was inserted into the database
-        $this->id = Core::fetchQuery($prepareStatement, $dataArray, false) ? Core::getInstance()->dbh->lastInsertId() : null;
+        $this->id = MySQLCore::fetchQuery($prepareStatement, $dataArray, false) ? MySQLCore::getInstance()->dbh->lastInsertId() : null;
 
         return $this;
     }
@@ -128,16 +128,16 @@ abstract class DatabaseObject implements DatabaseHandler{
             $prepareStatement .= ":$key, ";
 
             //If an object has the word date in it, we want to convert it to a usable mysql format
-            $data[':'.$key] = (mb_strpos($key,'date') !== false) ? unixToMySQL($val) : $val;
+            $data[':'.$key] = (mb_strpos($key,'date') !== false) ? Core::unixToMySQL($val) : $val;
 
             unset($data[$key]);
         }
 
         $prepareStatement = rtrim($prepareStatement, ", ").")";
 
-        if(Core::fetchQuery($prepareStatement, $data, false)){
+        if(MySQLCore::fetchQuery($prepareStatement, $data, false)){
 
-            return Core::getInstance()->dbh->lastInsertId();
+            return MySQLCore::getInstance()->dbh->lastInsertId();
 
         }
 
@@ -208,7 +208,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
                     if(array_key_exists($key, $goodKeys)){
                         $prepareStatement .= ":$key$objID, ";
-                        $dataArray[':'.$key.$objID] = (mb_strpos($key,'date') !== false) ? unixToMySQL($data[$objID][$key]) : $data[$objID][$key];
+                        $dataArray[':'.$key.$objID] = (mb_strpos($key,'date') !== false) ? Core::unixToMySQL($data[$objID][$key]) : $data[$objID][$key];
                     }
                 }
 
@@ -223,7 +223,7 @@ abstract class DatabaseObject implements DatabaseHandler{
                 foreach($obj as $key => $val){
                     if(array_key_exists($key, $goodKeys)){
                         $prepareStatement .= ":$key$count, ";
-                        $dataArray[':'.$key.$count] = (mb_strpos($key,'date') !== false) ? unixToMySQL($val) : $val;
+                        $dataArray[':'.$key.$count] = (mb_strpos($key,'date') !== false) ? Core::unixToMySQL($val) : $val;
                     }
                 }
 
@@ -236,7 +236,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         $prepareStatement = rtrim($prepareStatement, ", ");
 
-        return Core::fetchQuery($prepareStatement, $dataArray, false);
+        return MySQLCore::fetchQuery($prepareStatement, $dataArray, false);
 
     }
 
@@ -282,7 +282,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         foreach($changedData as $key => $val){
 
-            $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? unixToMySQL($val) : $val;
+            $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? Core::unixToMySQL($val) : $val;
 
             unset($changedData[$key]);
 
@@ -291,7 +291,7 @@ abstract class DatabaseObject implements DatabaseHandler{
         //string should look like this:
         //UPDATE fruit SET color = :color, count = :count WHERE id = :id
 
-        if(!Core::fetchQuery($prepareStatement, $changedData, false))
+        if(!MySQLCore::fetchQuery($prepareStatement, $changedData, false))
             throw new Exception("Object couldn't be saved");
 
         return $this;
@@ -329,7 +329,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         foreach($changedData as $key => $val){
 
-            $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? unixToMySQL($val) : $val;
+            $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? Core::unixToMySQL($val) : $val;
 
             unset($changedData[$key]);
 
@@ -338,7 +338,7 @@ abstract class DatabaseObject implements DatabaseHandler{
         //string should look like this:
         //UPDATE fruit SET color = :color, count = :count WHERE id = :id
 
-        return Core::fetchQuery($prepareStatement, $changedData, false);
+        return MySQLCore::fetchQuery($prepareStatement, $changedData, false);
 
     }
 
@@ -355,7 +355,7 @@ abstract class DatabaseObject implements DatabaseHandler{
         $prepareStatement = "SELECT * FROM ".self::_name()." WHERE id = :id LIMIT 1";
         $dataArray = [":id" => $id];
 
-        return Core::fetchQueryObj($prepareStatement, $dataArray, PDO::FETCH_INTO, $this);
+        return MySQLCore::fetchQueryObj($prepareStatement, $dataArray, PDO::FETCH_INTO, $this);
 
     }
 
@@ -377,7 +377,7 @@ abstract class DatabaseObject implements DatabaseHandler{
             self::_buildQueryWhere($prepareStatement, $conditionArray);
         }
 
-        $objects = Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
+        $objects = MySQLCore::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
 
         return $objects;
 
@@ -402,7 +402,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         $prepareStatement .= " LIMIT 1";
 
-        return Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_OBJ, $name);
+        return MySQLCore::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_OBJ, $name);
 
     }
 
@@ -438,7 +438,7 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         self::_buildQueryWhere($prepareStatement, $conditionArray);
 
-        return Core::fetchQuery($prepareStatement, $conditionArray);
+        return MySQLCore::fetchQuery($prepareStatement, $conditionArray);
 
     }
 
@@ -452,7 +452,7 @@ abstract class DatabaseObject implements DatabaseHandler{
         $prepareStatement = "DELETE FROM ".self::_name()." WHERE id = :id";
         $dataArray = [':id' => $id];
 
-        return Core::fetchQuery($prepareStatement, $dataArray);
+        return MySQLCore::fetchQuery($prepareStatement, $dataArray);
 
     }
 
@@ -464,8 +464,10 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         $obj = self::firstOrNew($dataArray);
 
-        if(!is_numeric($obj->id))
-            $obj->createNew();
+        if(is_object($obj)){
+            if(!is_numeric($obj->id))
+                $obj->createNew();
+        }
 
         return $obj;
 
@@ -486,23 +488,6 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     }
 
-    private static function _name(){
-
-        $className = explode("\\", get_called_class());
-
-        return end($className);
-
-    }
-
-    //returns an instance of an object with a given array of data
-    public static function newInstance($dataArray = null){
-
-        $className = get_called_class();
-
-        return new $className($dataArray);
-
-    }
-
     //Object::query('limit', 10)->getList();
     //Object::query(['orderBy', 'limit'], ['id DESC', 10])->getList();
     //Object::query(['orderBy', 'limit'], ['id ASC', 10])->getList();
@@ -518,16 +503,16 @@ abstract class DatabaseObject implements DatabaseHandler{
 
             foreach($functionCall as $key => $value){
                 if($key == 'groupBy' or $key == 'orderBy' or $key == 'limit'){
-                    Core::getInstance()->query->$key($value);
+                    MySQLCore::getInstance()->query->$key($value);
                 }
             }
 
         }else{
             if(!is_array($functionCall))
-                Core::getInstance()->query->$functionCall($params);
+                MySQLCore::getInstance()->query->$functionCall($params);
             else{
                 foreach($functionCall as $key => $value){
-                    Core::getInstance()->query->$value($params[$key]);
+                    MySQLCore::getInstance()->query->$value($params[$key]);
                 }
             }
         }
@@ -570,47 +555,6 @@ abstract class DatabaseObject implements DatabaseHandler{
 
     }
 
-
-    private static function _getKeyChain(){
-
-        return get_class_vars(get_called_class());
-
-    }
-
-    public function toArray(){
-
-        return get_object_vars($this);
-
-    }
-
-    private static function _dataToArray(&$dataToFilter){
-
-        if(!is_array($dataToFilter)){
-            if(is_object($dataToFilter))
-                $dataToFilter = (array) $dataToFilter;
-            else if(isJson($dataToFilter))
-                $dataToFilter = json_decode($dataToFilter, true);
-            else
-                trigger_error("Tried to filter Malformed data");
-        }
-
-        return $dataToFilter;
-
-    }
-
-    public function updateObject($array){
-
-        $keyChain = self::_getKeyChain();
-
-        self::_dataToArray($array);
-
-        foreach($array as $key => $value){
-            if(array_key_exists($key, $keyChain))
-                $this->{$key} = $value;
-        }
-
-        return $this;
-    }
 
     //Magic Methods
     //serialize
@@ -723,7 +667,7 @@ class QueryHandler{
 //would otherwise create many more objects then if we didn't have a singleton as a core.
 //Also, creating a singleton means we can save data to the query using our query handler
 //between instance calls.
-class Core implements DatabaseCore{
+class MySQLCore implements DatabaseCore{
 
     public $dbh;
     public $query;

@@ -1,16 +1,19 @@
 <?php
 
-    class UserTest extends PHPUnit_Extensions_Database_TestCase{
+class UserTest extends Generic_DB_Test{
 
-        public function setUp(){
+    public function setUp(){
+        $this->user = new User();
+    }
 
-            Config::write('db.host', 'localhost');
-            Config::write('db.base', 'logos_unit');
-            Config::write('db.user', 'logos_user');
-            Config::write('db.password', 'vYZ9J2aRTHveMhQZ');
+    public function getDataSet(){
+        return $this->createXMLDataSet('logos_unit.xml');
+    }
 
-            $this->User = new User();
+    public function testCheckObjectCreation(){
 
-        }
+        $this->assertObjectHasAttribute('id', $this->user);
 
     }
+
+}
