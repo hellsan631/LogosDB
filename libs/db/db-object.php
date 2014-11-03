@@ -2,37 +2,15 @@
 
 abstract class Database_Object{
 
-    protected static function _name(){
+    public $id;
 
-        $className = explode("\\", get_called_class());
-
-        return end($className);
-
+    public function __construct($id = null){
+        $this->classDataSetup($id);
     }
 
-    //returns an instance of an object with a given array of data
-    public static function newInstance($dataArray = null){
+    abstract function classDataSetup($id);
 
-        $className = get_called_class();
-
-        return new $className($dataArray);
-
-    }
-
-    public function toArray(){
-
-        return get_object_vars($this);
-
-    }
-
-    protected static function _getKeyChain(){
-
-        return get_class_vars(get_called_class());
-
-    }
-
-    protected static function _dataToArray(&$dataToFilter){
-
+    protected static function dataToArray(&$dataToFilter){
         if(!is_array($dataToFilter)){
             if(is_object($dataToFilter))
                 $dataToFilter = (array) $dataToFilter;
@@ -43,14 +21,12 @@ abstract class Database_Object{
         }
 
         return $dataToFilter;
-
     }
 
     public function updateObject($array){
+        $keyChain = self::getKeyChain();
 
-        $keyChain = self::_getKeyChain();
-
-        self::_dataToArray($array);
+        self::dataToArray($array);
 
         foreach($array as $key => $value){
             if(array_key_exists($key, $keyChain))
@@ -58,5 +34,56 @@ abstract class Database_Object{
         }
 
         return $this;
+    }
+
+    //returns an instance of an object with a given array of data
+    public static function newInstance($dataArray = null){
+        $className = self::name();
+
+        return new $className($dataArray);
+    }
+
+    public function toArray(){
+        return get_object_vars($this);
+    }
+
+    public function toJson(){
+        return json_encode($this->toArray());
+    }
+
+    protected static function getKeyChain(){
+        return get_class_vars(get_called_class());
+    }
+
+    protected static function name(){
+
+        $className = explode("\\", get_called_class());
+
+        return end($className);
+    }
+
+    //Magic Methods
+    //serialize
+    public function __sleep(){
+        $keys = self::getKeyChain();
+
+        $temp = [];
+
+        foreach($keys as $key => $value){
+            if($this->{$key} !== null)
+                array_push($temp, $key);
+        }
+
+        return $temp;
+    }
+
+    public function __toString(){
+        return json_encode($this->toArray(), JSON_FORCE_OBJECT);
+    }
+
+    public function __invoke($dataArray){
+        $object = self::name();
+
+        return new $object($dataArray);
     }
 }

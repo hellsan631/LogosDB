@@ -16,9 +16,7 @@ class CoreTest extends PHPUnit_Framework_TestCase{
      * @dataProvider inputJson
      */
     public function testCheckIsJson($jsonString, $expected){
-
         $this->assertEquals($expected, Core::isJson($jsonString));
-
     }
 
 }
