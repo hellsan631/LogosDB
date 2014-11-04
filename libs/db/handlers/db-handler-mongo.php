@@ -15,7 +15,7 @@ abstract class Logos_Mongo_Object extends Database_Object implements Database_Ha
             if(is_numeric($id)){
                 $this->loadInto($id);
             }else{
-                $this->updateObject(self::_dataToArray($id));
+                $this->updateObject(self::dataToArray($id));
             }
         }
     }
@@ -76,21 +76,10 @@ abstract class Logos_Mongo_Object extends Database_Object implements Database_Ha
     //gets the first object occurrence or returns a new instance of that object
     public static function firstOrNew($dataArray){}
 
-    //returns an instance of an object with a given array of data
-    public static function newInstance($dataArray){}
+    public static function createQuery($query, $type){
 
-    public function updateObject($array){
+        return Mongo_Core::runQuery($query, $type, self::name());
 
-        $keyChain = self::_getKeyChain();
-
-        self::_dataToArray($array);
-
-        foreach($array as $key => $value){
-            if(array_key_exists($key, $keyChain))
-                $this->{$key} = $value;
-        }
-
-        return $this;
     }
 
 }
@@ -103,16 +92,9 @@ class Mongo_Core implements Database_Core{
 
     public function __construct(){
 
-        $dsn = 'mysql:host=' . Config::read('db.host') .
-            ';dbname='    . Config::read('db.base') .
-            ';connect_timeout=15';
+        $dsn = new MongoClient();
 
-        //We use the @ symbol to supress errors because otherwise we would get the "mysql server has gone away"
-        $this->dbh = @new PDO($dsn, Config::read('db.user'), Config::read('db.password'), array(PDO::ATTR_PERSISTENT => true));
-        $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //PDO::ERRMODE_SILENT
-        $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
-        $this->query = new QueryHandler();
+        $this->dbh = $dsn->{Config::read('db.base')};
 
     }
 
@@ -124,6 +106,14 @@ class Mongo_Core implements Database_Core{
         }
 
         return self::$instance;
+    }
+
+    public static function runQuery($query, $type, $tableName){
+
+        $instance = self::getInstance();
+
+        return $instance->dbh->{$tableName}->{$type}($query);
+
     }
 
 

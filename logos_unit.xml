@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <dataset>
-    <table name="event">
+    <table name="MySQL_Event">
         <column>id</column>
         <column>name</column>
         <column>date_start</column>
@@ -30,7 +30,7 @@
             <value>2014-11-02 12:16:09</value>
         </row>
     </table>
-	<table name="user">
+	<table name="MySQL_User">
         <column>id</column>
         <column>username</column>
         <column>email</column>
