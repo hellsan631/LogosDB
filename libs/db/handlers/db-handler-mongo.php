@@ -3,23 +3,6 @@
 
 abstract class Logos_Mongo_Object extends Database_Object implements Database_Handler{
 
-    public $id;
-
-    public function __construct($id = null){
-        $this->classDataSetup($id);
-    }
-
-    public function classDataSetup($id = null){
-
-        if($id !== null){
-            if(is_numeric($id)){
-                $this->loadInto($id);
-            }else{
-                $this->updateObject(self::dataToArray($id));
-            }
-        }
-    }
-
     //-------------DB Object Creation
 
     //create new object in database with current given object
@@ -94,7 +77,7 @@ class Mongo_Core implements Database_Core{
 
         $dsn = new MongoClient();
 
-        $this->dbh = $dsn->{Config::read('db.base')};
+        $this->dbh = $dsn->{Config::read('db.name')};
 
     }
 

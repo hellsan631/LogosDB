@@ -8,6 +8,7 @@ interface Database_Core{
 }
 
 class Core{
+
     public static function clean($data){
         return htmlspecialchars(mysql_real_escape_string($data));
     }

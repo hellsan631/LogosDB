@@ -6,23 +6,6 @@
 
 abstract class Logos_MySQL_Object extends Database_Object implements Database_Handler{
 
-    /**
-     * Handles the object loading from the database when an ID is passed
-     * @param mixed $id [optional]
-     * <p>Can be an array of matched object data, the object ID, an object, or even a json string</p>
-     * @return void
-     */
-    public function classDataSetup($id = null){
-
-        if($id !== null){
-            if(is_numeric($id)){
-                $this->loadInto($id);
-            }else{
-                $this->updateObject(self::dataToArray($id));
-            }
-        }
-    }
-
     //-------------DB Object Creation
 
     /**
@@ -400,31 +383,16 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
     }
 
-    /**
-     * 100 Queries Run
-     * <p>Average Time: 4ms per 100/0.305kb</p>
-     */
-
-    //Static version of getList
-    public static function loadMultiple($conditionArray = null){
-        return self::newInstance()->getList($conditionArray);
-    }
-
     //-------------DB Delete Objects
-
-    /**
-     * 100 Queries Run
-     * <p>Average Time: 34ms per 100/0.335kb</p>
-     */
-
-    public function remove(){
-       return self::destroy($this->id);
-    }
 
     /**
      * 100 Queries Run
      * <p>Average Time: 2ms per 100/1.265kb</p>
      */
+
+    public function remove(){
+        return self::destroy($this->id);
+    }
 
     public static function removeMultiple($conditionArray){
 
@@ -482,10 +450,21 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
     }
 
-    //Object::query('limit', 10)->getList();
-    //Object::query(['orderBy', 'limit'], ['id DESC', 10])->getList();
-    //Object::query(['orderBy', 'limit'], ['id ASC', 10])->getList();
-    //Object::query(['orderBy' => 'id ASC', 'limit' => 10])->getList();
+    /**
+     * @param $functionCall
+     * What is added (orderBy, limit, groupBy) can be array or string
+     *
+     * @param null $params
+     * The parameters of the query ('10', 'id ADC') can be array or string
+     *
+     * @return mixed - returns new instance of self
+     *
+     * Examples:
+     * Object::query('limit', 10)->getList();
+     * Object::query(['orderBy', 'limit'], ['id DESC', 10])->getList();
+     * Object::query(['orderBy', 'limit'], ['id ASC', 10])->getList();
+     * Object::query(['orderBy' => 'id ASC', 'limit' => 10])->getList();
+     */
 
     public static function query($functionCall, $params = null){
 
@@ -639,7 +618,7 @@ class MySQL_Core implements Database_Core{
     public function __construct(){
 
         $dsn = 'mysql:host=' . Config::read('db.host') .
-            ';dbname='    . Config::read('db.base') .
+            ';dbname='    . Config::read('db.name') .
             ';connect_timeout=15';
 
         //We use the @ symbol to supress errors because otherwise we would get the "mysql server has gone away"

@@ -8,7 +8,32 @@ abstract class Database_Object{
         $this->classDataSetup($id);
     }
 
-    abstract function classDataSetup($id);
+    /**
+     * Handles the object loading from the database when an ID is passed
+     * @param mixed $id [optional]
+     * <p>Can be an array of matched object data, the object ID, an object, or even a json string</p>
+     * @return void
+     */
+
+    public function classDataSetup($id = null){
+
+        if($id !== null){
+            if(is_numeric($id)){
+                $this->loadInto($id);
+            }else{
+                $this->updateObject(self::dataToArray($id));
+            }
+        }
+    }
+
+    abstract public function loadInto($id);
+
+    abstract public function getList($conditionArray);
+
+    //Static version of getList
+    public static function loadMultiple($conditionArray = null){
+        return self::newInstance()->getList($conditionArray);
+    }
 
     protected static function dataToArray(&$dataToFilter){
         if(!is_array($dataToFilter)){

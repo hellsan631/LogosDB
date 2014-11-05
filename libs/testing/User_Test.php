@@ -1,6 +1,6 @@
 <?php
 
-class User_Test extends Generic_DB_Test{
+abstract class User_Test extends Generic_DB_Test{
 
     public static $db_table_name;
 
@@ -66,19 +66,40 @@ class User_Test extends Generic_DB_Test{
 
     public function testDatabaseCanLoadIntoObject(){
 
+        $object = self::$db_table_name;
+
+        $this->user = new $object();
+        $this->user->loadInto(1);
+        $this->assertTrue($this->user->id !== null);
+
+        $this->user = new $object(1);
+        $this->assertTrue($this->user->id !== null);
+
     }
 
     public function testDatabaseCanLoadMultipleObjects(){
+
+        $object = self::$db_table_name;
+
+        $list = $object::newInstance()->getList(['email' => 'hellsan631@email.com']);
+
+        $this->assertTrue(count($list) > 0);
+        $this->assertTrue(is_array($list));
+
+        $list = $object::loadMultiple(['email' => 'hellsan631@email.com']);
+
+        $this->assertTrue(count($list) > 0);
+        $this->assertTrue(is_array($list));
 
     }
 
     //------------Test Object Load or New
 
-    public function testDatabaseCanLoadFirstOrCreateObject(){
+    public function testDatabaseCanLoadFirstOrReturnNewInstanceOfObject(){
 
     }
 
-    public function testDatabaseCanLoadFirstOrReturnNewInstanceOfObject(){
+    public function testDatabaseCanLoadFirstOrCreateObject(){
 
     }
 
@@ -98,11 +119,11 @@ class User_Test extends Generic_DB_Test{
 
     }
 
-    public function testDatabaseCanDeleteMultipleObjects(){
+    public function testDatabaseCanDeleteSingleObject(){
 
     }
 
-    public function testDatabaseCanDeleteSingleObject(){
+    public function testDatabaseCanDeleteMultipleObjects(){
 
     }
 
