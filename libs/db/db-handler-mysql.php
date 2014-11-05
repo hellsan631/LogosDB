@@ -269,13 +269,13 @@ abstract class DatabaseObject implements DatabaseHandler{
 
         if($changedData === null)
             $changedData = $this->toArray();
-        else
+        else{
             self::_dataToArray($changedData);
+            $this->updateObject($changedData);
+        }
 
         $prepareStatement = "UPDATE ".self::_name()." SET ";
-
         self::_buildQuerySet($prepareStatement, $changedData, $keyChain);
-
         $prepareStatement .= " WHERE id = :id";
 
         $changedData["id"] = $this->id;
