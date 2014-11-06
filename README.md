@@ -40,7 +40,7 @@ include "./_db/objects.php";
 
 //Database settings
 Config::write('db.host', 'localhost');
-Config::write('db.base', 'db_name');
+Config::write('db.name', 'db_name');
 Config::write('db.user', 'db_user');
 Config::write('db.password', 'db_pass');
 ```

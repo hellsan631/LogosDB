@@ -1,0 +1,24 @@
+<phpunit  bootstrap="./vendor/autoload.php"
+          colors="true"
+          convertErrorsToExcpetions="true"
+          convertNoticesToExcpetions="true"
+          convertWarningsToExcpetions="true"
+          processIsolation="false"
+          stopOnFailure="false"
+          syntaxCheck="false"
+>
+
+    <php>
+        <var name="DB_DSN" value="mysql:dbname=logos_unit;host=localhost" />
+        <var name="DB_USER" value="logos_user" />
+        <var name="DB_PASSWD" value="vYZ9J2aRTHveMhQZ" />
+        <var name="DB_DBNAME" value="logos_unit" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Logos DB Tests">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+</phpunit>

@@ -1,9 +1,9 @@
 <?php
 
 
-interface DatabaseHandler{
+interface Database_Handler{
 
-    //-------------DB Object Creation
+    //-------------DB Create Objects
 
     //create new object in database with current given object
     public function createNew();
@@ -18,7 +18,7 @@ interface DatabaseHandler{
     public static function createMultiple($data, $count);
 
 
-    //-------------DB Object Update
+    //-------------DB Update Objects
 
     //Updates/saves changes to an object in the database, with an optional param $changedData
     public function save($changedData);
@@ -58,8 +58,5 @@ interface DatabaseHandler{
 
     //gets the first object occurrence or returns a new instance of that object
     public static function firstOrNew($dataArray);
-
-    //returns an instance of an object with a given array of data
-    public static function newInstance($dataArray);
 
 }

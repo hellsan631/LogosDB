@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="MySQL_Event">
+        <column>id</column>
+        <column>name</column>
+        <column>date_start</column>
+        <row>
+            <value>1</value>
+            <value>event1</value>
+            <value>2014-11-02 12:16:05</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>event2</value>
+            <value>2014-11-02 12:16:06</value>
+        </row>
+		<row>
+            <value>3</value>
+            <value>event3</value>
+            <value>2014-11-02 12:16:07</value>
+        </row>
+		<row>
+            <value>4</value>
+            <value>event4</value>
+            <value>2014-11-02 12:16:08</value>
+        </row>
+		<row>
+            <value>5</value>
+            <value>event5</value>
+            <value>2014-11-02 12:16:09</value>
+        </row>
+    </table>
+	<table name="MySQL_User">
+        <column>id</column>
+        <column>username</column>
+        <column>email</column>
+        <row>
+            <value>1</value>
+            <value>User1</value>
+            <value>user1@email.com</value>
+        </row>
+		<row>
+            <value>2</value>
+            <value>User2</value>
+            <value>user2@email.com</value>
+        </row>
+		<row>
+            <value>3</value>
+            <value>User3</value>
+            <value>user3@email.com</value>
+        </row>
+		<row>
+            <value>4</value>
+            <value>User4</value>
+            <value>user4@email.com</value>
+        </row>
+		<row>
+            <value>5</value>
+            <value>User5</value>
+            <value>user5@email.com</value>
+        </row>
+    </table>
+</dataset>
