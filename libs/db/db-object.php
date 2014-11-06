@@ -16,7 +16,6 @@ abstract class Database_Object{
      */
 
     public function classDataSetup($id = null){
-
         if($id !== null){
             if(is_numeric($id)){
                 $this->loadInto($id);
@@ -27,6 +26,12 @@ abstract class Database_Object{
     }
 
     abstract public function loadInto($id);
+
+    /**
+     * Ensures that data (JSON String, Objects) are turned into arrays for processing
+     * @param $dataToFilter
+     * @return array
+     */
 
     protected static function dataToArray(&$dataToFilter){
         if(!is_array($dataToFilter)){
@@ -44,7 +49,6 @@ abstract class Database_Object{
     /**
      * @param $dataToUpdate
      * The data (JSON, array, or object) which you want added to the object
-     *
      *
      * @param bool $adhere
      * Adhere's input data to the model. If you want to store data that is outside the model,
@@ -75,6 +79,15 @@ abstract class Database_Object{
         return new $className($dataArray);
     }
 
+    /**
+     * Returns an array of the object's internal data
+     *
+     * @param bool $emptyNull
+     * If $emptyNull is set to true, toArray will return an array of values that are NOT null.
+     * Default behavior is set to always return all values, even if they are null
+     *
+     * @return array
+     */
     public function toArray($emptyNull = false){
 
         if($emptyNull){
@@ -93,14 +106,27 @@ abstract class Database_Object{
         return get_object_vars($this);
     }
 
+    /**
+     * Returns a JSON string of an object, with no empty values
+     * @return string
+     */
     public function toJson(){
-        return json_encode($this->toArray());
+        return json_encode($this->toArray(true));
     }
 
+    /**
+     * Gets an array of the classes namee variables
+     * @return array
+     */
     protected static function getKeyChain(){
         return get_class_vars(get_called_class());
     }
 
+
+    /**
+     * Gets the name of the class
+     * @return string
+     */
     protected static function name(){
 
         $className = explode("\\", get_called_class());
