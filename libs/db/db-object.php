@@ -21,19 +21,12 @@ abstract class Database_Object{
             if(is_numeric($id)){
                 $this->loadInto($id);
             }else{
-                $this->updateObject(self::dataToArray($id));
+                $this->updateObject($id);
             }
         }
     }
 
     abstract public function loadInto($id);
-
-    abstract public function getList($conditionArray);
-
-    //Static version of getList
-    public static function loadMultiple($conditionArray = null){
-        return self::newInstance()->getList($conditionArray);
-    }
 
     protected static function dataToArray(&$dataToFilter){
         if(!is_array($dataToFilter)){
@@ -48,13 +41,27 @@ abstract class Database_Object{
         return $dataToFilter;
     }
 
-    public function updateObject($array){
+    /**
+     * @param $dataToUpdate
+     * The data (JSON, array, or object) which you want added to the object
+     *
+     *
+     * @param bool $adhere
+     * Adhere's input data to the model. If you want to store data that is outside the model,
+     * then you can set this to false.
+     *
+     * @return $this
+     */
+
+    public function updateObject(&$dataToUpdate, $adhere = true){
         $keyChain = self::getKeyChain();
 
-        self::dataToArray($array);
+        self::dataToArray($dataToUpdate);
 
-        foreach($array as $key => $value){
-            if(array_key_exists($key, $keyChain))
+        foreach($dataToUpdate as $key => $value){
+            if($adhere === false)
+                $this->{$key} = $value;
+            else if(array_key_exists($key, $keyChain))
                 $this->{$key} = $value;
         }
 
@@ -68,7 +75,21 @@ abstract class Database_Object{
         return new $className($dataArray);
     }
 
-    public function toArray(){
+    public function toArray($emptyNull = false){
+
+        if($emptyNull){
+
+            $array = get_object_vars($this);
+
+            foreach($array as $key => &$value){
+                if($value === null)
+                    unset($array[$key]);
+            }
+
+            return $array;
+
+        }
+
         return get_object_vars($this);
     }
 

@@ -239,30 +239,25 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      */
     public function save($changedData = null){
 
+        //@TODO make it so the object is the condition if id is null
         if($this->id === null)
             throw new Exception("Object has no ID, so cannot be saved using a non-static method.");
 
         $keyChain = self::getKeyChain();
 
-        if($changedData === null)
-            $changedData = $this->toArray();
-        else
-            self::dataToArray($changedData);
+        if($changedData !== null){
+            $this->updateObject($changedData);
+        }else
+            $changedData = $this->toArray(true);
 
         $prepareStatement = "UPDATE ".self::name()." SET ";
-
         self::_buildQuerySet($prepareStatement, $changedData, $keyChain);
-
         $prepareStatement .= " WHERE id = :id";
 
         $changedData["id"] = $this->id;
-
         foreach($changedData as $key => $val){
-
             $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ? Core::unixToMySQL($val) : $val;
-
             unset($changedData[$key]);
-
         }
 
         //string should look like this:
@@ -279,6 +274,11 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
     * 100 Queries Run
     * <p>Average Time: 1ms per 100/0.44kb</p>
     */
+
+    //alias for saveMultiple
+    public static function saveSingle($changedData, $conditionArray){
+        return self::saveMultiple($changedData, $conditionArray);
+    }
 
     public static function saveMultiple($changedData, $conditionArray){
 
@@ -329,10 +329,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
     public function loadInto($id){
 
-        $prepareStatement = "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1";
-        $dataArray = [":id" => $id];
-
-        return MySQL_Core::fetchQueryObj($prepareStatement, $dataArray, PDO::FETCH_INTO, $this);
+        return MySQL_Core::fetchQueryObj("SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1", [":id" => $id], PDO::FETCH_INTO, $this);
 
     }
 
@@ -354,9 +351,24 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
             self::_buildQueryWhere($prepareStatement, $conditionArray);
         }
 
-        $objects = MySQL_Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
+        return MySQL_Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
 
-        return $objects;
+    }
+
+    //Static version of getList
+    public static function loadMultiple($conditionArray = null){
+
+        self::dataToArray($conditionArray);
+        $name = self::name();
+
+        $prepareStatement = "SELECT * FROM ".$name;
+
+        if($conditionArray !== null){
+            $prepareStatement .= " WHERE ";
+            self::_buildQueryWhere($prepareStatement, $conditionArray);
+        }
+
+        return MySQL_Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
 
     }
 
