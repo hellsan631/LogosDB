@@ -245,23 +245,12 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
         $keyChain = self::getKeyChain();
 
-<<<<<<< HEAD:libs/db/db-handler-mysql.php
-        if($changedData === null)
-            $changedData = $this->toArray();
-        else{
-            self::_dataToArray($changedData);
-            $this->updateObject($changedData);
-        }
-
-        $prepareStatement = "UPDATE ".self::_name()." SET ";
-=======
         if($changedData !== null){
             $this->updateObject($changedData);
         }else
             $changedData = $this->toArray(true);
 
         $prepareStatement = "UPDATE ".self::name()." SET ";
->>>>>>> origin/dev:libs/db/handlers/db-handler-mysql.php
         self::_buildQuerySet($prepareStatement, $changedData, $keyChain);
         $prepareStatement .= " WHERE id = :id";
 
