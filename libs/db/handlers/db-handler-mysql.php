@@ -377,6 +377,10 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      * <p>Average Time: 47ms per 100/0.355kb</p>
      */
 
+    public static function loadSingle($conditionArray){
+        return self::load($conditionArray);
+    }
+
     public static function load($conditionArray){
 
         self::dataToArray($conditionArray);
