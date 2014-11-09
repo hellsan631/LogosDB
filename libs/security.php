@@ -1,7 +1,5 @@
 <?php
 
-include_once "db-core.php";
-
 class Cipher {
     private $secureKey;
     private $iv;
