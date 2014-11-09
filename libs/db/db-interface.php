@@ -30,13 +30,16 @@ interface Database_Handler{
     //-------------DB Load Objects
 
     //Loads an object from a database into the container class
-    public function loadInto($id);
+    public function load($id);
 
     //Loads a list of objects from the database with given conditions
     public function getList($conditionArray);
 
     //Loads a single object from the database
-    public static function load($conditionArray);
+    public static function loadSingle($conditionArray);
+
+    //Loads a multiple objects from the db
+    public static function loadMultiple($conditionArray);
 
 
     //-------------DB Delete Objects

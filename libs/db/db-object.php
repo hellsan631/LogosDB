@@ -17,15 +17,14 @@ abstract class Database_Object{
 
     public function classDataSetup($id = null){
         if($id !== null){
-            if(is_numeric($id)){
-                $this->loadInto($id);
-            }else{
+            if(is_numeric($id))
+                $this->load($id);
+            else
                 $this->updateObject($id);
-            }
         }
     }
 
-    abstract public function loadInto($id);
+    abstract public function load($id);
 
     /**
      * Ensures that data (JSON String, Objects) are turned into arrays for processing
@@ -91,7 +90,6 @@ abstract class Database_Object{
     public function toArray($emptyNull = false){
 
         if($emptyNull){
-
             $array = get_object_vars($this);
 
             foreach($array as $key => &$value){
@@ -100,7 +98,6 @@ abstract class Database_Object{
             }
 
             return $array;
-
         }
 
         return get_object_vars($this);
