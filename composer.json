@@ -11,20 +11,18 @@
 			"homepage": "http://mathew-kleppin.com/blog/"
 		}
 	],
-	"support": {
-		"source": "https://github.com/hellsan631/LogosDB"
-	},
 	"require": {
 		"php": ">=5.5",
 		"ext-mcrypt": "*"
 	},
-	"require-dev": {
-		"phpunit/phpunit": "4.3.*"
-	},
-	"autoload": {
-        "classmap":[
-            "libs/db",
-			"libs/helpers"
-        ]
-    }
+    "autoload": {
+        "psr-0": { "Logos": "libs/" }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/hellsan631/LogosDB",
+            "comment": "Several large changes in how composer autoloads package"
+        }
+    ]
 }
