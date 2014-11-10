@@ -1,8 +1,8 @@
 {
-	"name": "hellsan631/LogosDB",
+	"name": "logosdb/logosdb",
 	"description": "Logos DB Object Handlers",
 	"type": "library",
-	"keywords": ["framework"],
+	"keywords": ["logosdb"],
 	"homepage": "http://mathew-kleppin.com/blog/",
 	"license": "MIT",
 	"authors": [
