@@ -1,7 +1,30 @@
 {
-    "autoload": {
+	"name": "hellsan631/LogosDB",
+	"description": "Logos DB Object Handlers",
+	"type": "library",
+	"keywords": ["framework"],
+	"homepage": "http://mathew-kleppin.com/blog/",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Mathew Kleppin",
+			"homepage": "http://mathew-kleppin.com/blog/"
+		}
+	],
+	"support": {
+		"source": "https://github.com/hellsan631/LogosDB"
+	},
+	"require": {
+		"php": ">=5.5",
+		"ext-mcrypt": "*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "4.3.*"
+	},
+	"autoload": {
         "classmap":[
-            "libs"
+            "libs/db",
+			"libs/helpers"
         ]
     }
 }

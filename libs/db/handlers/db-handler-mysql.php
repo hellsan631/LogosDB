@@ -470,6 +470,14 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      * Object::query(['orderBy', 'limit'], ['id DESC', 10])->getList();
      * Object::query(['orderBy', 'limit'], ['id ASC', 10])->getList();
      * Object::query(['orderBy' => 'id ASC', 'limit' => 10])->getList();
+     *
+     * Min/Max Limiting
+     * Object::query('limit', [0, 10])->getList();
+     * Object::query('limit', ['min' => 0, 'max' => 10])->getList();
+     *
+     * Or if you want to use an array,
+     * Object::query(['limit' => [0, 10]])->getList();
+     * Object::query(['limit' => ['min' => 0, 'max' => 10]])->getList();
      */
 
     public static function query($functionCall, $params = null){
@@ -496,6 +504,16 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         return self::newInstance();
     }
 
+    /**
+     * Builds a PDO query for MYSQL Update. ex: SET thing = :thing, thing2 = :thing2
+     *
+     * @param $prepareStatement
+     *
+     * @param $conditionArray
+     *
+     * @param null $keyChain
+     */
+
     private static function _buildQuerySet(&$prepareStatement, &$conditionArray, &$keyChain = null){
 
         if($keyChain === null)
@@ -511,6 +529,16 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         $prepareStatement = rtrim($prepareStatement, ", ");
 
     }
+
+    /**
+     * Builds a PDO query for MYSQL WHERE. ex: WHERE thing = :thing AND thing2 = :thing2
+     *
+     * @param $prepareStatement
+     *
+     * @param $conditionArray
+     *
+     * @param null $keyChain
+     */
 
     private static function _buildQueryWhere(&$prepareStatement, &$conditionArray, &$keyChain = null){
 
