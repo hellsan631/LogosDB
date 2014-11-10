@@ -16,7 +16,9 @@
 		"ext-mcrypt": "*"
 	},
     "autoload": {
-        "psr-0": { "Logos": "libs/" }
+        "classmap":[
+            "lib"
+        ]
     },
     "repositories": [
         {
