@@ -51,7 +51,6 @@ your php header
 Create an object class for each table in your database you want to use this with.
 
 ```php
-
 //example object
 class User extends Logos_MySQL_Object{
 
@@ -133,7 +132,7 @@ User::createMultiple($users);
 //Saving a single object
 User::loadSingle(["id" => 10])->save(["email" => "newEmail@gmail.com"]);
 
-or
+//or
 
 User::saveSingle(["email" => "newEmail@gmail.com"], ["id" => 10]);
 
@@ -158,6 +157,7 @@ User::query('limit', 100)->getList();
 //Send them in as array!
 User::query('limit', [0, 10])->getList();
 User::query('limit', ['min' => 0, 'max' => 10])->getList();
+
 //Or if you want to use an array to add more,
 User::query(['limit' => [0, 10], 'orderBy' => 'id ASC'])->getList();
 User::query(['limit' => ['min' => 0, 'max' => 10], 'orderBy' => 'id ASC'])->getList();
