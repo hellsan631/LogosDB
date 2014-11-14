@@ -189,10 +189,10 @@ abstract class User_Test extends Generic_DB_Test{
         $max = 10000;
         $random =  mt_rand(0,$max*$max);
 
-        $list = $object::newInstance()->getList(['email' => 'hellsan631@email.com']);
+        $list = $object::loadMultiple(['email' => 'hellsan631@email.com']);
         $temp = [];
 
-        $this->assertTrue(count($list) > 0);
+        $this->assertTrue(count($list) > 0, "Tests to make sure data is loaded");
         $this->assertTrue(is_array($list));
 
         $count = 3;
@@ -209,9 +209,39 @@ abstract class User_Test extends Generic_DB_Test{
             $object::saveMultiple(["username" => $random], ["id" =>  $value->id]);
         }
 
-        $list = $object::newInstance()->getList(['username' => $random]);
+        $list = $object::loadMultiple(['username' => $random]);
 
-        $this->assertTrue(count($list) > 0);
+        $this->assertTrue(count($list) > 0, "Tests to make sure saveMultiple works");
+        $this->assertTrue(is_array($list));
+
+        $random2 =  mt_rand(0,$max*$max);
+
+        $count = 3;
+
+        foreach($list as $value){
+            array_push($temp, $value);
+            $count--;
+
+            if($count <= 0)
+                break;
+        }
+
+        $object::saveMultiple(['email' => $random2], ['username' => $random]);
+
+        $list = $object::loadMultiple(['email' => $random2]);
+
+        $this->assertTrue(count($list) > 1, "Tests to make save multiple saves more then 1");
+        $this->assertTrue(is_array($list));
+
+        $random2 =  mt_rand(0,$max*$max);
+
+        foreach($temp as $value){
+            $object::saveMultiple(['email' => $random2], ['username' => $random, "id" =>  $value->id]);
+        }
+
+        $list = $object::loadMultiple(['email' => $random2]);
+
+        $this->assertTrue(count($list) > 0, "Tests to make saveMultiple's condition array can support more then 1 argument");
         $this->assertTrue(is_array($list));
 
     }

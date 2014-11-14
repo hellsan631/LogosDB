@@ -289,14 +289,18 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
         $prepareStatement .= " WHERE ";
 
+        //This cannot be _buildWhereSet because we use two different data sets for the fetch query,
+        //changedData and the conditionArray. We add the where clauses to the condition array
+        //@TODO rewrite this so it uses the $conditionArray instead of $changedData, so we can use _buildQueryWhere
+
         foreach($conditionArray as $key => $value){
             if(array_key_exists($key, $keyChain)){
-                $prepareStatement .= "{$key} = :w{$key}, ";
+                $prepareStatement .= "{$key} = :w{$key} AND ";
                 $changedData["w".$key] = $value;
             }
         }
 
-        $prepareStatement = rtrim($prepareStatement, ", ");
+        $prepareStatement = rtrim($prepareStatement, " AND ");
 
         foreach($changedData as $key => $val){
             $changedData[':'.$key] = (mb_strpos($key,'date') !== false) ?
@@ -420,10 +424,10 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
     public static function destroy($id){
 
-        $prepareStatement = "DELETE FROM ".self::name()." WHERE id = :id";
-        $dataArray = [':id' => $id];
-
-        return MySQL_Core::fetchQuery($prepareStatement, $dataArray);
+        return MySQL_Core::fetchQuery(
+            "DELETE FROM ".self::name()." WHERE id = :id",
+            [':id' => $id]
+        );
 
     }
 

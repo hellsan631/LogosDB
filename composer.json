@@ -23,8 +23,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/hellsan631/LogosDB",
-            "comment": "Several large changes in how composer autoloads package"
+            "url": "https://github.com/hellsan631/LogosDB"
         }
     ]
 }
