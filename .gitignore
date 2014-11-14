@@ -17,9 +17,6 @@ $RECYCLE.BIN/
 #ideaFiles
 !/.idea
 
-#Composer Vendor files
-!/vendor
-
 # =========================
 # Operating System Files
 # =========================
@@ -32,7 +29,7 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
 
 # Thumbnails
 ._*
@@ -50,11 +47,3 @@ Icon
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
 .idea/workspace.xml
-vendor/autoload.php
-vendor/composer/autoload_classmap.php
-vendor/composer/autoload_namespaces.php
-vendor/composer/autoload_psr4.php
-vendor/composer/autoload_real.php
-vendor/composer/ClassLoader.php
-vendor/composer/include_paths.php
-vendor/composer/installed.json

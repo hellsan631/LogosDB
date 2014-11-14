@@ -1,7 +1,11 @@
-LogosDB v 1.2.1
+LogosDB v 1.4.*
 =======
 
-A Database Object Handler Class that makes DB interaction easy for a change.
+LogosDB is a database micro-framework for creating simple DB interaction without the need for a full MVC structure.
+
+The idea is that for small projects, creating APIs, or when you just don't want or need to implement a fully featured
+MVC framework (Phalcon, Laravel, CodeIgniter, Zend), LogosDB has your back. LogosDB is a bare-bones Model Interaction
+Framework for working with objects inside databases. Its pretty good on the performance too!
 
 ## Getting Started
 
@@ -12,18 +16,44 @@ Requires PHP 5.5+
 Requires PDO
 ```
 
+### Installation (via composer)
+
+Installation via composer is simple. Just add the following to your composer.json file
+
+```JSON
+{
+    "require": {
+        "hellsan631/logosdb": "1.4.*"
+    }
+}
+```
+
+After updating composer, extend the class with a logos object
+
+```php
+class User extends Logos_MySQL_Object{
+    public $username;
+    public $email;
+}
+```
+
+and make sure to include your autoloader
+
+```php
+include "./vendor/autoload.php";
+```
+
+For those who don't have composer, just download as a zip, and include the autoload file in
+your php header
+
 ### Creating A Model
 
-Copy this folder into your project, and create an object class for each table
-in your database you want to use this with.
+Create an object class for each table in your database you want to use this with.
 
 ```php
 
-//right now there is only mysql database compatibility
-include "db-handler-mysql.php";
-
 //example object
-class User extends DatabaseObject{
+class User extends Logos_MySQL_Object{
 
     public $id; //already defined in the DatabaseObject class.
 
@@ -33,11 +63,12 @@ class User extends DatabaseObject{
 }
 ```
 
-### Controller Usage
+### Database Setup
+
+We use the config class, which creates a simpleton, for inputting our DB connection data. Add this somewhere
+in your header (or you can add this to autoload.php)
 
 ```php
-include "./_db/objects.php";
-
 //Database settings
 Config::write('db.host', 'localhost');
 Config::write('db.name', 'db_name');
@@ -47,6 +78,7 @@ Config::write('db.password', 'db_pass');
 
 ### Database Schema
 
+MySQL
 ```
 Each table in your database should have an ID field, which is a incremental primary
 index. If you want a table to use a date, use the timestamp format, and include
@@ -54,6 +86,9 @@ date in the name of the field.
 ```
 
 ## Usage
+
+For a quick list of classes and what they do, head on over to the database interface
+https://github.com/hellsan631/LogosDB/blob/master/lib/LogosDB/db/db-interface.php
 
 ### Creating a new object in the database
 
@@ -96,11 +131,13 @@ User::createMultiple($users);
 
 ```php
 //Saving a single object
-User::newInstance(["id" => 10])->save(["email" => "newEmail@gmail.com"]);
+User::loadSingle(["id" => 10])->save(["email" => "newEmail@gmail.com"]);
+
+or
+
+User::saveSingle(["email" => "newEmail@gmail.com"], ["id" => 10]);
 
 //saving to multiple objects at the same time
-User::query(['limit'], [100]);
-
 User::saveMultiple(["email" => "newEmail@gmail.com"], ["username" => "testing"]);
 ```
 
@@ -109,22 +146,21 @@ User::saveMultiple(["email" => "newEmail@gmail.com"], ["username" => "testing"])
 Want to add a limit, orderBy, or groupBy to your query results?
 
 ```php
-User::query('limit', 10)->getList();
+User::query('limit', 10);
+User::query(['orderBy', 'limit'], ['id DESC', 10]);
+User::query(['orderBy', 'limit'], ['id ASC, username DESC', 10]);
+User::query(['orderBy' => 'id ASC', 'limit' => 10]);
 
-User::query(['orderBy', 'limit'], ['id DESC', 10])->getList();
-
-User::query(['orderBy', 'limit'], ['id ASC, username DESC', 10])->getList();
-
-User::query(['orderBy' => 'id ASC', 'limit' => 10])->getList();
+//Add getList to the end of your query to get a list of that classes objects
+User::query('limit', 100)->getList();
 
 //how to use min/max for limit
 //Send them in as array!
 User::query('limit', [0, 10])->getList();
 User::query('limit', ['min' => 0, 'max' => 10])->getList();
 //Or if you want to use an array to add more,
-
-User::query(['limit' => [0, 10]])->getList();
-User::query(['limit' => ['min' => 0, 'max' => 10]])->getList();
+User::query(['limit' => [0, 10], 'orderBy' => 'id ASC'])->getList();
+User::query(['limit' => ['min' => 0, 'max' => 10], 'orderBy' => 'id ASC'])->getList();
 ```
 
 Any added limit/orderby/groupby is only added to the next query executed.
@@ -133,19 +169,20 @@ If you run any two queries in a row , i.e.
 User::query('limit', 10);
 User::loadMultiple($array1);
 
-//limit no longer applies here
-User::query('limit', 10);
+//limit 10 no longer applies here
 User::CreateMultiple($array2);
 ```
-You will need to add the query to each call to the database if you want it to effect that call.
+
+You need to add the query to each call to the database if you want it to effect that call.
 
 Also, any time you set a query, the previous query of that type is overwritten.
+
 ```php
 User::query('limit', 10);
 User::query('orderBy', 'id ASC');
 User::query('orderBy', 'id DESC');
 
-//would load users in id DESC order
+//would load 10 users in id DESC order
 User::loadMultiple($array1);
 ```
 
