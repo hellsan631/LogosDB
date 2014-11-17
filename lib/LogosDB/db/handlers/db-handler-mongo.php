@@ -67,11 +67,7 @@ abstract class Logos_Mongo_Object extends Database_Object implements Database_Ha
 
 }
 
-class Mongo_Core implements Database_Core{
-
-    public $dbh;
-    private static $instance;
-    //Core is a singleton
+class Mongo_Core extends Database_Core{
 
     public function __construct(){
 
@@ -79,16 +75,6 @@ class Mongo_Core implements Database_Core{
 
         $this->dbh = $dsn->{Config::read('db.name')};
 
-    }
-
-    //Singleton get class
-    public static function getInstance(){
-        if (!isset(self::$instance)){
-            $object = __CLASS__;
-            self::$instance = new $object;
-        }
-
-        return self::$instance;
     }
 
     public static function runQuery($query, $type, $tableName){

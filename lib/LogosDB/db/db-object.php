@@ -71,7 +71,13 @@ abstract class Database_Object{
         return $this;
     }
 
-    //returns an instance of an object with a given array of data
+    /**
+     * Returns an instance of an object with a given array of data
+     *
+     * @param null $dataArray
+     *
+     * @return mixed
+     */
     public static function newInstance($dataArray = null){
         $className = self::name();
 
@@ -105,6 +111,7 @@ abstract class Database_Object{
 
     /**
      * Returns a JSON string of an object, with no empty values
+     *
      * @return string
      */
     public function toJson(){
@@ -113,6 +120,7 @@ abstract class Database_Object{
 
     /**
      * Gets an array of the classes namee variables
+     *
      * @return array
      */
     protected static function getKeyChain(){
@@ -122,6 +130,7 @@ abstract class Database_Object{
 
     /**
      * Gets the name of the class
+     *
      * @return string
      */
     protected static function name(){

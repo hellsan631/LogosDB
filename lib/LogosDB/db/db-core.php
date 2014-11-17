@@ -1,17 +1,45 @@
 <?php
 
 
-interface Database_Core{
+abstract class Database_Core{
 
-    public static function getInstance();
+    public $dbh;
+    private static $instance;
+    //Core is a singleton
+
+    //Ensures that anything that implements a Database_Core is a singleton
+    public static function getInstance(){
+        if (!isset(self::$instance)){
+            $object = get_called_class();
+            self::$instance = new $object;
+        }
+
+        return self::$instance;
+    }
 
 }
 
 class Core{
 
+    /**
+     * Cleans some data of escape characters and special html characters
+     *
+     * @param String $data
+     * Data to clean
+     *
+     * @return string
+     */
     public static function clean($data){
         return htmlspecialchars(mysql_real_escape_string($data));
     }
+
+    /**
+     * Checks if a given string is JSON or not
+     *
+     * @param $string
+     *
+     * @return bool
+     */
 
     public static function isJson($string){
 
@@ -40,14 +68,33 @@ class Core{
         return (json_last_error() === JSON_ERROR_NONE);
     }
 
-    public static function sendEmail($subject, $message, $recipient){
+    /**
+     * Sends an email with correct headers
+     * @param $subject
+     * @param $message
+     * @param $recipient
+     * @param string $from
+     * @return bool
+     */
+    public static function sendEmail($subject, $message, $recipient, $from = "no-reply<noreply@email.com>"){
 
-        $headers = "From: no-reply<noreply@whats-your-confidence.com>\r\n";
+        $headers = "From: $from\r\n";
         $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
         return mail($recipient, $subject, $message, $headers);
 
     }
+
+    /**
+     * Sorts an array of objects by an objects key with a given order
+     *
+     * @param $objects
+     * Array of objects to sort
+     *
+     * @param $key
+     * @param string $order
+     * @return mixed
+     */
 
     public static function sortByKey(&$objects, $key, $order = "DESC"){
 
@@ -79,11 +126,23 @@ class Core{
 
     }
 
+
+    /**
+     * Returns a base_64 encoded url
+     * @param $input
+     * @return string
+     */
     public static function base64_url_encode($input){
         return strtr(base64_encode($input), '+/=', '-_,');
     }
 
-    public static function formatNumber($number, $type = "ordinal"){//ordinal suffix
+    /**
+     * Formats a number with an ordinal suffix
+     * @param $number
+     * @param string $type
+     * @return string
+     */
+    public static function formatNumber($number, $type = "ordinal"){
 
         $ends = array('th','st','nd','rd','th','th','th','th','th','th');
 
@@ -94,23 +153,31 @@ class Core{
 
     }
 
+    /**
+     * Gets the current timezone
+     *
+     * @return DateTimeZone
+     */
     public static function getTimezone(){
         return new DateTimeZone('America/New_York');
     }
 
+    /**
+     * Checks to see if a string is a valid date time
+     * @param $str_dt
+     * DateTime string
+     *
+     * @return bool
+     */
     public static function isValidDateTimeString($str_dt) {
 
         if(!is_string($str_dt))
             return false;
 
         try{
-
             $date = new DateTime($str_dt);
-
         }catch(Exception $e){
-
             return false;
-
         }
 
         return $date &&
@@ -118,6 +185,14 @@ class Core{
             DateTime::getLastErrors()["error_count"] == 0;
 
     }
+
+    /**
+     * Converts a time to a correctly formatted Unix Timestamp, to be inserted into a database
+     *
+     * @param $timestamp
+     *
+     * @return bool|string
+     */
 
     public static function unixToMySQL($timestamp){
 
@@ -128,6 +203,13 @@ class Core{
 
     }
 
+    /**
+     * Gets the day of a given date time string
+     *
+     * @param $dateTimeString
+     *
+     * @return string
+     */
     public static function getDay($dateTimeString){
 
         $tempDate = new DateTime($dateTimeString);

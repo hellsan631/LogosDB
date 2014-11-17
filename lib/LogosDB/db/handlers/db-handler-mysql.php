@@ -267,14 +267,35 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
     }
 
     /**
-    * 100 Queries Run
-    * <p>Average Time: 1ms per 100/0.44kb</p>
-    */
-
-    //alias for saveMultiple
+     * Saves a single object inside a DB.
+     * Alias for saveMultiple
+     *
+     * @param $changedData
+     * An array of data to be changed
+     *
+     * @param $conditionArray
+     * Where the data is supposed to be changed
+     *
+     * @return bool
+     */
     public static function saveSingle($changedData, $conditionArray){
         return self::saveMultiple($changedData, $conditionArray);
     }
+
+    /**
+     * Saves multiple objects inside a DB.
+     *
+     * 100 Queries Run
+     * <p>Average Time: 1ms per 100/0.44kb</p>
+     *
+     * @param $changedData
+     * An array of data to be changed
+     *
+     * @param $conditionArray
+     * Where the data is supposed to be changed
+     *
+     * @return bool
+     */
 
     public static function saveMultiple($changedData, $conditionArray){
 
@@ -320,8 +341,15 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
     //-------------DB Load Objects
 
     /**
+     * Loads data into an existing object
+     *
      * 100 Queries Run
      * <p>Average Time: 39ms per 100/1.844kb</p>
+     *
+     * @param $id
+     * ID of object to load
+     *
+     * @return Object $this
      */
 
     public function load($id){
@@ -336,8 +364,15 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
     }
 
     /**
+     * Gets a list of items from a Query
+     *
      * 100 Queries Run
      * <p>Average Time: 4ms per 100/0.422kb</p>
+     *
+     * @param null $conditionArray
+     * Matching conditions for the list
+     *
+     * @return Array
      */
 
     public function getList($conditionArray = null){
@@ -357,8 +392,15 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
     }
 
     /**
+     * Loads a single object from the database
+     *
      * 100 Queries Run
      * <p>Average Time: 47ms per 100/0.355kb</p>
+     *
+     * @param $conditionArray
+     * Matching Conditions for the object to be loaded
+     *
+     * @return Object
      */
 
     public static function loadSingle($conditionArray){
@@ -378,6 +420,18 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         return MySQL_Core::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_OBJ, $name);
 
     }
+
+    /**
+     * Loads Multiple Objects from the database
+     *
+     * 100 Queries Run
+     * <p>Average Time: 4ms per 100/0.422kb</p>
+     *
+     * @param null $conditionArray
+     * Matching conditions for the list
+     *
+     * @return Array
+     */
 
     //Static version of getList
     public static function loadMultiple($conditionArray = null){
@@ -399,13 +453,28 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
     //-------------DB Delete Objects
 
     /**
+     * Removes a object, non-static alias for destroy($id)
+     *
      * 100 Queries Run
-     * <p>Average Time: 2ms per 100/1.265kb</p>
+     * <p>Average Time: 38ms per 100/0.325kb</p>
+     *
+     * @return bool
      */
 
     public function remove(){
         return self::destroy($this->id);
     }
+
+    /**
+     * Removes multiple objects based on a condition array
+     *
+     * 100 Queries Run
+     * <p>Average Time: 2ms per 100/1.265kb</p>
+     *
+     * @param $conditionArray
+     *
+     * @return bool
+     */
 
     public static function removeMultiple($conditionArray){
 
@@ -418,8 +487,15 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
     }
 
     /**
+     * Statically removes an object with a given ID from a database
+     *
      * 100 Queries Run
      * <p>Average Time: 38ms per 100/0.325kb</p>
+     *
+     * @param $id
+     * ID of object to be removed
+     *
+     * @return bool
      */
 
     public static function destroy($id){
@@ -434,23 +510,28 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
     //-------------Object Related
 
-    //gets the first object occurrence or creates a new one in the database
+    /**
+     * Gets the first object occurrence of an object in the database, or creates a new object
+     * if one doesn't exist
+     *
+     * @param $dataArray
+     *
+     * @return Database_Object
+     */
     public static function firstOrCreate($dataArray){
 
         $obj = self::firstOrNew($dataArray);
 
-        if(is_object($obj)){
-            if(!is_numeric($obj->id))
-                $obj->createNew();
-        }
-
-        return $obj;
+        return !is_numeric($obj->id) ? $obj->createNew() : $obj;
 
     }
 
-    //gets the first object occurrence or returns a new instance of that object
-    /*
-     * @return DatabaseObject $dataArray
+    /**
+     * Gets the first object occurrence or returns a new instance of that object
+     *
+     * @param $dataArray
+     *
+     * @return Database_Object
      */
     public static function firstOrNew($dataArray){
 
@@ -461,6 +542,8 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
     }
 
     /**
+     * Adds to a mysql query for grouping/ordering/limiting results
+     *
      * @param $functionCall
      * What is added (orderBy, limit, groupBy) can be array or string
      *
@@ -640,12 +723,10 @@ class QueryHandler{
 //would otherwise create many more objects then if we didn't have a singleton as a core.
 //Also, creating a singleton means we can save data to the query using our query handler
 //between instance calls.
-class MySQL_Core implements Database_Core{
+class MySQL_Core extends Database_Core{
 
     public $dbh;
     public $query;
-    private static $instance;
-    //Core is a singleton
 
     public function __construct(){
 
@@ -665,16 +746,6 @@ class MySQL_Core implements Database_Core{
 
         $this->query = new QueryHandler();
 
-    }
-
-    //Singleton get class
-    public static function getInstance(){
-        if (!isset(self::$instance)){
-            $object = __CLASS__;
-            self::$instance = new $object;
-        }
-
-        return self::$instance;
     }
 
     public static function fetchQuery($prepare, $execute, $returnQuery = true){
