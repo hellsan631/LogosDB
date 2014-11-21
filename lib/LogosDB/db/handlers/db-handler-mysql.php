@@ -56,6 +56,8 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         $this->id = MySQL_Core::fetchQuery($prepareStatement, $dataArray, false) ?
             MySQL_Core::getInstance()->dbh->lastInsertId() : null;
 
+        if($this->id === null)
+            return false;
 
         return $this;
     }
@@ -217,6 +219,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
     //-------------DB Object Update
 
     /**
+     * @TODO Should this throw exception on failure, or return false?
      * Updates/saves changes to an object in the database, with an optional param $changedData.
      * If changedData is null, then it will just use what data is in the class. If you however want to just change
      * a few things and already have an object, then use the changed data param
@@ -261,7 +264,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         //UPDATE fruit SET color = :color, count = :count WHERE id = :id
 
         if(!MySQL_Core::fetchQuery($prepareStatement, $changedData, false))
-            throw new Exception("Object couldn't be saved");
+            return false;
 
         return $this;
     }
@@ -355,11 +358,11 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
     public function load($id){
 
         return MySQL_Core::fetchQueryObj(
-                "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1",
-                [":id" => $id],
-                PDO::FETCH_INTO,
-                $this
-            );
+            "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1",
+            [":id" => $id],
+            PDO::FETCH_INTO,
+            $this
+        );
 
     }
 
