@@ -357,12 +357,14 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
     public function load($id){
 
-        return MySQL_Core::fetchQueryObj(
+        MySQL_Core::fetchQueryObj(
             "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1",
             [":id" => $id],
             PDO::FETCH_INTO,
             $this
         );
+
+        return ($this->id !== null) ? $this : false;
 
     }
 
