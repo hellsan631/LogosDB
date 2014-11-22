@@ -747,7 +747,7 @@ class MySQL_Core extends Database_Core{
         );
 
         $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //PDO::ERRMODE_SILENT
-        $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
 
         $this->query = new QueryHandler();
 
