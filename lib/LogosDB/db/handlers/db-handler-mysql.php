@@ -795,7 +795,7 @@ class MySQL_Core extends Database_Core{
 
                 $fetchParam = $query->fetchObject($fetchParam);
 
-                if(!is_object($fetchParam) && !is_array($fetchParam))
+                if(!is_object($fetchParam) && (!is_array($fetchParam) or count($fetchParam) == 0))
                     return false;
 
             }else if($fetchMode === PDO::FETCH_INTO)
