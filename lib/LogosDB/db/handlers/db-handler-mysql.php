@@ -350,19 +350,33 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      * <p>Average Time: 39ms per 100/1.844kb</p>
      *
      * @param $id
-     * ID of object to load
+     * ID of object to load, (this can also be an array of conditions)
      *
      * @return Object $this
      */
 
     public function load($id){
 
-        MySQL_Core::fetchQueryObj(
-            "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1",
-            [":id" => $id],
-            PDO::FETCH_INTO,
-            $this
-        );
+        if(is_numeric($id)){
+
+            MySQL_Core::fetchQueryObj(
+                "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1",
+                [":id" => $id],
+                PDO::FETCH_INTO,
+                $this
+            );
+
+        }else{
+
+            self::dataToArray($id);
+
+            $prepareStatement = "SELECT * FROM ".self::name()." WHERE ";
+            self::_buildQueryWhere($prepareStatement, $id);
+            $prepareStatement .= " LIMIT 1";
+
+            MySQL_Core::fetchQueryObj($prepareStatement, $id, PDO::FETCH_INTO, $this);
+
+        }
 
         return ($this->id !== null) ? $this : false;
 

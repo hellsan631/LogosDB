@@ -108,6 +108,16 @@ abstract class User_Test extends Generic_DB_Test{
         $this->user = new $object($savedID);
         $this->assertTrue($this->user->id !== null);
 
+        $this->user = new $object();
+        $this->user->load(['username' => 'HellsAn631']);
+        $this->assertTrue($this->user->id !== null);
+
+        $this->user = new $object();
+        $this->assertTrue($this->user->load(['username' => 'HellsAn631']) !== false, "Can load a conditional array into an object");
+
+        $this->user = new $object();
+        $this->assertTrue($this->user->load(['username' => 'mchammer']) == false, "Load returns false if no object in database is found");
+
     }
 
     public function testDatabaseCanLoadMultipleObjects(){
