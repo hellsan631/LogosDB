@@ -103,9 +103,9 @@ $user->createNew();
 User::createSingle(["username" => "testing", "email" => "email@email.com"]);
 ```
 
-### Saving Many objects to a database
+### Creating Many objects to a database
 
-You can save objects multiple ways.
+You can create objects multiple ways.
 
 ```php
 //Want to create 100 new identical objects?
