@@ -587,21 +587,34 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
     public static function query($functionCall, $params = null){
 
+        $callable = new QueryHandler();
+
         if($params === null){
             if(!is_array($functionCall))
                 trigger_error("Invalid Use of Query. No Params Given, and invalid Key/Value pairs");
 
             foreach($functionCall as $key => $value){
-                if($key == 'groupBy' or $key == 'orderBy' or $key == 'limit')
-                    MySQL_Core::getInstance()->query->$key($value);
+                $tempKey = strtolower($key);
+
+                if(is_callable([$callable, $tempKey], true))
+                    MySQL_Core::getInstance()->query->$tempKey($value);
+
             }
 
         }else{
-            if(!is_array($functionCall))
-                MySQL_Core::getInstance()->query->$functionCall($params);
-            else{
+            if(!is_array($functionCall)){
+                $functionCall = strtolower($functionCall);
+
+                if(is_callable([$callable, $functionCall], true))
+                    MySQL_Core::getInstance()->query->$functionCall($params);
+
+            }else{
                 foreach($functionCall as $key => $value){
-                    MySQL_Core::getInstance()->query->$value($params[$key]);
+                    $value = strtolower($value);
+
+                    if(is_callable([$callable, $value], true))
+                        MySQL_Core::getInstance()->query->$value($params[$key]);
+
                 }
             }
         }
@@ -665,34 +678,34 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
 class QueryHandler{
 
-    private $groupBy = "";
-    private $orderBy = "";
-    private $limit = "";
+    private $_groupby = "";
+    private $_orderby = "";
+    private $_limit = "";
 
     //Any time a query is executed, we want to make sure to clear the query so that it doesn't show up again.
     public function getQuery(){
 
-        $query = " {$this->groupBy} {$this->orderBy} {$this->limit} ";
+        $query = " {$this->_groupby} {$this->_orderby} {$this->_limit} ";
 
-        $this->groupBy = "";
-        $this->orderBy = "";
-        $this->limit = "";
+        $this->_groupby = "";
+        $this->_orderby = "";
+        $this->_limit = "";
 
         return $query;
 
     }
 
-    public function groupBy($grouping){
+    public function groupby($grouping){
 
-        $this->$groupBy = "GROUP BY $grouping";
+        $this->_groupby = "GROUP BY $grouping";
 
         return $this;
 
     }
 
-    public function orderBy($order){
+    public function orderby($order){
 
-        $this->orderBy = "ORDER BY $order";
+        $this->_orderby = "ORDER BY $order";
 
         return $this;
 
@@ -724,12 +737,12 @@ class QueryHandler{
         if($min === null)
             return $this;
 
-        $this->limit = "LIMIT $min, ";
+        $this->_limit = "LIMIT $min, ";
 
         if($max !== null)
-            $this->limit .= "$max, ";
+            $this->_limit .= "$max, ";
 
-        $this->limit = rtrim($this->limit, ", ");
+        $this->_limit = rtrim($this->_limit, ", ");
 
         return $this;
 
