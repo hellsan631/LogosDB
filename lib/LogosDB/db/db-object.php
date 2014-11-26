@@ -38,7 +38,7 @@ abstract class Database_Object{
                 $dataToFilter = (array) $dataToFilter;
             else if(Core::isJson($dataToFilter))
                 $dataToFilter = json_decode($dataToFilter, true);
-            else
+            else if($dataToFilter !== null)
                 trigger_error("Tried to filter Malformed data");
         }
 
