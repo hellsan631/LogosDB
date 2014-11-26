@@ -23,7 +23,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         $keyChain = self::getKeyChain();
         $dataArray = [];
 
-        $prepareStatement = "INSERT INTO ".self::name()." (";
+        $prepareStatement = "INSERT INTO `".self::name()."` (";
 
         foreach($keyChain as $key => $val){
             //since this is a new object, we don't want to save the ID, rather letting the DB generate an ID
@@ -87,7 +87,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         self::dataToArray($data);
         $keyChain = self::getKeyChain();
 
-        $prepareStatement = "INSERT INTO ".self::name()." (";
+        $prepareStatement = "INSERT INTO `".self::name()."` (";
 
         foreach($data as $key => $val){
             //Here we check to see if the key meets our criteria. If it doesn't we want to unset the key so
@@ -147,7 +147,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         $keyChain = self::getKeyChain();
         $goodKeys = $dataArray = [];
 
-        $prepareStatement = "INSERT INTO ".self::name()." (";
+        $prepareStatement = "INSERT INTO `".self::name()."` (";
 
         //We can trigger an error here but we can try and treat it as a single query
         if($count === null && !isset($data[0]))
@@ -248,7 +248,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         else
             $changedData = $this->toArray(true);
 
-        $prepareStatement = "UPDATE ".self::name()." SET ";
+        $prepareStatement = "UPDATE `".self::name()."` SET ";
         self::_buildQuerySet($prepareStatement, $changedData, $keyChain);
         $prepareStatement .= " WHERE id = :id";
 
@@ -306,7 +306,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         self::dataToArray($changedData);
         self::dataToArray($conditionArray);
 
-        $prepareStatement = "UPDATE ".self::name()." SET ";
+        $prepareStatement = "UPDATE `".self::name()."` SET ";
 
         self::_buildQuerySet($prepareStatement, $changedData, $keyChain);
 
@@ -359,7 +359,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         if(is_numeric($id)){
 
             MySQL_Core::fetchQueryObj(
-                "SELECT * FROM ".self::name()." WHERE id = :id LIMIT 1",
+                "SELECT * FROM `".self::name()."` WHERE id = :id LIMIT 1",
                 [":id" => $id],
                 PDO::FETCH_INTO,
                 $this
@@ -369,7 +369,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
             self::dataToArray($id);
 
-            $prepareStatement = "SELECT * FROM ".self::name()." WHERE ";
+            $prepareStatement = "SELECT * FROM `".self::name()."` WHERE ";
             self::_buildQueryWhere($prepareStatement, $id);
             $prepareStatement .= " LIMIT 1";
 
@@ -398,7 +398,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         self::dataToArray($conditionArray);
         $name = self::name();
 
-        $prepareStatement = "SELECT * FROM ".$name;
+        $prepareStatement = "SELECT * FROM `".$name."`";
 
         if($conditionArray !== null){
             $prepareStatement .= " WHERE ";
@@ -457,7 +457,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
         self::dataToArray($conditionArray);
         $name = self::name();
 
-        $prepareStatement = "SELECT * FROM ".$name;
+        $prepareStatement = "SELECT * FROM `".$name."`";
 
         if($conditionArray !== null){
             $prepareStatement .= " WHERE ";
@@ -496,7 +496,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
     public static function removeMultiple($conditionArray){
 
-        $prepareStatement = "DELETE FROM ".self::name()." WHERE ";
+        $prepareStatement = "DELETE FROM `".self::name()."` WHERE ";
 
         self::_buildQueryWhere($prepareStatement, $conditionArray);
 
