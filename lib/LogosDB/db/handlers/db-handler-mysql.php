@@ -13,7 +13,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      * 100 Queries Run
      * <p>Average Time: 48ms per 100/1.23kb</p>
      *
-     * @return Logos_MySQL_Object $this
+     * @return $this
      */
     public function createNew(){
 
@@ -230,7 +230,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      * <p>An optional array/object/json string of data that is to be saved into the database relating to the
      * referenced object</p>
      *
-     * @return Logos_MySQL_Object
+     * @return $this
      * <p>Returns the result of query execute. If the execute was successful, then returns true. False on fail</p>
      *
      * @throws Exception
@@ -351,7 +351,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      * @param $id
      * ID of object to load, (this can also be an array of conditions)
      *
-     * @return Logos_MySQL_Object $this
+     * @return $this
      */
 
     public function load($id){
@@ -418,7 +418,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      * @param $conditionArray
      * Matching Conditions for the object to be loaded
      *
-     * @return Logos_MySQL_Object
+     * @return $this
      */
 
     public static function loadSingle($conditionArray){
@@ -534,7 +534,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      *
      * @param $dataArray
      *
-     * @return Logos_MySQL_Object
+     * @return $this
      */
     public static function firstOrCreate($dataArray){
 
@@ -549,7 +549,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      *
      * @param $dataArray
      *
-     * @return Logos_MySQL_Object
+     * @return $this
      */
     public static function firstOrNew($dataArray){
 
@@ -568,7 +568,7 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
      * @param null $params
      * The parameters of the query ('10', 'id ADC') can be array or string
      *
-     * @return Logos_MySQL_Object - returns new instance of self
+     * @return $this - returns new instance of self
      *
      * Examples:
      * Object::query('limit', 10)->getList();
