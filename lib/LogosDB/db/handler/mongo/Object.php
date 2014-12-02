@@ -61,29 +61,8 @@ abstract class Logos_Mongo_Object extends Database_Object implements Database_Ha
 
     public static function createQuery($query, $type){
 
-        return Mongo_Core::runQuery($query, $type, self::name());
+        return Mongo_Adapter::runQuery($query, $type, self::name());
 
     }
-
-}
-
-class Mongo_Core extends Database_Core{
-
-    public function __construct(){
-
-        $dsn = new MongoClient();
-
-        $this->dbh = $dsn->{Config::read('db.name')};
-
-    }
-
-    public static function runQuery($query, $type, $tableName){
-
-        $instance = self::getInstance();
-
-        return $instance->dbh->{$tableName}->{$type}($query);
-
-    }
-
 
 }

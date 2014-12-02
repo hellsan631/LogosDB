@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Class Database_Object
+ *
+ * Includes some standard methods for object database handlers
+ */
+
 abstract class Database_Object{
 
     public $id;
@@ -24,6 +30,11 @@ abstract class Database_Object{
         }
     }
 
+    /**
+     * Ensures that the class must have a load function for classDataSetup
+     * @param $id
+     * @return mixed
+     */
     abstract public function load($id);
 
     /**
@@ -119,7 +130,8 @@ abstract class Database_Object{
     }
 
     /**
-     * Gets an array of the classes namee variables
+     * Gets an array of the classes named variables so that it can iterate through them
+     * by using $this->{$key}
      *
      * @return array
      */
