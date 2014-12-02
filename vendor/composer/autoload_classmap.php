@@ -9,7 +9,7 @@ return array(
     'Cipher' => $baseDir . '/lib/LogosDB/resources/Cipher.php',
     'Config' => $baseDir . '/lib/LogosDB/db/Config.php',
     'Core' => $baseDir . '/lib/LogosDB/resources/Core.php',
-    'Database_Adapter' => $baseDir . '/lib/LogosDB/db/AdapterInterface.php',
+    'Database_Adapter' => $baseDir . '/lib/LogosDB/db/AdapterAbstract.php',
     'Database_Handler' => $baseDir . '/lib/LogosDB/db/HandlerInterface.php',
     'Database_Object' => $baseDir . '/lib/LogosDB/db/DatabaseObject.php',
     'Generic_DB_Test' => $baseDir . '/lib/LogosDB/testing/tests/Generic_DB_Test.php',
