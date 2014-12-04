@@ -1,6 +1,6 @@
 {
 	"name": "hellsan631/logosdb",
-	"description": "Logos DB Object Handlers",
+	"description": "A database micro-framework for creating simple DB interaction without the need for a full framework",
 	"type": "library",
 	"keywords": ["framework"],
 	"homepage": "http://mathew-kleppin.com/blog/",
