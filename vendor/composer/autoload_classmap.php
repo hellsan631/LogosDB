@@ -6,14 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Cipher' => $baseDir . '/lib/LogosDB/resources/Cipher.php',
+    'Cipher' => $baseDir . '/lib/LogosDB/resources/security/Cipher.php',
     'Config' => $baseDir . '/lib/LogosDB/db/Config.php',
     'Core' => $baseDir . '/lib/LogosDB/resources/Core.php',
     'Database_Adapter' => $baseDir . '/lib/LogosDB/db/AdapterAbstract.php',
     'Database_Handler' => $baseDir . '/lib/LogosDB/db/HandlerInterface.php',
     'Database_Object' => $baseDir . '/lib/LogosDB/db/DatabaseObject.php',
     'Generic_DB_Test' => $baseDir . '/lib/LogosDB/testing/tests/Generic_DB_Test.php',
-    'Iron' => $baseDir . '/lib/LogosDB/resources/Iron.php',
+    'Iron' => $baseDir . '/lib/LogosDB/resources/security/Iron.php',
     'Logos_Mongo_Object' => $baseDir . '/lib/LogosDB/db/handler/mongo/Object.php',
     'Logos_MySQL_Object' => $baseDir . '/lib/LogosDB/db/handler/mysql/Object.php',
     'Mongo_Adapter' => $baseDir . '/lib/LogosDB/db/handler/mongo/Adapter.php',
@@ -23,7 +23,7 @@ return array(
     'MySQL_Core' => $baseDir . '/lib/LogosDB/db/handler/mysql/Adapter.php',
     'MySQL_Event' => $baseDir . '/lib/LogosDB/testing/objects/mysql/Event.php',
     'MySQL_User' => $baseDir . '/lib/LogosDB/testing/objects/mysql/User.php',
-    'Password' => $baseDir . '/lib/LogosDB/resources/Password.php',
+    'Password' => $baseDir . '/lib/LogosDB/resources/security/Password.php',
     'QueryHandler' => $baseDir . '/lib/LogosDB/db/handler/mysql/QueryHandler.php',
     'User_Test' => $baseDir . '/lib/LogosDB/testing/tests/User_Test.php',
 );
