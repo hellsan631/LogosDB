@@ -17,6 +17,14 @@ class Cipher {
 
     }
 
+    /**
+     * Encrypts a piece of text with a given text key
+     * @param $input
+     *
+     * @return string
+     * Returns
+     */
+
     public function encrypt($input) {
         return base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $this->_secureKey, $input, MCRYPT_MODE_ECB, $this->_iv));
     }
@@ -30,7 +38,7 @@ class Cipher {
     }
 
     public static function getRandomKey($length = 22){
-        return substr(str_replace('+', '.', base64_encode(openssl_random_pseudo_bytes (64))), 0, $length);
+        return substr(str_replace('+', '.', base64_encode(openssl_random_pseudo_bytes(64))), 0, $length);
     }
 
 }

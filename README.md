@@ -229,6 +229,120 @@ $user->save();
 //UPDATE user SET username = :username, email = :email WHERE id = :id
 ```
 
+## Security
+
+There are 3 added security classes that help with php development. The goal is to enhance existing
+PHP 5.5 functionality with industry standard practices, and make them easy to use.
+
+### The Cipher Class
+
+The Cipher class allows you to encrypt/decrypt text and generate safe random numbers. It does this using
+MCrypt, a built in PHP extension. Currently, keys are one way, but soon that will change.
+
+Use of the Cipher Class is easy. To encrypt something:
+
+```php
+//Send a secure key to the cipher class.
+$cipher = new Cipher("s3cur3k3y");
+
+echo $cipher->encrypt("Hello World!");
+
+//outputs "kRTIR6qDGYNumkoAMfwWMGNVPIUoODr0kvFMCmPDynM="
+```
+
+If you want to then decrypt
+
+```php
+echo $cipher->decrypt("kRTIR6qDGYNumkoAMfwWMGNVPIUoODr0kvFMCmPDynM=");
+
+//outputs "Hello World!"
+```
+
+You can also get a random key from Cipher. Its highly recommended that you use cipher in place of any other
+random key/number generators for security, as Cipher uses "openssl_random_pseudo_bytes()", which is the most
+secure way in php to get a random string of data.
+
+```php
+//You can send in a length of key into the getRandomKey method, or just leave it blank for a default length of 22.
+$randomKey = Cipher::getRandomKey();
+```
+
+### The Password Class
+
+The password class helps secure user passwords using PHP 5.5 built in BCrypt implementation. Its by far the most
+secure way of storing passwords, and all passwords should be stored this way.
+
+For an implementation of this, I recommend looking at one of my other projects, and the way it handles user creation.
+
+https://github.com/hellsan631/Angular-Stats/blob/3d522455602df1ea708bfb83120ee96006e7975b/app/libs/objects/class.user.php
+
+### The Iron Class
+
+Iron Class helps protect against Cross Site Request Forgery attacks. Doing this can be a bit complicated, but
+with this class, the implementation is pretty straight forward.
+
+For Post Requests (example login form)
+
+login.php
+```php
+<?php
+
+    $iron = Iron::getInstance();
+
+?>
+
+<form id="login" action="auth.php" method="post">
+    <input type="text" name="username" placeholder="Username" />
+    <input type="password" name="password" placeholder="Password" />
+    <?php
+       echo $iron->generate_post_token(); //echos a post input with a new random key
+    ?>
+</form>
+
+```
+
+auth.php
+```php
+$iron = Iron::getInstance();
+
+if($iron->check_token() !== false){
+
+    //its safe, you can do user authentication in here
+
+}else{
+
+    //warning, auth isn't safe. You should log the IP and lock down the system.
+
+}
+```
+
+If you wanted to protect your GET requests as well
+
+Info.php
+```php
+    $iron = Iron::getInstance();
+
+    $requestURL = "www.example.com/user.php?id=100123".$iron->generate_get_token();
+
+    getUserData($requestURL);
+```
+
+user.php
+```php
+
+$iron = Iron::getInstance();
+
+if($iron->check_token() !== false){
+
+    //its safe, you can do user authentication in here
+
+}else{
+
+    //warning, auth isn't safe. You should log the IP and lock down the system.
+
+}
+```
+
 ## Contributing
 
 Please feel free to fork, push, pull and all that other good Git stuff!

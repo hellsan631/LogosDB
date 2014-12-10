@@ -8,13 +8,14 @@
 
 class Iron{
 
-    private static $_token_id;
-    private static $_token_value;
+    private $_token_id;
+    private $_token_value;
     private static $_instance;
 
     public function __construct(){
 
-        $this->_generate_token_data();
+        $this->_token_id = $this->get_token_id();
+        $this->_token_value = $this->get_token_value();
 
     }
 
@@ -36,28 +37,28 @@ class Iron{
     /**
      * Used for echoing a form input for a post request
      *
-     * @return void
+     * @return string
      */
 
     public function generate_post_token(){
 
         $data = $this->_generate_token_data();
 
-        echo "<input type='hidden' name='{$data['id']}' value='{$data['value']}' />";
+        return "<input type='hidden' name='{$data['id']}' value='{$data['value']}' />";
 
     }
 
     /**
      * Used for echoing a part of a url for a get token
      *
-     * @return void
+     * @return string
      */
 
     public function generate_get_token(){
 
         $data = $this->_generate_token_data();
 
-        echo "&{$data['id']}={$data['value']}";
+        return "&{$data['id']}={$data['value']}";
 
     }
 
@@ -68,10 +69,10 @@ class Iron{
      */
 
     private function _generate_token_data(){
-        self::$_token_id = $_SESSION['token_id'] = urlencode(Cipher::getRandomKey(8));
-        self::$_token_value = $_SESSION[self::$_token_id] = urlencode(Cipher::getRandomKey());
+        $this->_token_id = $_SESSION['token_id'] = urlencode(Cipher::getRandomKey(8));
+        $this->_token_value = $_SESSION[$this->_token_id] = urlencode(Cipher::getRandomKey());
 
-        return ["id" => self::$_token_id, "value" => self::$_token_value];
+        return ["id" => $this->_token_id, "value" => $this->_token_value];
     }
 
     public function check_token(){
@@ -83,14 +84,14 @@ class Iron{
             if(!isset($_POST[$this->get_token_id()]))
                 return false;
 
-            if($_POST[self::$_token_id] !== $this->get_token_value())
+            if($_POST[$this->_token_id] !== $this->get_token_value())
                 return false;
 
         }else if($_SERVER['REQUEST_METHOD'] == 'GET'){
             if(!isset($_GET[$this->get_token_id()]))
                 return false;
 
-            if($_GET[self::$_token_id] !== $this->get_token_value())
+            if($_GET[$this->_token_id] !== $this->get_token_value())
                 return false;
 
         }
@@ -110,13 +111,13 @@ class Iron{
 
     public function get_token_value() {
 
-        if(!isset(self::$_token_id))
+        if(!isset($this->_token_id))
             trigger_error("Construct Not Called on Iron Class");
 
-        if(!isset($_SESSION[self::$_token_id]))
-            $_SESSION[self::$_token_id] = urlencode(Cipher::getRandomKey());
+        if(!isset($_SESSION[$this->_token_id]))
+            $_SESSION[$this->_token_id] = urlencode(Cipher::getRandomKey());
 
-        return $_SESSION[self::$_token_id];
+        return $_SESSION[$this->_token_id];
 
     }
 
