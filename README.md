@@ -274,7 +274,130 @@ secure way of storing passwords, and all passwords should be stored this way.
 
 For an implementation of this, I recommend looking at one of my other projects, and the way it handles user creation.
 
-https://github.com/hellsan631/Angular-Stats/blob/3d522455602df1ea708bfb83120ee96006e7975b/app/libs/objects/class.user.php
+To Create A New User and save his password correctly:
+
+newUser.php
+```php
+$newUser = new User($_POST);
+
+if($newUser->createNew())
+    $_SESSION['result'] = "Successfully added new User";
+else
+    $_SESSION['result'] = "Unable to add new User";
+
+header("Location: ./index.php");
+```
+
+To Login with a user
+
+auth.php
+```php
+$user = User::loadSingle(["username" => $_POST['username']]);
+
+if(!$user && strlen($_POST['username']) > 6)
+    $user = User::loadSingle(["email" => $_POST['username']]);
+
+if(!$user){
+    $_SESSION['result'] = "Couldn't find a user with that username/email";
+}else{
+    if($user->doAuth($_POST['password'])){
+
+        $_SESSION['result'] = "Login Successful";
+        $_SESSION['user'] = $user->toArray();
+
+    }else{
+
+        $_SESSION['result'] = "Incorrect Password";
+
+    }
+}
+
+header("Location: ../login.php");
+```
+
+And then the user class that handles it all
+
+class.user.php
+```php
+
+class User extends Logos_MySQL_Object{
+
+    public $username;
+    public $email;
+    public $password;
+    public $salt;
+    public $admin;
+    public $auth_key;
+    public $company_id;
+
+    public function createNew(){
+
+        $password = new Password($this->password);
+
+        $this->password = $password->getKey();
+        $this->salt = $password->getSalt();
+
+        return parent::createNew();
+
+    }
+
+    public function verifyLogin($password){
+        $passwordCheck = new Password($this->password, array('salt' => $this->salt, 'hashed' => true));
+
+        return $passwordCheck->checkPassword($password);
+    }
+
+    public function verifyAuth(){
+        if(!isset($_SESSION['auth_key']))
+            return false;
+
+        if($this->auth_key !== $_SESSION['auth_key'])
+            return false;
+
+        return true;
+    }
+
+    public function verifyAdmin(){
+        if($this->admin === 0)
+            return false;
+
+        return true;
+    }
+
+    public static function deAuth(){
+        foreach($_SESSION as $key => $value){
+            if($key !== "result" || $key !== "Result" || $key !== "RESULT")
+                unset($_SESSION[$key]);
+        }
+
+        return true;
+    }
+
+    public function doAuth($password, $level = 0){
+        if($this->verifyLogin($password) === false)
+            return false;
+
+        if((int) $level === 1){
+            if($this->verifyAdmin())
+                return true;
+        }else{
+            if($this->verifyAuth())
+                return true;
+        }
+
+        if($this->admin === 0 && $level === 1)
+            return false;
+
+        $_SESSION['auth_key'] = $this->auth_key = Cipher::getRandomKey();
+
+        if($level === 1)
+            $_SESSION['admin_key'] = $this->auth_key;
+
+        return ($this->save() !== false) ? true : false;
+    }
+}
+
+```
 
 ### The Iron Class
 
