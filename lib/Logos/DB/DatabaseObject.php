@@ -1,5 +1,9 @@
 <?php
 
+namespace Logos\DB;
+
+use Logos\Resources\Core;
+
 /**
  * Class Database_Object
  *

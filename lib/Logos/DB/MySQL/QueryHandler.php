@@ -1,5 +1,7 @@
 <?php
 
+namespace Logos\DB\MySQL;
+
 /**
  * Class QueryHandler
  * Adds Additional Functionality to sorting, grouping, and limiting of mysql queries.

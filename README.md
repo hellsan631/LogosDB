@@ -1,4 +1,4 @@
-LogosDB v 1.4.*
+LogosDB v 1.5.*
 =======
 
 LogosDB is a database micro-framework for creating simple DB interaction without the need for a full MVC structure.
@@ -6,6 +6,11 @@ LogosDB is a database micro-framework for creating simple DB interaction without
 The idea is that for small projects, creating APIs, or when you just don't want or need to implement a fully featured
 MVC framework (Phalcon, Laravel, CodeIgniter, Zend), LogosDB has your back. LogosDB is a bare-bones Model Interaction
 Framework for working with objects inside databases. Its pretty good on the performance too!
+
+## Version 1.5.*
+
+1.5.* Introduces Namespaces into the framework. The namespaces reflect the folder hierarchy, and helps when
+using multiple frameworks. Names and folder structures might shuffle around a bit while 1.5 gets updates.
 
 ## Getting Started
 
@@ -23,7 +28,7 @@ Installation via composer is simple. Just add the following to your composer.jso
 ```JSON
 {
     "require": {
-        "hellsan631/logosdb": "1.4.*"
+        "hellsan631/logosdb": "1.5.*"
     }
 }
 ```
@@ -31,7 +36,7 @@ Installation via composer is simple. Just add the following to your composer.jso
 After updating composer, extend the class with a logos object
 
 ```php
-class User extends Logos_MySQL_Object{
+class User extends Logos\DB\MySQL\DBO{
     public $username;
     public $email;
 }
@@ -52,9 +57,9 @@ Create an object class for each table in your database you want to use this with
 
 ```php
 //example object
-class User extends Logos_MySQL_Object{
+class User extends Logos\DB\MySQL\DBO{
 
-    public $id; //already defined in the DatabaseObject class.
+    //public $id; already defined in the Database_Object class.
 
     public $username;
     public $email;
@@ -68,6 +73,8 @@ We use the config class, which creates a simpleton, for inputting our DB connect
 in your header (or you can add this to autoload.php)
 
 ```php
+use Logos\DB\Config;
+
 //Database settings
 Config::write('db.host', 'localhost');
 Config::write('db.name', 'db_name');

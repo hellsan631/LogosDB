@@ -1,5 +1,7 @@
 <?php
 
+namespace Logos\Resources;
+
 class Core{
 
     /**

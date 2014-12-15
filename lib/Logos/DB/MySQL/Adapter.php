@@ -1,5 +1,12 @@
 <?php
 
+namespace Logos\DB\MySQL;
+
+use Logos\DB\Database_Adapter;
+use Logos\DB\Config;
+use \PDO;
+use \PDOException;
+
 /**
  * Class MySQL_Adapter
  *
@@ -90,16 +97,5 @@ class MySQL_Adapter extends Database_Adapter{
         return false;
 
     }
-
-}
-
-/**
- * Class MySQL_Core
- *
- * Class to maintain 1.4.* backwards compatibility. Will be removed in 1.5.*
- *
- * @deprecated
- */
-class MySQL_Core extends MySQL_Adapter{
 
 }

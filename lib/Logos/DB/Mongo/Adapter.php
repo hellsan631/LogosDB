@@ -1,5 +1,11 @@
 <?php
 
+namespace Logos\DB\Mongo;
+
+use Logos\DB\Handler\Database_Adapter;
+use Logos\DB\Handler\Config;
+use \MongoClient;
+
 class Mongo_Adapter extends Database_Adapter{
 
     public function __construct(){

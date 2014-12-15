@@ -1,5 +1,7 @@
 <?php
 
+namespace Logos\DB;
+
 /**
  * Class Database_Adapter
  *

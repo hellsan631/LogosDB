@@ -1,5 +1,7 @@
 <?php
 
+namespace Logos\DB;
+
 class Config{
 
     static $confArray;

@@ -1,5 +1,7 @@
 <?php
 
+namespace Logos\Resources\Security;
+
 class Password{
 
     private $_key;

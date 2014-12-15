@@ -1,5 +1,7 @@
 <?php
 
+use Logos\DB\Config;
+
 class MySQLUserTest extends User_Test{
 
     public function setUp(){

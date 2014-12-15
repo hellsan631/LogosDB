@@ -1,9 +1,17 @@
 <?php
 
+namespace Logos\DB\MySQL;
+
+use Logos\DB\Database_Object;
+use Logos\DB\Database_Handler;
+use Logos\Resources\Core;
+use \Exception;
+use \PDO;
+
 //@TODO: create Schema syntax for object database creation
 //@TODO: re-do querying to better follow php code conventions
 
-abstract class Logos_MySQL_Object extends Database_Object implements Database_Handler{
+abstract class DBO extends Database_Object implements Database_Handler{
 
     //-------------DB Object Creation
 

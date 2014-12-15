@@ -1,5 +1,7 @@
 <?php
 
+use Logos\Resources\Security\Cipher;
+
 class CipherTest extends PHPUnit_Framework_TestCase{
 
     public function setUp(){
