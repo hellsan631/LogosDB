@@ -94,7 +94,7 @@ date in the name of the field.
 ## Usage
 
 For a quick list of classes and what they do, head on over to the database interface
-https://github.com/hellsan631/LogosDB/blob/master/lib/LogosDB/db/db-interface.php
+https://github.com/hellsan631/LogosDB/blob/92a702f60fbf8b2e351bfd6f2d505e391d4a894c/lib/Logos/DB/HandlerInterface.php
 
 ### Creating a new object in the database
 
