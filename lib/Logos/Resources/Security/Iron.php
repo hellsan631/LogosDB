@@ -127,9 +127,13 @@ class Iron{
 
         $method = strtolower($method);
 
-        if($method == 'post' || $method == 'get'){
-            if(isset(${$method}[$this->get_token_id()]) and (${$method}[$this->get_token_id()] == $this->get_token_value()))
-                return true;
+        if(
+            ($method == 'post' or $method == 'get') and
+            isset(${$method}[$this->get_token_id()]) and
+            (${$method}[$this->get_token_id()] == $this->get_token_value())
+        ){
+
+            return true;
 
         }
 

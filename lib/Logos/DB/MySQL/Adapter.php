@@ -6,6 +6,7 @@ use Logos\DB\Database_Adapter;
 use Logos\DB\Config;
 use \PDO;
 use \PDOException;
+use \PDOStatement;
 
 /**
  * Class MySQL_Adapter
@@ -18,16 +19,25 @@ class MySQL_Adapter extends Database_Adapter{
     public $query;
 
     public function __construct(){
+        $this->connect();
+    }
+
+    /**
+     * This method is used to connect to the current config database
+     *
+     * @return $this
+     */
+    public function connect(){
 
         $dsn = 'mysql:host=' . Config::read('db.host') .
             ';dbname='    . Config::read('db.name') .
             ';connect_timeout=15';
 
-        //We use the @ symbol to suppress errors because otherwise we would get the "mysql server has gone away"
+        //We use the @ symbol to suppress "mysql server has gone away" errors
         $this->dbh = @new PDO($dsn,
             Config::read('db.user'),
             Config::read('db.password'),
-            array(PDO::ATTR_PERSISTENT => true)
+            [PDO::ATTR_PERSISTENT => true]
         );
 
         $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //PDO::ERRMODE_SILENT
@@ -35,15 +45,26 @@ class MySQL_Adapter extends Database_Adapter{
 
         $this->query = new QueryHandler();
 
+        return $this;
     }
 
+    /**
+     * Runs a simple PDO query/execute which can return the query itself or the results of the query
+     *
+     * @param $prepare
+     * @param $execute
+     *
+     * @param bool $returnQuery [optional]
+     *
+     * @return bool|array|PDOStatement
+     */
     public static function fetchQuery($prepare, $execute, $returnQuery = true){
 
         try {
 
             $newInstance = self::getInstance();
 
-            $query = $newInstance->dbh->prepare($prepare.$newInstance->query->getQuery());
+            $query = $newInstance->dbh->prepare($newInstance->query->getQuery($prepare));
 
             if(!$returnQuery)
                 return $query->execute($execute);
@@ -57,17 +78,28 @@ class MySQL_Adapter extends Database_Adapter{
         }
 
         return false;
-
     }
 
+    /**
+     * Runs a PDO Query with a specified fetch mode, which is meant to return an object or class
+     * or perform a FETCH_INTO an existing object.
+     *
+     * @param $prepare
+     * @param $execute
+     *
+     * @param $fetchMode
+     * @param $fetchParam
+     *
+     * @return bool|array|object
+     */
     public static function fetchQueryObj($prepare, $execute, $fetchMode, &$fetchParam){
 
         try {
-
             $newInstance = self::getInstance();
 
-            $query = $newInstance->dbh->prepare($prepare.$newInstance->query->getQuery());
+            $query = $newInstance->dbh->prepare($newInstance->query->getQuery($prepare));
 
+            //if the fetch mode is object then we won't need a fetch param
             if($fetchMode === PDO::FETCH_OBJ)
                 $query->setFetchMode($fetchMode);
             else
@@ -79,14 +111,13 @@ class MySQL_Adapter extends Database_Adapter{
 
                 $fetchParam = $query->fetchObject($fetchParam);
 
-                if(!is_object($fetchParam) && (!is_array($fetchParam) or count($fetchParam) == 0))
+                if(!is_object($fetchParam) and (!is_array($fetchParam) or count($fetchParam) == 0))
                     return false;
 
             }else if($fetchMode === PDO::FETCH_INTO)
                 $query->fetch();
             else if($fetchMode === PDO::FETCH_CLASS)
                 return $query->fetchAll($fetchMode, $fetchParam);
-
 
             return $fetchParam;
 
@@ -95,7 +126,5 @@ class MySQL_Adapter extends Database_Adapter{
         }
 
         return false;
-
     }
-
 }

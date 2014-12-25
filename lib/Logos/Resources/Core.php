@@ -2,6 +2,10 @@
 
 namespace Logos\Resources;
 
+use \DateTime;
+use \DateTimeZone;
+use \Exception;
+
 class Core{
 
     /**
@@ -36,13 +40,13 @@ class Core{
         $firstChar = substr($string, 0, 1);
         $lastChar = substr($string, -1);
 
-        if (!$firstChar || !$lastChar)
+        if (!$firstChar or !$lastChar)
             return false;
 
-        if ($firstChar !== '{' && $firstChar !== '[')
+        if ($firstChar !== '{' and $firstChar !== '[')
             return false;
 
-        if ($lastChar !== '}' && $lastChar !== ']')
+        if ($lastChar !== '}' and $lastChar !== ']')
             return false;
 
         // let's leave the rest to PHP.
@@ -120,19 +124,18 @@ class Core{
     }
 
     /**
-     * Formats a number with an ordinal suffix
+     * Formats a number with an ordinal suffix (th, st, nd, rd, th)
      * @param $number
-     * @param string $type
      * @return string
      */
-    public static function formatNumber($number, $type = "ordinal"){
+    public static function formatNumber($number){
 
-        $ends = array('th','st','nd','rd','th','th','th','th','th','th');
+        $ends = ['th','st','nd','rd','th','th','th','th','th','th'];
 
         if($number == "N/A")
             return $number;
 
-        return (($number %100) >= 11 && ($number%100) <= 13) ? $number.'th' : $number.$ends[$number % 10];
+        return (($number%100) >= 11 and ($number%100) <= 13) ? $number.'th' : $number.$ends[$number % 10];
 
     }
 
@@ -163,8 +166,8 @@ class Core{
             return false;
         }
 
-        return $date &&
-            DateTime::getLastErrors()["warning_count"] == 0 &&
+        return $date and
+            DateTime::getLastErrors()["warning_count"] == 0 and
             DateTime::getLastErrors()["error_count"] == 0;
 
     }
@@ -196,8 +199,8 @@ class Core{
     public static function getDay($dateTimeString){
 
         $tempDate = new DateTime($dateTimeString);
-        $tempDate->setTime(0,0,0);
-        return $tempDate->format('D');
+
+        return $tempDate->setTime(0,0,0)->format('D');
 
     }
 }

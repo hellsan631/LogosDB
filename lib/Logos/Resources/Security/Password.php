@@ -8,7 +8,7 @@ class Password{
     private $_salt;
     private $_options;
 
-    public function __construct($key, $options = array('salt' => null, 'cost' => 11, 'hashed' => false)) {
+    public function __construct($key, $options = ['salt' => null, 'cost' => 11, 'hashed' => false]) {
 
         if(!isset($options['salt']))
             $options['salt'] = null;
@@ -22,7 +22,7 @@ class Password{
         else
             $this->_salt = $options['salt'];
 
-        $this->_options = array('cost' => $options['cost'], 'salt' => $this->_salt);
+        $this->_options = ['cost' => $options['cost'], 'salt' => $this->_salt];
 
         if($options['hashed'] === false)
             $this->generatePassword($key);

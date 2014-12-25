@@ -28,11 +28,27 @@ class Cipher {
      */
 
     public function encrypt($input) {
-        return base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $this->_secureKey, $input, MCRYPT_MODE_ECB, $this->_iv));
+        return base64_encode(
+            mcrypt_encrypt(
+                MCRYPT_RIJNDAEL_256,
+                $this->_secureKey,
+                $input,
+                MCRYPT_MODE_ECB,
+                $this->_iv
+            )
+        );
     }
 
     public function decrypt($input) {
-        return trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $this->_secureKey, base64_decode($input), MCRYPT_MODE_ECB, $this->_iv));
+        return trim(
+            mcrypt_decrypt(
+                MCRYPT_RIJNDAEL_256,
+                $this->_secureKey,
+                base64_decode($input),
+                MCRYPT_MODE_ECB,
+                $this->_iv
+            )
+        );
     }
 
     public function getIV(){

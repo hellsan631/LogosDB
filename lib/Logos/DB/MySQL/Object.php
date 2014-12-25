@@ -35,7 +35,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
         foreach($keyChain as $key => $val){
             //since this is a new object, we don't want to save the ID, rather letting the DB generate an ID
-            if($this->{$key} !== null && $key !== "id")
+            if($this->{$key} !== null and $key !== "id")
                 $prepareStatement .= "$key, ";
             else
                 unset($keyChain[$key]);
@@ -100,7 +100,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
         foreach($data as $key => $val){
             //Here we check to see if the key meets our criteria. If it doesn't we want to unset the key so
             //don't have to sort through the $data array again, and make the same comparisons.
-            if($val !== null && array_key_exists($key, $keyChain) && $keyChain[$key] !== "id")
+            if($val !== null and array_key_exists($key, $keyChain) and $keyChain[$key] !== "id")
                 $prepareStatement .= "$key, ";
             else
                 unset($data[$key]);
@@ -140,7 +140,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
      * <p>Can be an array of matched object data, an array of objects, or even an array of json strings.
      * It is recommended that all of the arrays inside $data be symmetrical.</p>
      *
-     * @param mixed $count
+     * @param mixed $count [optional]
      * <p>Can be an array of matched object data, an object, or even a json string</p>
      *
      * @return boolean
@@ -158,11 +158,11 @@ abstract class DBO extends Database_Object implements Database_Handler{
         $prepareStatement = "INSERT INTO `".self::name()."` (";
 
         //We can trigger an error here but we can try and treat it as a single query
-        if($count === null && !isset($data[0]))
+        if($count === null and !isset($data[0]))
             $count = 1;
 
         //This creates a uniform data set to convert and set our remaining data to.
-        if($count !== null && !isset($data[0]))
+        if($count !== null and !isset($data[0]))
             $data = [$data];
 
         //We want to check that each array of data is usable in the builder, and not json or an object
@@ -172,7 +172,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
         //Arrays inside $data should NOT be asymmetric.
         foreach(array_keys ($data[0]) as $value){
-            if($value !== "id" && array_key_exists($value, $keyChain)){
+            if($value !== "id" and array_key_exists($value, $keyChain)){
                 $goodKeys[$value] = true;
                 $prepareStatement .= "$value, ";
             }
@@ -395,7 +395,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
      * 100 Queries Run
      * <p>Average Time: 4ms per 100/0.422kb</p>
      *
-     * @param null $conditionArray
+     * @param null $conditionArray [optional]
      * Matching conditions for the list
      *
      * @return Array
@@ -453,7 +453,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
      * 100 Queries Run
      * <p>Average Time: 4ms per 100/0.422kb</p>
      *
-     * @param null $conditionArray
+     * @param null $conditionArray [optional]
      * Matching conditions for the list
      *
      * @return Array
@@ -525,12 +525,10 @@ abstract class DBO extends Database_Object implements Database_Handler{
      */
 
     public static function destroy($id){
-
         return MySQL_Adapter::fetchQuery(
             "DELETE FROM ".self::name()." WHERE id = :id",
             [':id' => $id]
         );
-
     }
 
 
@@ -573,7 +571,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
      * @param $functionCall
      * What is added (orderBy, limit, groupBy) can be array or string
      *
-     * @param null $params
+     * @param null $params [optional]
      * The parameters of the query ('10', 'id ADC') can be array or string
      *
      * @return $this - returns new instance of self
@@ -637,7 +635,9 @@ abstract class DBO extends Database_Object implements Database_Handler{
      *
      * @param $conditionArray
      *
-     * @param null $keyChain
+     * @param null $keyChain [optional]
+     *
+     * @return void
      */
 
     private static function _buildQuerySet(&$prepareStatement, &$conditionArray, &$keyChain = null){
@@ -646,14 +646,13 @@ abstract class DBO extends Database_Object implements Database_Handler{
             $keyChain = self::getKeyChain();
 
         foreach($conditionArray as $key => $val){
-            if($val !== null && $key !== "id" && array_key_exists($key, $keyChain))
+            if($val !== null and $key !== "id" and array_key_exists($key, $keyChain))
                 $prepareStatement .= "$key = :$key, ";
             else
                 unset($conditionArray[$key]);
         }
 
         $prepareStatement = rtrim($prepareStatement, ", ");
-
     }
 
     /**
@@ -663,7 +662,9 @@ abstract class DBO extends Database_Object implements Database_Handler{
      *
      * @param $conditionArray
      *
-     * @param null $keyChain
+     * @param null $keyChain [optional]
+     *
+     * @return void
      */
 
     private static function _buildQueryWhere(&$prepareStatement, &$conditionArray, &$keyChain = null){
@@ -681,9 +682,4 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
         $prepareStatement = rtrim($prepareStatement, "AND ");
     }
-
 }
-
-
-
-

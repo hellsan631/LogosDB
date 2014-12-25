@@ -20,8 +20,11 @@ abstract class Database_Object{
 
     /**
      * Handles the object loading from the database when an ID is passed
+     *
      * @param mixed $id [optional]
+     *
      * <p>Can be an array of matched object data, the object ID, an object, or even a json string</p>
+     *
      * @return void
      */
 
@@ -36,24 +39,28 @@ abstract class Database_Object{
 
     /**
      * Ensures that the class must have a load function for classDataSetup
+     *
      * @param $id
+     *
      * @return mixed
      */
     abstract public function load($id);
 
     /**
      * Ensures that data (JSON String, Objects) are turned into arrays for processing
+     *
      * @param $dataToFilter
+     *
      * @return array
      */
 
     protected static function dataToArray(&$dataToFilter){
-        if(!is_array($dataToFilter)){
+        if(!is_array($dataToFilter) and $dataToFilter !== null){
             if(is_object($dataToFilter))
                 $dataToFilter = (array) $dataToFilter;
             else if(Core::isJson($dataToFilter))
                 $dataToFilter = json_decode($dataToFilter, true);
-            else if($dataToFilter !== null)
+            else
                 trigger_error("Tried to filter Malformed data");
         }
 
@@ -64,7 +71,7 @@ abstract class Database_Object{
      * @param $dataToUpdate
      * The data (JSON, array, or object) which you want added to the object
      *
-     * @param bool $adhere
+     * @param bool $adhere [optional]
      * Adhere's input data to the model. If you want to store data that is outside the model,
      * then you can set this to false.
      *
@@ -89,7 +96,7 @@ abstract class Database_Object{
     /**
      * Returns an instance of an object with a given array of data
      *
-     * @param null $dataArray
+     * @param null $dataArray [optional]
      *
      * @return mixed
      */
@@ -102,7 +109,7 @@ abstract class Database_Object{
     /**
      * Returns an array of the object's internal data
      *
-     * @param bool $emptyNull
+     * @param bool $emptyNull [optional]
      * If $emptyNull is set to true, toArray will return an array of values that are NOT null.
      * Default behavior is set to always return all values, even if they are null
      *
@@ -150,7 +157,6 @@ abstract class Database_Object{
      * @return string
      */
     protected static function name(){
-
         $className = explode("\\", get_called_class());
 
         return end($className);

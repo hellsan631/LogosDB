@@ -9,34 +9,34 @@ namespace Logos\DB\MySQL;
 
 class QueryHandler{
 
-    private $_groupby = "";
-    private $_orderby = "";
+    private $_groupBy = "";
+    private $_orderBy = "";
     private $_limit = "";
 
     //Any time a query is executed, we want to make sure to clear the query so that it doesn't show up again.
-    public function getQuery(){
+    public function getQuery($prepare){
 
-        $query = " {$this->_groupby} {$this->_orderby} {$this->_limit} ";
+        $query = " {$this->_groupBy} {$this->_orderBy} {$this->_limit}";
 
-        $this->_groupby = "";
-        $this->_orderby = "";
+        $this->_groupBy = "";
+        $this->_orderBy = "";
         $this->_limit = "";
 
-        return $query;
+        return $prepare.$query;
 
     }
 
-    public function groupby($grouping){
+    public function groupBy($grouping){
 
-        $this->_groupby = "GROUP BY $grouping";
+        $this->_groupBy = "GROUP BY $grouping";
 
         return $this;
 
     }
 
-    public function orderby($order){
+    public function orderBy($order){
 
-        $this->_orderby = "ORDER BY $order";
+        $this->_orderBy = "ORDER BY $order";
 
         return $this;
 
