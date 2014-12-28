@@ -26,7 +26,7 @@ class QueryHandler{
 
     }
 
-    public function groupBy($grouping){
+    public function groupby($grouping){
 
         $this->_groupBy = "GROUP BY $grouping";
 
@@ -34,7 +34,7 @@ class QueryHandler{
 
     }
 
-    public function orderBy($order){
+    public function orderby($order){
 
         $this->_orderBy = "ORDER BY $order";
 

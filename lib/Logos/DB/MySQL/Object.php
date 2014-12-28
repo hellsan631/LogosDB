@@ -342,9 +342,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
         //string should look like this:
         //UPDATE fruit SET color = :color, count = :count WHERE id = :id
-
         return MySQL_Adapter::fetchQuery($prepareStatement, $changedData, false);
-
     }
 
 

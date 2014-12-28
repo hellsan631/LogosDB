@@ -13,7 +13,7 @@ class Cipher {
         $this->_secureKey = hash('sha256', $textKey, TRUE);
 
         if($iv == null)
-            $this->_iv = mcrypt_create_iv(32);
+            $this->_iv = mcrypt_create_iv(64);
         else
             $this->_iv = base64_decode($iv);
 
@@ -24,7 +24,6 @@ class Cipher {
      * @param $input
      *
      * @return string
-     * Returns
      */
 
     public function encrypt($input) {
@@ -55,8 +54,8 @@ class Cipher {
         return base64_encode($this->_iv);
     }
 
-    public static function getRandomKey($length = 22){
-        return substr(str_replace('+', '.', base64_encode(openssl_random_pseudo_bytes(64))), 0, $length);
+    public static function getRandomKey($length = 32){
+        return substr(str_replace('+', '.', base64_encode(openssl_random_pseudo_bytes(128))), 0, $length);
     }
 
 }
