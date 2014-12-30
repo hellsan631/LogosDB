@@ -358,8 +358,10 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
         if(is_numeric($id)){
 
+            self::query(["limit" => 1]);
+
             MySQL_Adapter::fetchQueryObj(
-                "SELECT * FROM `".self::name()."` WHERE id = :id LIMIT 1",
+                "SELECT * FROM `".self::name()."` WHERE id = :id",
                 [":id" => $id],
                 PDO::FETCH_INTO,
                 $this
@@ -371,7 +373,8 @@ abstract class Logos_MySQL_Object extends Database_Object implements Database_Ha
 
             $prepareStatement = "SELECT * FROM `".self::name()."` WHERE ";
             self::_buildQueryWhere($prepareStatement, $id);
-            $prepareStatement .= " LIMIT 1";
+
+            self::query(["limit" => 1]);
 
             MySQL_Adapter::fetchQueryObj($prepareStatement, $id, PDO::FETCH_INTO, $this);
 
