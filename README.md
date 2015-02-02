@@ -36,7 +36,7 @@ Installation via composer is simple. Just add the following to your composer.jso
 After updating composer, extend the class with a logos object
 
 ```php
-class User extends Logos\DB\MySQL\DBO{
+class User extends Logos\DB\MySQL\Model{
     public $username;
     public $email;
 }
@@ -57,7 +57,7 @@ Create an object class for each table in your database you want to use this with
 
 ```php
 //example object
-class User extends Logos\DB\MySQL\DBO{
+class User extends Logos\DB\MySQL\Model{
 
     //public $id; already defined in the Database_Object class.
 
@@ -327,7 +327,7 @@ And then the user class that handles it all
 class.user.php
 ```php
 
-class User extends Logos_MySQL_Object{
+class User extends Logos\DB\MySQL\Model{
 
     public $username;
     public $email;
