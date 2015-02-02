@@ -2,8 +2,8 @@
 
 namespace Logos\DB\MySQL;
 
-use Logos\DB\Database_Object;
-use Logos\DB\Database_Handler;
+use Logos\DB\DatabaseObject;
+use Logos\DB\HandlerInterface;
 use Logos\Resources\Core;
 use \Exception;
 use \PDO;
@@ -11,7 +11,7 @@ use \PDO;
 //@TODO: create Schema syntax for object database creation
 //@TODO: re-do querying to better follow php code conventions
 
-abstract class DBO extends Database_Object implements Database_Handler{
+abstract class Model extends DatabaseObject implements HandlerInterface{
 
     //-------------DB Object Creation
 
@@ -60,8 +60,8 @@ abstract class DBO extends Database_Object implements Database_Handler{
         //INSERT INTO fruit (color, count) VALUES (:color, :count)
 
         //checks to see if there was an object that was inserted into the database
-        $this->id = MySQL_Adapter::fetchQuery($prepareStatement, $dataArray, false) ?
-            MySQL_Adapter::getInstance()->dbh->lastInsertId() : null;
+        $this->id = Adapter::fetchQuery($prepareStatement, $dataArray, false) ?
+            Adapter::getInstance()->dbh->lastInsertId() : null;
 
         if($this->id === null)
             return false;
@@ -119,8 +119,8 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
         $prepareStatement = rtrim($prepareStatement, ", ").")";
 
-        if(MySQL_Adapter::fetchQuery($prepareStatement, $data, false))
-            return MySQL_Adapter::getInstance()->dbh->lastInsertId();
+        if(Adapter::fetchQuery($prepareStatement, $data, false))
+            return Adapter::getInstance()->dbh->lastInsertId();
 
         return false;
 
@@ -219,7 +219,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
         $prepareStatement = rtrim($prepareStatement, ", ");
 
-        return MySQL_Adapter::fetchQuery($prepareStatement, $dataArray, false);
+        return Adapter::fetchQuery($prepareStatement, $dataArray, false);
 
     }
 
@@ -270,7 +270,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
         //string should look like this:
         //UPDATE fruit SET color = :color, count = :count WHERE id = :id
 
-        if(!MySQL_Adapter::fetchQuery($prepareStatement, $changedData, false))
+        if(!Adapter::fetchQuery($prepareStatement, $changedData, false))
             return false;
 
         return $this;
@@ -342,7 +342,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
         //string should look like this:
         //UPDATE fruit SET color = :color, count = :count WHERE id = :id
-        return MySQL_Adapter::fetchQuery($prepareStatement, $changedData, false);
+        return Adapter::fetchQuery($prepareStatement, $changedData, false);
     }
 
 
@@ -364,7 +364,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
         if(is_numeric($id)){
 
-            MySQL_Adapter::fetchQueryObj(
+            Adapter::fetchQueryObj(
                 "SELECT * FROM `".self::name()."` WHERE id = :id LIMIT 1",
                 [":id" => $id],
                 PDO::FETCH_INTO,
@@ -379,7 +379,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
             self::_buildQueryWhere($prepareStatement, $id);
             $prepareStatement .= " LIMIT 1";
 
-            MySQL_Adapter::fetchQueryObj($prepareStatement, $id, PDO::FETCH_INTO, $this);
+            Adapter::fetchQueryObj($prepareStatement, $id, PDO::FETCH_INTO, $this);
 
         }
 
@@ -411,7 +411,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
             self::_buildQueryWhere($prepareStatement, $conditionArray);
         }
 
-        return MySQL_Adapter::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
+        return Adapter::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
 
     }
 
@@ -441,7 +441,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
         $prepareStatement .= " LIMIT 1";
 
-        return MySQL_Adapter::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_OBJ, $name);
+        return Adapter::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_OBJ, $name);
 
     }
 
@@ -470,7 +470,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
             self::_buildQueryWhere($prepareStatement, $conditionArray);
         }
 
-        return MySQL_Adapter::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
+        return Adapter::fetchQueryObj($prepareStatement, $conditionArray, PDO::FETCH_CLASS, $name);
 
     }
 
@@ -506,7 +506,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
         self::_buildQueryWhere($prepareStatement, $conditionArray);
 
-        return MySQL_Adapter::fetchQuery($prepareStatement, $conditionArray);
+        return Adapter::fetchQuery($prepareStatement, $conditionArray);
 
     }
 
@@ -523,7 +523,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
      */
 
     public static function destroy($id){
-        return MySQL_Adapter::fetchQuery(
+        return Adapter::fetchQuery(
             "DELETE FROM ".self::name()." WHERE id = :id",
             [':id' => $id]
         );
@@ -601,7 +601,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
                 $tempKey = strtolower($key);
 
                 if(is_callable([$callable, $tempKey], true))
-                    MySQL_Adapter::getInstance()->query->$tempKey($value);
+                    Adapter::getInstance()->query->$tempKey($value);
 
             }
 
@@ -610,14 +610,14 @@ abstract class DBO extends Database_Object implements Database_Handler{
                 $functionCall = strtolower($functionCall);
 
                 if(is_callable([$callable, $functionCall], true))
-                    MySQL_Adapter::getInstance()->query->$functionCall($params);
+                    Adapter::getInstance()->query->$functionCall($params);
 
             }else{
                 foreach($functionCall as $key => $value){
                     $value = strtolower($value);
 
                     if(is_callable([$callable, $value], true))
-                        MySQL_Adapter::getInstance()->query->$value($params[$key]);
+                        Adapter::getInstance()->query->$value($params[$key]);
 
                 }
             }

@@ -2,11 +2,11 @@
 
 namespace Logos\DB\Mongo;
 
-use Logos\DB\Handler\Database_Adapter;
-use Logos\DB\Handler\Config;
+use Logos\DB\AdapterAbstract;
+use Logos\DB\Config;
 use \MongoClient;
 
-class Mongo_Adapter extends Database_Adapter{
+class Adapter extends AdapterAbstract{
 
     public function __construct(){
 

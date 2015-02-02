@@ -1,6 +1,6 @@
 <?php
 
-use Logos\Resources\Security\Iron;
+use Logos\Security\Iron;
 
 class IronTest extends PHPUnit_Framework_TestCase{
 

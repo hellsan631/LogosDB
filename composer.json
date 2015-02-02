@@ -17,8 +17,17 @@
 	},
     "autoload": {
         "classmap":[
-            "lib"
-        ]
+            "lib/Testing"
+        ],
+        "psr-4": {
+            "Logos\\": "lib/",
+            "Logos\\DB\\": "lib/Logos/DB/",
+            "Logos\\DB\\Mongo\\": "lib/Logos/DB/Mongo",
+            "Logos\\DB\\MySQL\\": "lib/Logos/DB/MySQL",
+            "Logos\\Resources\\": "lib/Logos/Resources/",
+            "Logos\\Security\\": "lib/Logos/Security/"
+
+        }
     },
     "repositories": [
         {

@@ -6,4 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Logos\\Security\\' => array($baseDir . '/lib/Logos/Security'),
+    'Logos\\Resources\\' => array($baseDir . '/lib/Logos/Resources'),
+    'Logos\\DB\\MySQL\\' => array($baseDir . '/lib/Logos/DB/MySQL'),
+    'Logos\\DB\\Mongo\\' => array($baseDir . '/lib/Logos/DB/Mongo'),
+    'Logos\\DB\\' => array($baseDir . '/lib/Logos/DB'),
+    'Logos\\' => array($baseDir . '/lib'),
 );

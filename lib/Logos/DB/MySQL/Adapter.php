@@ -2,7 +2,7 @@
 
 namespace Logos\DB\MySQL;
 
-use Logos\DB\Database_Adapter;
+use Logos\DB\AdapterAbstract;
 use Logos\DB\Config;
 use \PDO;
 use \PDOException;
@@ -13,7 +13,7 @@ use \PDOStatement;
  *
  * Handles all database interaction for the object class.
  */
-class MySQL_Adapter extends Database_Adapter{
+class Adapter extends AdapterAbstract{
 
     public $dbh;
     public $query;

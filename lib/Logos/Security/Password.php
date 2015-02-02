@@ -1,6 +1,6 @@
 <?php
 
-namespace Logos\Resources\Security;
+namespace Logos\Security;
 
 class Password{
 

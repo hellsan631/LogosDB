@@ -10,7 +10,7 @@ use Logos\Resources\Core;
  * Includes some standard methods for object database handlers
  */
 
-abstract class Database_Object{
+abstract class DatabaseObject{
 
     public $id;
 

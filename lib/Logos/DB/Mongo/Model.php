@@ -1,11 +1,11 @@
 <?php
 
-namespace Logos\DBMongo;
+namespace Logos\DB\Mongo;
 
-use Logos\DB\Database_Object;
-use Logos\DB\Database_Handler;
+use Logos\DB\DatabaseObject;
+use Logos\DB\HandlerInterface;
 
-abstract class DBO extends Database_Object implements Database_Handler{
+abstract class Model extends DatabaseObject implements HandlerInterface{
 
     //-------------DB Object Creation
 
@@ -65,7 +65,7 @@ abstract class DBO extends Database_Object implements Database_Handler{
 
     public static function createQuery($query, $type){
 
-        return Mongo_Adapter::runQuery($query, $type, self::name());
+        return Adapter::runQuery($query, $type, self::name());
 
     }
 

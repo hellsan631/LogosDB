@@ -1,6 +1,6 @@
 <?php
 
-use Logos\Resources\Security\Cipher;
+use Logos\Security\Cipher;
 
 class CipherTest extends PHPUnit_Framework_TestCase{
 

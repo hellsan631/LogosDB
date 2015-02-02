@@ -1,6 +1,6 @@
 <?php
 
-class Mongo_Event extends Logos\DB\MySQL\DBO{
+class MySQL_Event extends Logos\DB\MySQL\Model{
 
     public $date_start;
     public $name;

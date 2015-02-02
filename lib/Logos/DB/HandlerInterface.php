@@ -2,7 +2,7 @@
 
 namespace Logos\DB;
 
-interface Database_Handler{
+interface HandlerInterface{
 
     //-------------DB Create Objects
 

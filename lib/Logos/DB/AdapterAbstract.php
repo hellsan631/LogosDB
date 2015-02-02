@@ -7,7 +7,7 @@ namespace Logos\DB;
  *
  * Outlines that all DatabaseAdapters are singletons
  */
-abstract class Database_Adapter{
+abstract class AdapterAbstract{
 
     public $dbh;
     private static $instance;
