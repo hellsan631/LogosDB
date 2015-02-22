@@ -2,13 +2,12 @@
 
 include "./vendor/autoload.php";
 
-
 $timeArray = [];
 
 timeFunction(function(){
         $count = 0;
         while($count < 1000){
-            MySQL_User::newInstance(["username" => "testing", "email" => "email@email.com"]);
+            MySQL_User::newInstance(["username" => "testing"]);
             $count++;
         }
 }, "newInstance x 1000", $timeArray);

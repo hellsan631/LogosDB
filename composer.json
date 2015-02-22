@@ -1,14 +1,15 @@
 {
 	"name": "hellsan631/logosdb",
 	"description": "A database micro-framework for creating simple DB interaction without the need for a full framework",
-	"type": "library",
+	"type": "project",
 	"keywords": ["framework"],
 	"homepage": "http://mathew-kleppin.com/blog/",
 	"license": "MIT",
 	"authors": [
 		{
 			"name": "Mathew Kleppin",
-			"homepage": "http://mathew-kleppin.com/blog/"
+			"homepage": "http://mathew-kleppin.com/blog/",
+            "role": "Developer"
 		}
 	],
 	"require": {
@@ -20,13 +21,7 @@
             "lib/Testing"
         ],
         "psr-4": {
-            "Logos\\": "lib/",
-            "Logos\\DB\\": "lib/Logos/DB/",
-            "Logos\\DB\\Mongo\\": "lib/Logos/DB/Mongo",
-            "Logos\\DB\\MySQL\\": "lib/Logos/DB/MySQL",
-            "Logos\\Resources\\": "lib/Logos/Resources/",
-            "Logos\\Security\\": "lib/Logos/Security/"
-
+            "Logos\\": "lib/"
         }
     },
     "repositories": [
