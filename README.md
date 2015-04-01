@@ -5,7 +5,7 @@ LogosDB is a database micro-framework for creating simple DB interaction without
 
 The idea is that for small projects, creating APIs, or when you just don't want or need to implement a fully featured
 MVC framework (Phalcon, Laravel, CodeIgniter, Zend), LogosDB has your back. LogosDB is a bare-bones Model Interaction
-Framework for working with objects inside databases. Its pretty good on the performance too!
+Framework for working with objects inside databases.
 
 ## Version 1.5.*
 
