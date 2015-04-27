@@ -8,6 +8,9 @@ php:
 allow_failures:
   - php: hhvm
 
+notifications:
+  email: false
+
 services: mysql
 
 before_script:
@@ -20,3 +23,4 @@ before_script:
 
 script:
   - phpunit --verbose
+
