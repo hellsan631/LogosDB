@@ -11,11 +11,12 @@ allow_failures:
 services: mysql
 
 before_script:
+  - mysql < logos_unit.sql
   - composer self-update
   # --prefer-source is required to avoid hitting GitHub API limit:
   # https://github.com/composer/composer/issues/1314
   - composer install --no-interaction --prefer-source
-  - mysql < logos_unit.sql
+
 
 script:
   - phpunit --verbose
