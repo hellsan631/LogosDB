@@ -17,14 +17,14 @@
 		"ext-mcrypt": "*"
 	},
     "require-dev": {
-        "phpunit/phpunit": "~4.3.1"
+        "phpunit/phpunit": "~4.3.5"
     },
     "autoload": {
         "classmap":[
             "lib/Testing"
         ],
         "psr-4": {
-            "Logos\\": "lib/"
+            "Logos\\": "lib/Logos"
         }
     },
     "repositories": [
