@@ -15,7 +15,8 @@ $RECYCLE.BIN/
 *.msp
 
 #ideaFiles
-!/.idea
+.idea
+vendor
 
 # =========================
 # Operating System Files
@@ -38,13 +39,3 @@ Icon
 .Spotlight-V100
 .Trashes
 
-.idea/.name
-.idea/encodings.xml
-.idea/LogosDB.iml
-.idea/misc.xml
-.idea/modules.xml
-.idea/php.xml
-.idea/scopes/scope_settings.xml
-.idea/vcs.xml
-.idea/workspace.xml
-.idea/dictionaries/HellsAn631.xml

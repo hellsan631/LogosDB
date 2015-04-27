@@ -12,8 +12,8 @@ class MySQLUserTest extends User_Test{
 
         Config::write('db.host', 'localhost');
         Config::write('db.name', 'logos_unit');
-        Config::write('db.user', 'logos_user');
-        Config::write('db.password', 'vYZ9J2aRTHveMhQZ');
+        Config::write('db.user', 'travis');
+        Config::write('db.password', '');
 
         $this->user = new $object();
 

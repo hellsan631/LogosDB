@@ -35,7 +35,7 @@ Installation via composer is simple. Just add the following to your composer.jso
 }
 ```
 
-After updating composer, extend the class with a logos object
+After running a composer update/install command, extend the class with a logos object
 
 ```php
 class User extends Logos\DB\MySQL\Model{

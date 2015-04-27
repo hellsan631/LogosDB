@@ -10,8 +10,8 @@
 
     <php>
         <var name="DB_DSN" value="mysql:dbname=logos_unit;host=localhost" />
-        <var name="DB_USER" value="logos_user" />
-        <var name="DB_PASSWD" value="vYZ9J2aRTHveMhQZ" />
+        <var name="DB_USER" value="travis" />
+        <var name="DB_PASSWD" value="" />
         <var name="DB_DBNAME" value="logos_unit" />
     </php>
 
