@@ -4,7 +4,7 @@ namespace Logos\DB;
 
 class Config{
 
-    static $confArray;
+    private static $confArray;
 
     public static function read($name){
         return self::$confArray[$name];

@@ -35,7 +35,7 @@ abstract class Model extends DatabaseObject implements HandlerInterface{
 
         foreach($keyChain as $key => $val){
             //since this is a new object, we don't want to save the ID, rather letting the DB generate an ID
-            if($this->{$key} !== null and $key !== "id")
+            if($this->{$key} !== null && $key !== "id")
                 $prepareStatement .= "$key, ";
             else
                 unset($keyChain[$key]);
@@ -64,7 +64,7 @@ abstract class Model extends DatabaseObject implements HandlerInterface{
             Adapter::getInstance()->dbh->lastInsertId() : null;
 
         if($this->id === null)
-            return false;
+            trigger_error("Error: object was not created in database");
 
         return $this;
     }
@@ -100,7 +100,7 @@ abstract class Model extends DatabaseObject implements HandlerInterface{
         foreach($data as $key => $val){
             //Here we check to see if the key meets our criteria. If it doesn't we want to unset the key so
             //don't have to sort through the $data array again, and make the same comparisons.
-            if($val !== null and array_key_exists($key, $keyChain) and $keyChain[$key] !== "id")
+            if($val !== null && array_key_exists($key, $keyChain) && $keyChain[$key] !== "id")
                 $prepareStatement .= "$key, ";
             else
                 unset($data[$key]);
@@ -158,11 +158,11 @@ abstract class Model extends DatabaseObject implements HandlerInterface{
         $prepareStatement = "INSERT INTO `".self::name()."` (";
 
         //We can trigger an error here but we can try and treat it as a single query
-        if($count === null and !isset($data[0]))
+        if($count === null && !isset($data[0]))
             $count = 1;
 
         //This creates a uniform data set to convert and set our remaining data to.
-        if($count !== null and !isset($data[0]))
+        if($count !== null && !isset($data[0]))
             $data = [$data];
 
         //We want to check that each array of data is usable in the builder, and not json or an object
@@ -172,7 +172,7 @@ abstract class Model extends DatabaseObject implements HandlerInterface{
 
         //Arrays inside $data should NOT be asymmetric.
         foreach(array_keys ($data[0]) as $value){
-            if($value !== "id" and array_key_exists($value, $keyChain)){
+            if($value !== "id" && array_key_exists($value, $keyChain)){
                 $goodKeys[$value] = true;
                 $prepareStatement .= "$value, ";
             }
@@ -271,7 +271,7 @@ abstract class Model extends DatabaseObject implements HandlerInterface{
         //UPDATE fruit SET color = :color, count = :count WHERE id = :id
 
         if(!Adapter::fetchQuery($prepareStatement, $changedData, false))
-            return false;
+            trigger_error("Error: object was not saved");
 
         return $this;
     }
@@ -357,7 +357,7 @@ abstract class Model extends DatabaseObject implements HandlerInterface{
      * @param $id
      * ID of object to load, (this can also be an array of conditions)
      *
-     * @return $this
+     * @return object|boolean
      */
 
     public function load($id){
@@ -424,7 +424,7 @@ abstract class Model extends DatabaseObject implements HandlerInterface{
      * @param $conditionArray
      * Matching Conditions for the object to be loaded
      *
-     * @return $this
+     * @return boolean|array|object
      */
 
     public static function loadSingle($conditionArray){
@@ -638,13 +638,13 @@ abstract class Model extends DatabaseObject implements HandlerInterface{
      * @return void
      */
 
-    private static function _buildQuerySet(&$prepareStatement, &$conditionArray, &$keyChain = null){
+    private static function _buildQuerySet(&$prepareStatement, &$conditionArray, &$keyChain = []){
 
-        if($keyChain === null)
+        if(count($keyChain) === 0)
             $keyChain = self::getKeyChain();
 
         foreach($conditionArray as $key => $val){
-            if($val !== null and $key !== "id" and array_key_exists($key, $keyChain))
+            if($val !== null && $key !== "id" && array_key_exists($key, $keyChain))
                 $prepareStatement .= "$key = :$key, ";
             else
                 unset($conditionArray[$key]);

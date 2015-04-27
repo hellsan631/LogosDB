@@ -55,7 +55,7 @@ abstract class DatabaseObject{
      */
 
     protected static function dataToArray(&$dataToFilter){
-        if(!is_array($dataToFilter) and $dataToFilter !== null){
+        if(!is_array($dataToFilter) && $dataToFilter !== null){
             if(is_object($dataToFilter))
                 $dataToFilter = (array) $dataToFilter;
             else if(Core::isJson($dataToFilter))

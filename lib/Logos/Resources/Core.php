@@ -40,13 +40,13 @@ class Core{
         $firstChar = substr($string, 0, 1);
         $lastChar = substr($string, -1);
 
-        if (!$firstChar or !$lastChar)
+        if (!$firstChar || !$lastChar)
             return false;
 
-        if ($firstChar !== '{' and $firstChar !== '[')
+        if ($firstChar !== '{' && $firstChar !== '[')
             return false;
 
-        if ($lastChar !== '}' and $lastChar !== ']')
+        if ($lastChar !== '}' && $lastChar !== ']')
             return false;
 
         // let's leave the rest to PHP.
@@ -109,6 +109,8 @@ class Core{
             });
         }
 
+        unset($sortKey);
+
         return $objects;
 
     }
@@ -166,8 +168,8 @@ class Core{
             return false;
         }
 
-        return $date and
-            DateTime::getLastErrors()["warning_count"] == 0 and
+        return $date &&
+            DateTime::getLastErrors()["warning_count"] == 0 &&
             DateTime::getLastErrors()["error_count"] == 0;
 
     }

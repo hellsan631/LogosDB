@@ -9,7 +9,7 @@ class Cipher {
     private $_secureKey;
     private $_iv;
 
-    function __construct($textKey, $iv = null) {
+    public function __construct($textKey, $iv = null) {
         $this->_secureKey = hash('sha256', $textKey, TRUE);
 
         if($iv == null)

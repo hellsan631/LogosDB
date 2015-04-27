@@ -111,7 +111,7 @@ class Adapter extends AdapterAbstract{
 
                 $fetchParam = $query->fetchObject($fetchParam);
 
-                if(!is_object($fetchParam) and (!is_array($fetchParam) or count($fetchParam) == 0))
+                if(!is_object($fetchParam) && (!is_array($fetchParam) || count($fetchParam) == 0))
                     return false;
 
             }else if($fetchMode === PDO::FETCH_INTO)
