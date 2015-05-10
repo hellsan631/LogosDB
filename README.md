@@ -1,7 +1,6 @@
 LogosDB v 1.5.*
 =======
-[![Build Status](https://travis-ci.org/hellsan631/LogosDB.svg?branch=master)](https://travis-ci.org/hellsan631/LogosDB) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/hellsan631/LogosDB/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/hellsan631/LogosDB/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/hellsan631/LogosDB/badges/build.png?b=master)](https://scrutinizer-ci.com/g/hellsan631/LogosDB/build-status/master)
-
+[![Build Status](https://travis-ci.org/hellsan631/LogosDB.svg?branch=master)](https://travis-ci.org/hellsan631/LogosDB) [![Code Climate](https://codeclimate.com/github/hellsan631/LogosDB/badges/gpa.svg)](https://codeclimate.com/github/hellsan631/LogosDB)
 
 LogosDB is a database micro-framework for creating simple DB interaction without the need for a full MVC structure.
 
